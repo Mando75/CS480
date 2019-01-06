@@ -1,0 +1,32 @@
+# Add any directories, files, or patterns you don't want to be tracked by version control
+# Compiled
+*.elc
+
+# Packaging
+.cask
+
+# Finder blecchery
+.DS_Store
+
+# Backups and Autosaves
+*~
+*.#*
+*#*#
+
+# Exporting
+*.txt
+*.html
+*.pdf
+*.tex
+ltxpng
+
+# Source
+*.el
+*.py
+*.clojure
+*.c
+*.cpp
+*.clj
+
+notes
+code

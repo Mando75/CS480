@@ -1,0 +1,360 @@
+#+TITLE:CS 480 Syllabus and Portfolio@@html:<br>@@ Winter 2019
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t
+#+OPTIONS: html-postamble:nil
+#+STARTUP: showeverything entitiespretty
+
+* What\rsquo{}s It All About?
+  This course is about the *theory of computation.*
+
+  The following is a partial list of topics that will be covered:
+
+  - Finite Automata
+  - Regular Expressions
+  - Push-Down Automata
+  - Grammars
+  - Languages
+  - Turing Machines
+  - Computability
+  - Complexity
+  - P, NP and NP-Complete Problems.
+
+  In other words, it\rsquo{}s a blast!
+
+* Objectives
+ 1. Examine the theoretical basis of computer science.
+ 2. Learn the real limitations and opportunities in computing. This includes:
+   - What can and can not be computed (computability),
+   - The power of different types of computational systems in terms of what they
+     can compute (automata classification, recursive function theory, Chomsky
+     Hierarchy),
+   - What is practically computable and the complexity of solving certain
+     classes of problems (complexity and tractability).
+ 3. Appreciate and gain proficiency with rigorous methods, representations, and
+   proof techniques.
+ 4. Learn how to apply theoretical concepts to practical problems.
+
+* Prerequisites
+  You must have successfully completed the following courses:
+
+  - CS 238 Discrete Mathematics II (concurrent enrollment okay)
+  - CS 306 Algorithms and Complexity
+
+* Requirements
+You are required to
++ attend class each class period (but then again, why wouldn\rsquo{}t you?),
++ read assigned portions of the course materials /before/ the class meeting when they will be discussed,
++ complete weekly preparation assessments, and 
++ do weekly homework assignments to deepen your understanding of selected topics.
+
+* Text
+   /Automata and Computability: A Programmer\rsquo{}s Perspective/
+
+   *Ganesh Gopalakrishnan*
+
+   /First Edition, 2019, Taylor & Francis/ 
+
+* Software
+  (For the first two, see installation instructions [[https://rickneff.github.io][here]] and go to the /Tools/
+  section. For the third and fourth, more information will be given later.)
++ git 
++ Emacs/Spacemacs
++ python3
++ @@latex:\LaTeX{}@@ 
+
+* Behavioral Requirements
+You are required to\dots{}
++ attend class, as assessments will happen in class each day that are not reproducible outside of class.
++ read assigned portions of the course materials /before/ class each Monday and Friday.
++ complete all team and personal assessments to deepen your understanding of selected topics.
++ acquire and maintain a three-ring binder that will hold your portfolio of completed work (see below).
+
+* Course Periodicity
+This course has a weekly period, i.e., you can count on knowing ahead of time
+what you will be doing each day of each week. Each class period consists of two
+30-minute sections.
+
+On Mondays these sections are:
+
+ - Presentation :: --- A time where I will add depth information to the preparation
+                   material you finished reading *before class*.
+ - Class Directed Learning :: --- You will participate in a class-wide activity that
+      reinforces what you\rsquo{}ve read and what I\rsquo{}ve shown you.
+
+On Fridays these sections are:
+ - Answer Questions :: --- I will answer questions that have been submitted to the
+      class slack channel (more on which later).
+ - Class Directed Learning :: --- You will participate in a class-wide activity that
+      reinforces what you\rsquo{}ve read and what I\rsquo{}ve shown you.
+
+* Questions
++ The questions answered on Friday are generalized from those you submit via
+  the slack channel on Wednesday Evenings.
++ You must submit any and all unanswered questions on Wednesday evening. Not
+  submitting questions leads to a reduced learning experience.
++ You will have plenty of questions. Submit them! Choose knowledge over ignorance.
+
+* Exercises
+Exercises are smaller experiences that are designed to float uncertainties and
+questions you have to the surface of your mind. They are designed to be smaller
+so you can find out what you don\rsquo{}t know and then take the steps necessary to
+know.
+
+* Problems 
+Problems are weightier experiences that invite you to explore topics in
+theoretical computer science --- and especially mathematical proofs --- as well
+as increase your logical thinking and problem solving prowess. All involve
+writing mathematically.
+
+* Assessment
+Every four weeks you will meet with me in my office. The purpose
+of this meeting is for you to present your portfolio of work to me, make a
+grade-to-date claim, and provide evidence justifying that claim.
+
+Your portfolio *MUST* be a modified version of this file. All entries must
+follow the example format you will find at the end of this document (when it is
+updated). Also, your evidences must be complete and internally consistent. You
+are required to produce the portfolio using Spacemacs, export it as a pdf file,
+and print it. To accmoplish this you will need @@latex:\LaTeX{}@@ installed on
+your machine.
+
+* Late Work
+Late work is accepted /only if/ the reason is extraordinary, and acceptance is
+reached through private and prolonged negotiation. Also, you must come talk to
+me in person in my office --- *NOT* by email, nor any other means of
+communication.
+
+* Grades
+In each of our three personal meetings, you will present your portfolio and a
+letter-based grade-to-date claim. Afterwards I will give you my thoughts on the
+strength of your claim. The last claim that you make, taking into account any
+feedback from me, will be your final grade for the course. All of your claims
+must must be evidence-based. That means you *MUST* bring the evidence with you,
+in your portfolio, that supports your claim.
+
+** Letter-Based
+When making your claim, you are required to use the [[http://www.byui.edu/student-records/grades/grading-system][BYU-Idaho standard]]
+letter-based definition of grades, reproduced below:
+
++ \ldquo{}A\rdquo represents outstanding understanding, application, and integration of
+  subject material and extensive evidence of original thinking, skillful use of
+  concepts, and ability to analyze and solve complex problems. Demonstrates
+  diligent application of Learning Model principles, including initiative in
+  serving other students.
++ \ldquo{}B\rdquo represents considerable/significant understanding, application, and
+  incorporation of the material that would prepare a student to be successful in
+  next level courses, graduate school, or employment. The student participates
+  in the Learning Model as applied in the course.
++ \ldquo{}C\rdquo represents sufficient understanding of subject matter. The student
+  demonstrates minimal initiative to be prepared for class. Sequenced courses
+  could be attempted, but mastering new materials might prove challenging. The
+  student participates only marginally in the Learning Model.
++ \ldquo{}D\rdquo represents poor performance and initiative to learn and understand and
+  apply course materials. Retaking a course or remediation may be necessary to
+  prepare for additional instruction in this subject matter.
++ \ldquo{}F\rdquo represents failure in the course.
+
+#+Begin_Latex
+\pagebreak
+#+End_Latex
+
+Note that the above description of an \ldquo{}A\rdquo implies that you have gone *above and
+beyond*. To claim this grade you *must* have continually done the following
+things throughout the 4-week period and recorded evidence of this behavior in
+your portfolio. These behaviors are:
+  1. teaching and/or helping others in the class but not in your group;
+  2. teaching a Non-CS, Non-CE, Non-EE, Non-SE major about the material in this
+     class to help them with a class they are taking;
+  3. applying what you've learned in this class in another class you are
+     currently taking; and
+  4. doing work not assigned such as exploring mathematics, writing code
+     implementing what you are learning that has not been assigned, etc.
+
+Regarding the first two, quoting Truman Madsen (quoting the Prophet Joseph
+Smith): Now one of the strongest and wisest statements I have ever heard on
+egoism. The question was put to him, \ldquo{}Joseph, is the principle of
+self-aggrandizement wrong? Should we seek our own good?\rdquo Listen to his answer.
+\ldquo{}It is a correct principle and may be indulged upon only one rule or plan ---
+and that is to elevate, benefit, and bless others first. If you will elevate
+others, the very work itself will exalt you. Upon no other plan can a man justly
+and permanently aggrandize himself.\rdquo
+* Harassment
+	Title IX of the Education Amendments of 1972 prohibits sex discrimination
+  against any participant in an education program or activity that receives
+  federal funds, including Federal loans and grants. Title IX also covers
+  student-to-student sexual harassment. If you encounter unlawful sexual
+  harassment or gender based discrimination, please contact the Personnel Office
+  at 496-1130.
+
+* Disability
+  Brigham Young University-Idaho is committed to providing a working and
+  learning atmosphere which reasonably accommodates qualified persons with
+  disabilities. If you have any disability which may impair your ability to
+  complete this course successfully, please contact the Services for Students
+  with Disabilities Office, 496-1158. Reasonable academic accommodations are
+  reviewed for all students who have qualified documented disabilities. Services
+  are coordinated with the student and instructor by this office. If you need
+  assistance or if you feel you have been unlawfully discriminated against on
+  the basis of disability, you may seek resolution through established grievance
+  policy and procedures. You should contact the Personnel Office at 496-1130.
+
+* Other
+  This document may be modified by the instructor at any time without notification.
+
+* Readings                                                         :noexport:
+
+These readings are to be completed *prior to* each listed week\rsquo{}s Wednesday. The
+exercises from each chapter (all of them) are to be completed *prior to* close-of-day each
+Friday.
+
+  | Week | Reading from ACAPP               |
+  |------+----------------------------------|
+  |   01 | None (Initial Exam Papers only)  |
+  |   02 | Chapters 1 and 2, and Appendix A |
+  |   03 | Chapter                          |
+  |   04 |                                  |
+  |   05 |                                  |
+  |   06 |                                  |
+  |   07 |                                  |
+  |   08 |                                  |
+  |   09 |                                  |
+  |   10 |                                  |
+  |   11 |                                  |
+  |   12 |                                  |
+  |   13 |                                  |
+  |   14 |                                  |
+
+#+Begin_Latex
+\pagebreak
+#+End_Latex
+
+* Portfolio                                                        :noexport:
+** Course Tracker
+You are required to track your progress in the course using this table. 
+
+Note: Currently, you see full credit for week one\rsquo{}s work. (\checkmark means yes. Blank means no.) Update the 
+table for week 1 and all subsequent weeks each class day and week during the semester.
+
+** Course Tracker
+
+| / |   <> | <>  | <>  | <>  | <>  | <>  | <>  | <>   |
+|---+------+-----+-----+-----+-----+-----+-----+------|
+| # | Week | CRU | PFP | CDL | SAQ | PAQ | CDL | PPL  |
+|---+------+-----+-----+-----+-----+-----+-----+------|
+| # |    1 | \check   | \check   | \check   | \check   | \check   | \check   | 100% |
+|---+------+-----+-----+-----+-----+-----+-----+------|
+| # |    2 |     |     |     |     |     |     |      |
+|---+------+-----+-----+-----+-----+-----+-----+------|
+| # |    3 |     |     |     |     |     |     |      |
+|---+------+-----+-----+-----+-----+-----+-----+------|
+| # |    4 |     |     |     |     |     |     |      |
+|---+------+-----+-----+-----+-----+-----+-----+------|
+| # |    5 |     |     |     |     |     |     |      |
+|---+------+-----+-----+-----+-----+-----+-----+------|
+| # |    6 |     |     |     |     |     |     |      |
+|---+------+-----+-----+-----+-----+-----+-----+------|
+| # |    7 |     |     |     |     |     |     |      |
+|---+------+-----+-----+-----+-----+-----+-----+------|
+| # |    8 |     |     |     |     |     |     |      |
+|---+------+-----+-----+-----+-----+-----+-----+------|
+| # |    9 |     |     |     |     |     |     |      |
+|---+------+-----+-----+-----+-----+-----+-----+------|
+| # |   10 |     |     |     |     |     |     |      |
+|---+------+-----+-----+-----+-----+-----+-----+------|
+| # |   11 |     |     |     |     |     |     |      |
+|---+------+-----+-----+-----+-----+-----+-----+------|
+| # |   12 |     |     |     |     |     |     |      |
+|---+------+-----+-----+-----+-----+-----+-----+------|
+| # |   13 |     |     |     |     |     |     |      |
+|---+------+-----+-----+-----+-----+-----+-----+------|
+
+This is an honest and true record of my work for this course.
+
+#+Begin_Latex
+\vspace{2in}
+#+End_Latex
+
+Signature: @@latex:\underline{\makebox[4in]{}}@@
+
+* Tracker Acronym Key                                              :noexport:
+Course Tracker acronyms and their meanings.
+
+	+ CRU - I Completed the Reading and achieved a level of Understanding *before* the start of Tuesday\rsquo{}s class and recorded questions about the items I didn\rsquo{}t understand.
+	+ PFP - I was present for and attentive to the presentation for this date.
+	+ CDL - I fully participated in the Class Directed Learning for this date.
+	+ SAQ - I submitted /at least 1/ appropriate, Significant, Actual Question I have regarding the information for this week.
+	+ PAQ - I was Present for and Attentive to the Answer Questions presentation for this date.
+	+ PPL - I, individually, correctly completed this Percentage of the Problems and exercises proving this Level of understanding before Friday at Midnight.
+
+* Grade Claims                                                     :noexport:
+
+On the week indicated, bring this updated document to my office and make your claim.
+
+| / | <>         | <>          | <>               | <>             |
+|---+------------+-------------+------------------+----------------|
+| # | Claim Week | Grade Claim | Instructor Grade | Adjusted Grade |
+|---+------------+-------------+------------------+----------------|
+| # | 5          |             |                  |                |
+|---+------------+-------------+------------------+----------------|
+| # | 9          |             |                  |                |
+|---+------------+-------------+------------------+----------------|
+| # | 13 - 14    |             |                  |                |
+|---+------------+-------------+------------------+----------------|
+
+
+#+Begin_Latex
+\pagebreak
+#+End_Latex
+
+* Evidences                                                        :noexport:
+
+Fill in your evidences here each week to build your portfolio.
+The number of pieces of evidence are determined by you. However,
+the more you have the better off you will be.
+
+** Week 1
+*** Some Exercise or Problem
+
+    Solution here
+
+*** Some Other Exercise or Problem
+
+    Solution here
+
+*** Some Problem Requiring Code
+
+#+BEGIN_SRC elisp :results silent
+;; this is just some example code showing you how it can be done.
+;; put evidence code in source blocks like this
+  (defun my-cool-function ()
+    (let (it be)
+      (setq it (+ 1 2) be (* 3 4))
+       (cons it be)))
+#+END_SRC
+
+** Week 2
+#+INCLUDE: ./assignment-02.org
+
+** Week 3
+  [[file:assignment-03.org][Link to Assignment File]] 
+   
+** Week 4
+   [[elisp:(progn%20(forward-line)%20(insert-file%20"assignment-04.org"))][Insert Assignment File]]
+** Week 5
+
+** Week 6
+
+** Week 7
+
+** Week 8
+
+** Week 9
+
+** Week 10
+
+** Week 11
+
+** Week 12
+
+** Week 13
+

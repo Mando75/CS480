@@ -62,6 +62,15 @@ You are required to
 + python3
 + @@latex:\LaTeX{}@@ 
 
+** Jove
+  https://github.com/ganeshutah/Jove
+#+BEGIN_SRC sh :results silent
+  cd ~
+  git clone https://github.com/ganeshutah/Jove.git
+#+END_SRC
+
+  [[file:~/Jove/README.md]] 
+
 * Behavioral Requirements
 You are required to\dots{}
 + attend class, as assessments will happen in class each day that are not reproducible outside of class.
@@ -279,7 +288,7 @@ Signature: @@latex:\underline{\makebox[4in]{}}@@
 * Tracker Acronym Key                                              :noexport:
 Course Tracker acronyms and their meanings.
 
-	+ CRU - I Completed the Reading and achieved a level of Understanding *before* the start of Tuesday\rsquo{}s class and recorded questions about the items I didn\rsquo{}t understand.
+	+ CRU - I Completed the Reading and achieved a level of Understanding *before* the start of Wednesday\rsquo{}s class and recorded questions about the items I didn\rsquo{}t understand.
 	+ PFP - I was present for and attentive to the presentation for this date.
 	+ CDL - I fully participated in the Class Directed Learning for this date.
 	+ SAQ - I submitted /at least 1/ appropriate, Significant, Actual Question I have regarding the information for this week.

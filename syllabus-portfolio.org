@@ -50,6 +50,8 @@ You are required to
 * Text
    /Automata and Computability: A Programmer\rsquo{}s Perspective/
 
+   (abbreviated ACAPP)
+
    *Ganesh Gopalakrishnan*
 
    /First Edition, 2019, Taylor & Francis/ 
@@ -74,7 +76,7 @@ You are required to
 * Behavioral Requirements
 You are required to\dots{}
 + attend class, as assessments will happen in class each day that are not reproducible outside of class.
-+ read assigned portions of the course materials /before/ class each Monday and Friday.
++ read assigned portions of the course materials /before/ class meetings when they will be discussed. 
 + complete all team and personal assessments to deepen your understanding of selected topics.
 + acquire and maintain a three-ring binder that will hold your portfolio of completed work (see below).
 
@@ -83,7 +85,7 @@ This course has a weekly period, i.e., you can count on knowing ahead of time
 what you will be doing each day of each week. Each class period consists of two
 30-minute sections.
 
-On Mondays these sections are:
+On Mondays (or Wednesdays where the Monday is a holiday) these sections are:
 
  - Presentation :: --- A time where I will add depth information to the preparation
                    material you finished reading *before class*.
@@ -163,10 +165,6 @@ letter-based definition of grades, reproduced below:
   prepare for additional instruction in this subject matter.
 + \ldquo{}F\rdquo represents failure in the course.
 
-#+Begin_Latex
-\pagebreak
-#+End_Latex
-
 Note that the above description of an \ldquo{}A\rdquo implies that you have gone *above and
 beyond*. To claim this grade you *must* have continually done the following
 things throughout the 4-week period and recorded evidence of this behavior in
@@ -210,41 +208,54 @@ and permanently aggrandize himself.\rdquo
 * Other
   This document may be modified by the instructor at any time without notification.
 
-* Readings                                                         :noexport:
+#+Begin_Latex
+\pagebreak
+#+End_Latex
 
-These readings are to be completed *prior to* each listed week\rsquo{}s Wednesday. The
-exercises from each chapter (all of them) are to be completed *prior to* close-of-day each
-Friday.
+* Readings
+
+These readings are to be completed *before* each listed week\rsquo{}s Wednesday\rsquo{}s
+class. The exercises from each chapter (all of them) are to be completed
+*before* close-of-day each Friday.
 
   | Week | Reading from ACAPP               |
   |------+----------------------------------|
   |   01 | None (Initial Exam Papers only)  |
   |   02 | Chapters 1 and 2, and Appendix A |
-  |   03 | Chapter                          |
-  |   04 |                                  |
-  |   05 |                                  |
-  |   06 |                                  |
-  |   07 |                                  |
-  |   08 |                                  |
-  |   09 |                                  |
-  |   10 |                                  |
-  |   11 |                                  |
-  |   12 |                                  |
-  |   13 |                                  |
-  |   14 |                                  |
+  |   03 | Chapters 3 and 4                 |
+  |   04 | Chapters 5 and 6                 |
+  |   05 | Chapters 7 and 8                 |
+  |   06 | Chapters 9 and 10                |
+  |   07 | Chapters 11 and 12               |
+  |   08 | Chapter 13                       |
+  |   09 | Chapter 14                       |
+  |   10 | Chapter 15                       |
+  |   11 | Chapter 16                       |
+  |   12 | Chapter 17                       |
+  |   13 | Chapter 18                       |
+  |   14 | Finals Week                      |
+
+* Tracker Acronym Key
+Course Tracker acronyms and their meanings.
+
+	+ CRU - I Completed the Reading and achieved a level of Understanding *before* the start of Wednesday\rsquo{}s class and recorded questions about the items I didn\rsquo{}t understand.
+	+ PFP - I was present for and attentive to the presentation for this date.
+	+ CDL - I fully participated in the Class Directed Learning for this date.
+	+ SAQ - I submitted /at least one/ appropriate, Significant, Actual Question I have regarding the information for this week.
+	+ PAQ - I was Present for and Attentive to the Answer Questions presentation for this date.
+	+ PPL - I, individually, correctly completed this Percentage of the Problems and exercises proving this Level of understanding before Friday at Midnight.
 
 #+Begin_Latex
 \pagebreak
 #+End_Latex
 
-* Portfolio                                                        :noexport:
+* Portfolio
 ** Course Tracker
 You are required to track your progress in the course using this table. 
 
-Note: Currently, you see full credit for week one\rsquo{}s work. (\checkmark means yes. Blank means no.) Update the 
-table for week 1 and all subsequent weeks each class day and week during the semester.
-
-** Course Tracker
+Note: Currently, you see full credit for week one\rsquo{}s work. (\checkmark means yes. Blank
+means no.) Update the table for week 2 and all subsequent weeks each class day
+and week during the semester.
 
 | / |   <> | <>  | <>  | <>  | <>  | <>  | <>  | <>   |
 |---+------+-----+-----+-----+-----+-----+-----+------|
@@ -280,22 +291,12 @@ table for week 1 and all subsequent weeks each class day and week during the sem
 This is an honest and true record of my work for this course.
 
 #+Begin_Latex
-\vspace{2in}
+\vspace{1in}
 #+End_Latex
 
 Signature: @@latex:\underline{\makebox[4in]{}}@@
 
-* Tracker Acronym Key                                              :noexport:
-Course Tracker acronyms and their meanings.
-
-	+ CRU - I Completed the Reading and achieved a level of Understanding *before* the start of Wednesday\rsquo{}s class and recorded questions about the items I didn\rsquo{}t understand.
-	+ PFP - I was present for and attentive to the presentation for this date.
-	+ CDL - I fully participated in the Class Directed Learning for this date.
-	+ SAQ - I submitted /at least 1/ appropriate, Significant, Actual Question I have regarding the information for this week.
-	+ PAQ - I was Present for and Attentive to the Answer Questions presentation for this date.
-	+ PPL - I, individually, correctly completed this Percentage of the Problems and exercises proving this Level of understanding before Friday at Midnight.
-
-* Grade Claims                                                     :noexport:
+* Grade Claims
 
 On the week indicated, bring this updated document to my office and make your claim.
 
@@ -310,12 +311,11 @@ On the week indicated, bring this updated document to my office and make your cl
 | # | 13 - 14    |             |                  |                |
 |---+------------+-------------+------------------+----------------|
 
-
 #+Begin_Latex
 \pagebreak
 #+End_Latex
 
-* Evidences                                                        :noexport:
+* Evidences
 
 Fill in your evidences here each week to build your portfolio.
 The number of pieces of evidence are determined by you. However,

@@ -1,0 +1,319 @@
+#+TITLE: Week 1 Notebook
+#+Author: Bryan Muller
+#+LANGUAGE:en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t
+#+OPTIONS: html-postamble:nil
+#+STARTUP: showeverything entitiespretty
+
+* Mon Jan 14th
+** CDL
+ | x                      | Tractable                        | Intractable                                           | Unsolvable Problems                                                         |
+ | Description            | Can be solved in Polynomial Time | Can be solved in non polynomial time/ superpolynomial | Cannot be computed with our current models or we know no solution can exist |
+ | Computable in Theory   | Y                                | Y                                                     | N                                                                           |
+ | Computable in Practice | Y                                | Depends                                               | N                                                                           |
+ | Example                | Euclidean GCD                    | Traveling Salesman Problem                            | Halting Problem                                                             |
+
+** Python Session / Elisp Practice
+
+#+begin_src python :results silent :session test
+def hello():
+    print('hello')
+#+end_src
+
+#+begin_src python :results output :session test
+hello()
+#+end_src
+
+#+RESULTS:
+: hello
+
+#+name: contGAGA
+#+begin_src elisp
+(defun contains-GAGA? (in-string)
+  (if (string-match "GAGA" in-string)
+     "YES"
+    "NO"))
+#+end_src
+
+#+name: read-gaga-string
+#+begin_src elisp
+(org-sbe contGAGA)
+(defun read-gaga-string ()
+   (contains-GAGA? (read-from-minibuffer "Enter your test string: ")))
+#+end_src
+
+#+begin_src elisp
+(org-sbe read-gaga-string)
+(read-gaga-string)
+#+end_src
+
+#+RESULTS:
+: NO
+
+* TODO Chapter 2 Exercises
+** Exercises 2.1.3: Language Operations
+*** 1.
+    No, it cannot. Our definition of an alphabet is /finite/ and /non-empty/ set
+    of symbols. While /Nat/ may be a /non-empty/ set, it's cardinality is \aleph_0
+    (infinite).
+*** 2.
+    /symbols/ = {"H", "e", "l", "o", " ", "t", "h", "r", "!" } The smallest
+    alphabet underlying this string would be the set /symbols/. It meets our
+    definition of an alphabet; a finitie and non-empty set.
+*** 3.
+    While perhaps not every palindrome string is initially created using a
+    concatenation of a string with its reverse, any palindrome could certainly
+    be defined that way.
+
+** Exercises 2.1.4: Zero, One, Exp
+*** 1.
+    /s/ = /abacaca/
+    number of /a/'s = 4
+    number of /b/'s = 1
+    number of /c/'s = 2
+
+    s^4 = abacacaabacacaabacacaabacaca
+    number of /a/'s = 4 * 4 = 16
+    number of /b/'s = 1 * 4 = 4
+    number of /c/'s = 2 * 4 = 8
+    number of /d/'s = 0 * 4 = 0
+*** 2.
+
+    The /One/ element would be the Universal set (or as we defined it, /Nat/).
+    The intersection of any subset with it's parent set would return just the
+    subset, aka the /One/ element in multiplication.
+
+    s \cap /Nat/ = s  \cong  s \cap /One/ = s
+
+    The /Zero/ element would be the empty set (\empty). The intersection of any set
+    with the empty set returns the empty set. This behaves the same way as the
+    /Zero/ element in multiplication.
+
+    s \cap \empty = \empty  \cong  s \cap /Zero/ = /Zero/
+
+** Exercises 2.2: Languages
+*** 1.
+    As we've defined language, it must equal the empty set (\empty) or possibly
+    infinite set of finite strings which must meet the constraint
+         \{a^{i}b^j : i,j \ge 0, and i < j}\
+
+   This means our language either has /no/ strings (\epsilon is a string, albiet empty)
+   OR the string must match the contraints. The constraints specify that the
+   number of /i's/ and /j's/ must be greater than or equal to zero AND that
+   there are less /b's/ than /a's/.
+
+   For those constraints to be valid, there
+   must always be at least 1 /b/, meaning that \epsilon would never be a valid string
+   in our language.
+*** 2.
+   For \epsilon to be a valid string in this language, we would need to modify second
+   part of the condition. If we change the condition to be
+         \{a^{i}b^j : i,j \ge 0, and i \le j}\
+   \epsilon would be a valid string in our language (note: change /i < j/ to /i \le j/)
+
+** Exercises 2.2: Languages- Python
+*** 1.
+#+begin_src python :results output
+substrings_s = { "a" * i + "b" * j + "c" * k for i in range(2) for j in range(2) for k in range(2) }
+print(substrings_s)
+#+end_src
+
+#+RESULTS:
+: set(['', 'a', 'c', 'b', 'abc', 'bc', 'ac', 'ab'])
+
+#+begin_src elisp :results raw
+(-flatten (loop for i from 0 to 1
+      collect (loop for j from 0 to 1
+          collect (loop for k from 0 to 1
+              collect (concat (make-string i ?a) (make-string j ?b) (make-string k ?c))))))
+#+end_src
+
+#+RESULTS:
+( c b bc a ac ab abc)
+
+*** 2.
+
+#+begin_src python :results output
+print({"(" * i + ")" * j for i in range(6) for j in range(6) if i == j})
+#+end_src
+
+#+RESULTS:
+: set(['', '(())', '((()))', '()', '((((()))))', '(((())))'])
+
+#+begin_src elisp :results raw
+(-flatten
+    (loop for i from 0 to 5
+        collect (loop for j from 0 to 5
+            if (= i j)
+            collect (concat (make-string i ?\() (make-string j ?\)))))))
+
+#+end_src
+
+#+RESULTS:
+( () (()) ((())) (((()))) ((((())))))
+
+*** 3.
+
+#+begin_src python :results output
+p = "abcde"
+q = "fghij"
+
+print((p+q)[::-1])
+print(q[::-1] + p[::-1])
+#+end_src
+
+#+RESULTS:
+: 14
+: jihgfedcba
+: jihgfedcba
+
+On the left side of the equation, we are adding the strings /p/ and /q/ and then
+reversing that concatenated string. On the right side of the equation, we are
+reversing the strings /p/ and /q/ and then adding them together. This works due
+to the commutative property of reverse function. In integer arithmetic, we can
+see this same property like so.
+
+Given an three integers /a/, /b/, and /c/:
+ (a + b)(c) = (a * c) + (b * c)
+
+
+#+begin_src python :results output
+a = 5
+b = 3
+c = 2
+
+print((a+b)*(c))
+print((a * c) + (b * c))
+#+end_src
+
+#+RESULTS:
+: 16
+: 16
+
+*** 4.
+    L_1 describes a language that contains pairs of opposing balanced parantheses
+    and the empty string. By opposing balanced parantheses, I mean that the
+    string is equally split with all of the opening parentheses on the left side
+    of the string, and the closing parentheses on the right (e.g. '()' '(())'
+    '((()))' '(((())))' '((((()))))')
+
+    L_2 describes all strings that contain a balanced set of parentheses. This
+    means there always an opening parenthesis which precedes a matching closing
+    parenthesis. There may be nested pairs of opening and closing parentheses,
+    but every opening parenthesis has a matching closing parenthesis and vice
+    versa. (e.g. '()' '(())' '(()())')
+
+    L_1 \subset L_2.
+
+    L_3 describes all strings with an equal number of opposing parentheses. The
+    opening and closing parentheses are not required to be balanced. The string
+    is valid as long as there is the same number of opening as closing parentheses.
+    (e.g. '()' '(())' '()()()' '))()((')
+
+    L_1 \sub L_2 \sub L_3
+** TODO Exercises 2.2.2: Zero and One for Concat
+*** 1.
+    The biggest difference is that {\empty} contains /NO/ strings, while {\epsilon} contains 1, the empty string {''}.
+    {\empty} has cardinality of 0 while {\epsilon} has cardinality 1
+
+    I would say that {\epsilon} woulde be a language over alphabet {2, 3}. You can
+    simply choose not to select any of the letters, resulting in \epsilon, which is \in {\epsilon}
+
+*** TODO 2.
+
+** DONE Exercises 2.2.5: Languages(review)
+   CLOSED: [2019-01-15 Tue 16:10]
+*** 1.
+    \Sigma = {0,1}
+    a. \Sigma^2 = {00, 01, 10, 11}
+    b. \Sigma^0 = {\epsilon} (see pg 24)
+    c. \Sigma^1 = {0, 1}
+    d. \Sigma^3 = {000, 001, 010, 011, 100, 101, 110, 111}
+*** 2.
+    M = {0, 10}
+    a. M^2 = {00, 010, 100, 1010}
+    b. M^0 = {\epsilon} (see pg 24)
+    c. M^1 = {0, 10}
+    d. M^3 = {000, 0010, 0100, 01010, 1000, 10010, 10100, 101010}
+*** DONE 3.
+    CLOSED: [2019-01-15 Tue 16:10]
+    #+begin_src elisp :results silent
+(defun l-1 (n)
+   (-flatten
+      (loop for i from 0 to n
+            collect (loop for j from 0 to n
+                       if (= i j)
+                       collect (concat (make-string i ?\() (make-string j ?\))))))))
+#+end_src
+
+#+BEGIN_SRC elisp
+(l-1 3)
+#+END_SRC
+
+#+RESULTS:
+|   | () | (()) | ((())) |
+
+    a. \epsilon, '()', '(())'
+    b. '()()()'
+    c. '()'.
+       We previously established that L_1 \sub L_2 \sub L_3,
+       so we would need to take the smallest member of L_1. We could
+       go with \epsilon, but that seemed a little too much of a given :)
+
+** Exercises 2.2.6
+*** 1.
+    a. L_1 \cup L_2 would match L_2 because L_1 \sub L_2
+    b. L_1 \cup L_3 would match L_3 because L_1 \sub L_3
+    c. L_1 \cap L_2 would match L_1 because L_1 \sub L_2
+
+*** 2.
+    a. star({0, 1}, 2) = {\epsilon, 0, 1, 00, 01, 10, 11}
+    b. star({0, 1}, 0) = {\epsilon}
+    c. star({0, 1}, 1) = {\epsilon, 0, 1}
+    d. star({0, 1}, 3) = {\epsilon, 0, 1, 00, 01, 10, 11, 000, 001, 010, 011, 100, 101, 110, 111}
+    e. star({0, 10}, 2) = {\epsilon, 0, 10, 00, 010, 100, 1010}
+    f. star({0, 10}, 0) =  {\epsilon}
+    g. star({0, 10}, 1) = {\epsilon, 0, 10}
+    h. star({0, 10}, 3) = {\epsilon, 0, 10, 00, 010, 100, 1010, 000, 0010, 0100, 01010, 1000, 10010, 10100, 101010}
+    i. star({0, 1, 00, \epsilon}, 2) = {\epsilon, 0, 1,00, 01, 000, 10, 11, 100, 001, 0000}
+    j. star({0, 10}, 0) = {\epsilon}
+    k. star({0, 10}, 1) = {\epsilon, 0, 10}
+    l. star({0, 10}, 3) = {\epsilon, 0, 10, 00, 010, 100, 1010, 000, 0010, 0100, 01010, 1000, 10010, 10100, 101010}
+    m. It is \sum_0^n 2^n. The size of each set which results from L^n = 2^n. Because /star/ unions these sets together,
+       we some the cardinalities of each exponentiated set to find the total number of items
+    n. An arbitrary string that is finite/infinite and each symbol in the string is a combintation of the characters 1 or 0
+** Exercises 2.3: Slippery Concepts
+*** 1.
+    L_E = {0^{2i} : i \ge 0} each string character will be 2i characters long. 2 times
+    any number will always result in an even number, thus every string produced
+    by this constraint will also be even
+*** 2.
+    (00) = 0^2 so (00)^i = 0^{2i} thus {0^{2i} : i \ge 0} = {(00)^i : i \ge 0}
+*** 3.
+    L_O - {0^{2i+1} : i \ge 0}
+    contains all strings with odd number of characters. So union would be all strings
+    of a finite/infinite number of zeros. Is that what {0}^* represents?
+*** 4.
+    A language which contains all strings beginning with a finite/infinite number of zeros,
+    and ending with a finite/infinite number of ones.
+*** 5.
+    a. They are equal. The only thing that is different is the variable used to represent the exponenent.
+    b. They are equal. The first constraint creates a finite/infinite list of zeros, which is multiplied together
+       with a finite/infinite list of ones formed by the second contstraint. This is an equivalent definition.
+    c. They are equal. Both sets create words with a finite/infinite number of preceding zeros followed by a
+       finite/infinite number of ones. Both sets have a cardinality of \aleph_0, so they are equal.
+    d. They are not equal. L_4 does not contain \epsilon
+    e. Yes. This is a union of L_3 and {\epsilon} (which should already be in L_3) so we've already established that they are
+       the same.
+    f. Yes. Although the variable names have changed, they are fixed to be equal to each other, rendering the same result
+*** 6.
+    No. as L_7 is defined, i and j can be different values, which allows there to be unequal numbers of ones and zeros.
+    {0^i : i \ge 0}{1^i : i \ge 0} is using the samve value, which means there will always be an equal number of ones and zeros.
+*** 7.
+    a. Yes. L_6 defines a set of strings with a finite/infinite number of zeros matched with an equal finite/infinite number of ones.
+       All strings in L_6 will have an equal number of ones and zeros.
+       L_8 defines a set of strings with a finite/infinite number of ones and zeros, but no strings with an equal number of ones and zeros.
+       This should be the complement set to L_6
+    b. It is true
+    c. \empty set. A set minus itself is equal to the empty set. I claim L_8 = complement(L_6) so L_8 - complement(L_6) = \empty
+    d. No. I say the are equal, which means they would contain the same strings.

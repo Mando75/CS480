@@ -1,9 +1,11 @@
-#+TITLE: Week 1 Notebook
+#+TITLE: Week 2 Notebook
 #+Author: Bryan Muller
 #+LANGUAGE:en
 #+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t
 #+OPTIONS: html-postamble:nil
 #+STARTUP: showeverything entitiespretty
+
+Export: ,, no-export
 
 * Mon Jan 14th
 ** CDL
@@ -49,6 +51,26 @@ hello()
 
 #+RESULTS:
 : NO
+
+* Wed Jan 16th
+** Open file in elisp
+#+BEGIN_SRC elisp
+(defun get-string-from-file (path)
+   (with-temp-buffer
+      (insert-file-contents path)
+      (buffer-substring-no-properties (point-min) (point-max))))
+#+END_SRC
+
+#+RESULTS:
+: get-string-from-file
+** SISO
+   String in, string out. Always one string out.
+   Alphabet = ASCII 128
+** Proofs
+    if a \cong_5 b then a^2
+
+    Prove \radic2 is irrational
+
 
 * TODO Chapter 2 Exercises
 ** Exercises 2.1.3: Language Operations
@@ -221,8 +243,7 @@ print((a * c) + (b * c))
 
 *** TODO 2.
 
-** DONE Exercises 2.2.5: Languages(review)
-   CLOSED: [2019-01-15 Tue 16:10]
+** Exercises 2.2.5: Languages(review)
 *** 1.
     \Sigma = {0,1}
     a. \Sigma^2 = {00, 01, 10, 11}

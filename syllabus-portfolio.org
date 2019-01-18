@@ -44,7 +44,7 @@
 You are required to
 + attend class each class period (but then again, why wouldn\rsquo{}t you?),
 + read assigned portions of the course materials /before/ the class meeting when they will be discussed,
-+ complete weekly preparation assessments, and 
++ complete weekly preparation assessments, and
 + do weekly homework assignments to deepen your understanding of selected topics.
 
 * Text
@@ -54,15 +54,15 @@ You are required to
 
    *Ganesh Gopalakrishnan*
 
-   /First Edition, 2019, Taylor & Francis/ 
+   /First Edition, 2019, Taylor & Francis/
 
 * Software
   (For the first two, see installation instructions [[https://rickneff.github.io][here]] and go to the /Tools/
   section. For the third and fourth, more information will be given later.)
-+ git 
++ git
 + Emacs/Spacemacs
 + python3
-+ @@latex:\LaTeX{}@@ 
++ @@latex:\LaTeX{}@@
 
 ** Jove
   https://github.com/ganeshutah/Jove
@@ -71,12 +71,12 @@ You are required to
   git clone https://github.com/ganeshutah/Jove.git
 #+END_SRC
 
-  [[file:~/Jove/README.md]] 
+  [[file:~/Jove/README.md]]
 
 * Behavioral Requirements
 You are required to\dots{}
 + attend class, as assessments will happen in class each day that are not reproducible outside of class.
-+ read assigned portions of the course materials /before/ class meetings when they will be discussed. 
++ read assigned portions of the course materials /before/ class meetings when they will be discussed.
 + complete all team and personal assessments to deepen your understanding of selected topics.
 + acquire and maintain a three-ring binder that will hold your portfolio of completed work (see below).
 
@@ -111,7 +111,7 @@ questions you have to the surface of your mind. They are designed to be smaller
 so you can find out what you don\rsquo{}t know and then take the steps necessary to
 know.
 
-* Problems 
+* Problems
 Problems are weightier experiences that invite you to explore topics in
 theoretical computer science --- and especially mathematical proofs --- as well
 as increase your logical thinking and problem solving prowess. All involve
@@ -251,7 +251,7 @@ Course Tracker acronyms and their meanings.
 
 * Portfolio
 ** Course Tracker
-You are required to track your progress in the course using this table. 
+You are required to track your progress in the course using this table.
 
 Note: Currently, you see full credit for week one\rsquo{}s work. (\checkmark means yes. Blank
 means no.) Update the table for week 2 and all subsequent weeks each class day
@@ -263,7 +263,7 @@ and week during the semester.
 |---+------+-----+-----+-----+-----+-----+-----+------|
 | # |    1 | \check   | \check   | \check   | \check   | \check   | \check   | 100% |
 |---+------+-----+-----+-----+-----+-----+-----+------|
-| # |    2 |     |     |     |     |     |     |      |
+| # |    2 | \check   | \check   | \check   | \check   |     |     | 100% |
 |---+------+-----+-----+-----+-----+-----+-----+------|
 | # |    3 |     |     |     |     |     |     |      |
 |---+------+-----+-----+-----+-----+-----+-----+------|
@@ -345,8 +345,8 @@ the more you have the better off you will be.
 #+INCLUDE: ./assignment-02.org
 
 ** Week 3
-  [[file:assignment-03.org][Link to Assignment File]] 
-   
+  [[file:assignment-03.org][Link to Assignment File]]
+
 ** Week 4
    [[elisp:(progn%20(forward-line)%20(insert-file%20"assignment-04.org"))][Insert Assignment File]]
 ** Week 5
@@ -366,4 +366,3 @@ the more you have the better off you will be.
 ** Week 12
 
 ** Week 13
-

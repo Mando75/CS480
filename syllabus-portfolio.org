@@ -344,6 +344,9 @@ the more you have the better off you will be.
 ** Week 2
 #+INCLUDE: ./assignment-02.org
 
+  This directive has a keyword, namely :minlevel --- what do you suppose it
+  does?!
+
 ** Week 3
   [[file:assignment-03.org][Link to Assignment File]]
 

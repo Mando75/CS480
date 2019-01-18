@@ -1,0 +1,212 @@
+#+TITLE: Introduction to Computing 
+#+LANGUAGE: en
+#+OPTIONS: num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t d:(not "HELP" "HINT")
+#+STARTUP: showeverything entitiespretty
+#+REVEAL_ROOT: https://cdn.jsdelivr.net/reveal.js/3.0.0/
+
+* Class-Directed Learning 
+
+  Fill in this table:
+
+|             | tractable | intractable | unsolvable |
+|             | problems  | problems    | problems   |
+|-------------+-----------+-------------+------------|
+| Description |           |             |            |
+|             |           |             |            |
+| Computable  |           |             |            |
+| in theory   |           |             |            |
+|             |           |             |            |
+| Computable  |           |             |            |
+| in practice |           |             |            |
+|             |           |             |            |
+| Example     |           |             |            |
+
+** Sample Answer
+
+|             | tractable   | intractable           | unsolvable       |
+|             | problems    | problems              | problems         |
+|-------------+-------------+-----------------------+------------------|
+| Description | can be      | method for solving    | cannot by solved |
+|             | solved      | exists but is hope-   | by any computer  |
+|             | efficiently | lessly time-consuming | program          |
+|             |             |                       |                  |
+| Computable  |             |                       |                  |
+| in theory   | Yes         | Yes                   | No               |
+|             |             |                       |                  |
+| Computable  |             |                       |                  |
+| in practice | Yes         | Yes/No(?)             | No               |
+|             |             |                       |                  |
+| Example     | shortest    | decryption            | finding all bugs |
+|             | route on    |                       | in computer      |
+|             | a map       |                       | programs         |
+
+* Why study the theory of computation?
+** Reason #1
+   It is useful.
+*** 1
+    When using computers to solve problems, it’s often important to understand
+    whether a given problem is computable and/or tractable.
+*** 2
+    If it’s not tractable, is there a suitable variant or approximation that is
+    tractable?
+*** 3
+    How do we compare the efficiency and effectiveness of proposed methods
+    for solving the problem?
+*** 4
+    Certain specific techniques have practical applications, including
+    reductions, regular expressions, and automata theory.
+
+** Reason #2
+   The theory of computation is beautiful and important.
+*** Important?
+    We would like to more fully understand computer science as an intellectual
+    discipline.
+* Some string-matching basics
+
+#+name: containsGAGA
+#+BEGIN_SRC python :results silent :session
+  def containsGAGA(inString):
+    if 'GAGA' in inString:
+      return 'yes'
+    else:
+      return 'no'
+#+END_SRC
+
+#+BEGIN_SRC python :results output :noweb eval
+  <<containsGAGA>>
+  print(containsGAGA('ABGAGHI'))
+#+END_SRC
+
+#+RESULTS:
+: no
+
+#+BEGIN_SRC python :results output :noweb eval
+  <<containsGAGA>>
+  print(containsGAGA('ABGAGAI'))
+#+END_SRC
+
+#+RESULTS:
+: yes
+
+#+BEGIN_SRC python :results output :session
+  print(containsGAGA('ABGAGAI'))
+#+END_SRC
+
+#+RESULTS:
+: Traceback (most recent call last):
+:   File "<stdin>", line 1, in <module>
+: NameError: name 'containsGAGA' is not defined
+: 
+: 
+
+#+name: contGAGA
+#+BEGIN_SRC elisp :results silent
+  (defun contains-GAGA? (in-string)
+    (if (string-match "GAGA" in-string)
+        "Yes"
+      "No"))
+#+END_SRC
+
+#+BEGIN_SRC elisp
+  (org-sbe contGAGA)
+  (contains-GAGA? "ABGAGHI")
+#+END_SRC
+
+#+BEGIN_SRC elisp
+  (contains-GAGA? "ABGAGAI")
+#+END_SRC
+
+* Practice
+** Run containsGAGA? on inputs
+*** Prompted for and typed-in by the user
+#+BEGIN_SRC elisp
+  (org-sbe contGAGA)
+  (contains-GAGA? (read-from-minibuffer "Type input string: "))
+#+END_SRC
+*** Read in from a file
+#+BEGIN_SRC elisp
+  (defun get-string-from-file (filepath)
+    (with-temp-buffer
+      (insert-file-contents filepath)
+      (buffer-substring-no-properties (point-min) (point-max))))
+#+END_SRC
+** Create a new function that searches for another string
+** Create more sophisticated programs, for example:
+    return “yes” if the input contains “GAGA” but not “TATA”
+* What IS a computer program?
+** Let us restrict our computer program universe to SISO
+*** SISO means String In String Out
+    So all programs receive a string as input and return a string as output
+**** However, sometimes we allow
+     multiple string inputs
+** In SISO programs
+   numeric inputs/outputs must be converted to/from strings
+*** For example
+#+name: multiplyAll
+#+BEGIN_SRC python :results silent
+  def multiplyAll(inString):
+      # split on whitespace
+      numbers = inString.split()
+
+      # convert strings to integers
+      for i in range(len(numbers)):
+          numbers[i] = int(numbers[i])
+
+      # compute the product of the numbers array
+      product = 1
+      for num in numbers:
+          product = product * num
+
+      # convert product to string, and return it
+      productString = str(product)
+      return productString
+#+END_SRC 
+
+#+BEGIN_SRC python :results output :noweb eval 
+  <<multiplyAll>>
+  print(multiplyAll("54 42 7 531"))
+#+END_SRC
+
+#+BEGIN_SRC elisp :results silent
+  (defun multiply-all (in-string)
+    (let* ((numbers (loop for num in (split-string in-string)
+                          collect (string-to-number num)))
+           (product (apply '* numbers)))
+      (number-to-string product)))
+#+END_SRC
+
+#+BEGIN_SRC elisp
+  (multiply-all "54 42 7 531")
+#+END_SRC
+** Restrict alphabet
+   to the ASCII standard character set of 128 characters, which includes all of the following:
+
+#+BEGIN_VERBATIM
+
+   !"#$%&'()*+,./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+
+#+END_VERBATIM
+
+   plus newline and space characters.
+*** Therefore, a SISO program can receive and return large multiline blocks of text
+
+#+BEGIN_SRC python :results silent
+  def countLines(inString):
+    # split on newlines
+    lines = inString.split('\n')
+    # return the number of lines as a string
+    return str(len(lines))
+#+END_SRC
+
+#+BEGIN_SRC elisp :results silent
+  (defun count-lines (in-string)
+    (let ((lines (split-string in-string "\n")))
+      (number-to-string (length lines)))) 
+#+END_SRC
+
+#+BEGIN_SRC elisp
+  (string-to-number "A" 16)
+#+END_SRC
+
+#+RESULTS:
+: 10

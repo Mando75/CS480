@@ -1,0 +1,36 @@
+#+TITLE: Week 03 Workbook
+#+AUTHOR: Bryan Muller
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t
+#+OPTIONS: html-postamble:nil
+#+STARTUP: showeverything entitiespretty
+
+* Wednesday Jan 23
+* Friday Jan 25
+
+* Chapter 3 Examples
+** Exercise 3.2: Star Properties
+*** 1.
+**** Code
+#+BEGIN_SRC elisp :results silent
+  (defun unit-lang ()
+     '(""))
+
+  (defun lunion (L1 L2)
+     (logior L1 L2))
+
+  (defun lit (L1 L2)
+     (logand L1 L2))
+
+  (defun star-lang (L n)
+     (if (zerop n)
+        (unit-lang)
+      (lunion (expt L n) (star-lang L (-1 n)))))
+
+#+END_SRC
+
+#+BEGIN_SRC elisp :results raw
+(star-lang '(1 0) 0)
+#+END_SRC
+   { \epsilon, "((((((", ")))))))", "()()()()" ")))(((", "()())()(" }
+*** 2.

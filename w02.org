@@ -71,7 +71,6 @@ hello()
 
     Prove \radic2 is irrational
 
-
 * TODO Chapter 2 Exercises
 ** Exercises 2.1.3: Language Operations
 *** 1.
@@ -331,10 +330,10 @@ print((a * c) + (b * c))
     No. as L_7 is defined, i and j can be different values, which allows there to be unequal numbers of ones and zeros.
     {0^i : i \ge 0}{1^i : i \ge 0} is using the samve value, which means there will always be an equal number of ones and zeros.
 *** 7.
-    a. Yes. L_6 defines a set of strings with a finite/infinite number of zeros matched with an equal finite/infinite number of ones.
-       All strings in L_6 will have an equal number of ones and zeros.
-       L_8 defines a set of strings with a finite/infinite number of ones and zeros, but no strings with an equal number of ones and zeros.
-       This should be the complement set to L_6
-    b. It is true
-    c. \empty set. A set minus itself is equal to the empty set. I claim L_8 = complement(L_6) so L_8 - complement(L_6) = \empty
+    a. No, it is not the true complement of L_6
+    b. 10, 110, 11100000, 1010101
+    c. Any string with a 1 coming before a zero would be in the language complement.
+       Any string with alternating 1's and 0's would be in the compliment.
+       [{1^{j}0^i}: i, j > 0]
+       [{
     d. No. I say the are equal, which means they would contain the same strings.

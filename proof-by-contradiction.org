@@ -1,0 +1,119 @@
+#+TITLE: Proof By Contradiction 
+#+LANGUAGE: en
+#+OPTIONS: num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t
+#+STARTUP: showeverything entitiespretty
+
+* How and When to Use the Contradiction Method
+
+  From the book /How to Read and Do Proofs/ by Daniel Solow (ISBN 0471680583):
+
+  With the contradiction method, you begin by assuming that $A$ is true, just as
+  you do in [a straightforward proof] method.
+
+  However, to reach the desired conclusion that $B$ is true, you proceed by
+  asking yourself the simple question ``Why can't $B$ be false?'' After all, if
+  $B$ is supposed to be true, then there must be some reason why $B$ cannot be
+  false. The objective of the contradiction method is to discover that reason.
+
+  In other words, the idea of a proof by contradiction is to assume that $A$ is
+  true and $B$ is false, and see why this cannot happen. So what does it mean
+  \ldquo{}to see why this cannot happen?\rdquo Suppose, for example, that as a result of
+  assuming that $A$ is true and $B$ is false (hereafter written as $\lnot B$),
+  you were somehow able to reach the conclusion that $1 = 0$. Would that not
+  convince you that it is impossible for $A$ to be true and $B$ to be false
+  simultaneously?! Thus, in a proof by contradiction, you assume that $A$ is
+  true and $\lnot B$ is true, and you must then use this information to reach a
+  contradiction to something that you absolutely know is true.
+
+  Another way of viewing the contradiction method is to recall that the
+  statement \ldquo{}$A$ implies $B$\rdquo $(A \rightarrow B)$ is true in all cases except when $A$ is
+  true and $B$ is false. With a proof by contradiction, you rule out this one
+  unfavorable case by assuming that it actually does happen, and then reaching a
+  contradiction.
+
+  At this point, [a couple of] questions arise:
+
+  1. What contradiction should you be looking for?
+  2. Exactly how do you use the assumption that $A$ is true and $B$ is false to
+     reach the contradiction?
+
+  The first question is by far the hardest to answer because there are no
+  specific guidelines. Each problem gives rise to its own contradiction. It
+  takes creativity, insight, persistence, and sometimes luck to produce a
+  contradiction.
+
+  As to the second question, the most common approach to finding a contradiction
+  is to work forward from the assumptions that $A$ and $\lnot B$ are true.
+
+  Normally, working forward means you assume only that $A$ is true, while in the
+  contradiction method, you assume that both $A$ and $\lnot B$ are true. Thus,
+  you have two statements from which to reason forward instead of just one. On
+  the other hand, you do not [necessarily] know what the contradiction will be
+  and therefore cannot work backward.
+
+* Proving the Irrationality of the Square Root of Two
+
+  What definitions/lemma(s) should we use to prove that the square root of 2 is
+  irrational?
+
+  Definition: \ldquo{}x is irrational\rdquo means x is NOT rational.
+
+  Definition: \ldquo{}x is rational\rdquo means $\exists m,n(m,n \in Int \land n \neq 0 \land x = m/n)$.
+
+  Definition: \ldquo{}x is even\rdquo means $\exists k(k \in Int \land x = 2k)$.
+
+  Lemma: $\forall x(x \in Int \land (x^2$ is even iff $x$ is even$))$.
+
+  (Alread proved.)
+
+  Now assume, to the contrary of what we want to prove, that $\sqrt{2}$ is
+  rational. Then by definition it can be written in the form:
+
+  \[\begin{equation}
+	    \sqrt{2} = \frac{m}{n}
+	  \end{equation}\]
+
+  where $m$ and $n$ are integers. Further assume---and this is the *key*
+  assumption--- that $m$ and $n$ have no common factors.
+
+  Now square both sides of (1) to get
+
+  \[\begin{equation}
+	     2 = \frac{m^2}{n^2}\ \ \mbox{or}\ \ m^2 = 2n^2
+	  \end{equation}\]
+
+  Thus $m^2$ is even. It follows that $m$ is also even (by the above Lemma).
+
+  Since $m$ is even it can be written as $m = 2k$. Thus (2) becomes
+  \[4k^2 = 2n^2\ \ \mbox{or}\ \ n^2 = 2k^2.\]
+
+  Thus $n^2$ is even, and therefore $n$ must be even too.
+
+  However, this would mean that *both* $m$ and $n$ are even, and so they have
+  the common factor 2, which is contrary to our *key* assumption.
+
+  This contradiction proves that $\sqrt{2}$ is *not* rational, i.e., that it is
+  irrational.
+
+  Q.E.D.
+
+* Proving the Divergence of the Harmonic Series
+
+  Assume, contrary to what we wish to show, that the harmonic series converges.
+  Say it converges to the real number $s$.
+
+  Then the sum of the reciprocals of the even numbers, $$\sum_{n=1}^{\infty} \frac{1}{2n}
+  = \frac{1}{2} \sum_{n=1}^{\infty} \frac{1}{n} = \frac{s}{2}.$$
+
+  Thus, the sum of the reciprocals of the odd numbers, $$\sum_{n=1}^{\infty}
+  \frac{1}{2n - 1}\ =\ \sum_{n=1}^{\infty} \frac{1}{n} \ -\ \sum_{n=1}^{\infty} \frac{1}{2n} =
+  s - \frac{s}{2} = \frac{s}{2}\ \mbox{too}.$$
+
+  But $1 > \frac{1}{2}, \frac{1}{3} > \frac{1}{4}$, and in general
+  $\frac{1}{2n - 1} > \frac{1}{2n}$ for all $n \ge 1$. So the notion that the sum
+  of the reciprocals of the even numbers is the same as the sum of the
+  reciprocals of the odd numbers is absurd.
+
+  Therefore, the harmonic series cannot converge but rather must diverge.
+
+  Q.E.D.

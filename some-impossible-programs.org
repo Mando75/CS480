@@ -1,0 +1,134 @@
+#+TITLE: Some Impossible Programs 
+#+LANGUAGE: en
+#+OPTIONS: num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t d:(not "HELP" "HINT")
+#+STARTUP: showeverything entitiespretty
+
+* Proof By Contradiction
+  Follows a familiar human thought pattern:
+
+  S = statement we would like to prove false, e.g.: “I bought the milk on Monday.”
+
+  C = consequence that follows from S being true, e.g.: “I was in town on Monday.”
+
+  T = a fact that is known to be true, but contradicts C, e.g.: “I was out of town on Monday.”
+
+  Reasoning pattern: If S were true, then C would be true, but that’s impossible
+  because T is true and T contradicts C. So S must be false. e.g. “if I bought
+  the milk on Monday, then I was in town on Monday, but I was out of town on
+  Monday, so I could not have bought the milk on Monday.”
+
+** Closely Related
+   *Proof by Contraposition (or Contrapositivity)*
+
+   In the contrapositive of a conditional statement, the negation of the
+   consequent may indirectly be easier to have as an assumption to start off
+   with. A direct proof of the negated antecedent is often straightforward.
+
+   For example, let us use this to prove: If n^2 is even then n is even.
+
+   Proof: If n were odd then n^2 would be odd.
+
+   This is true because, in general, the product of *any* two odds is odd (even
+   the same odd multiplied by itself -- i.e., squared).
+
+   A 4-step direct proof shows this:
+
+   1. Let i and j be two odd integers.
+   2. By definition, i = 2m + 1 for some m, and j = 2n + 1 for some n.
+      (That\rsquo{}s what it means to be odd.)
+   3. Their product, ij, is (2n + 1)(2m + 1), which by FOIL = 4mn + 2n + 2m + 1,
+   4. Which equals 2(2mn + n + m) + 1, which is also odd, by definition.
+
+** The Difference?
+
+   With [[file:proof-by-contradiction.org][Proof By Contradiction]], you get to assume more.
+   
+* Programs Can Analyze Things
+  They can analyze other programs, and they can analyze themselves.
+
+  A program analyzing another program:
+
+#+BEGIN_SRC python
+  countLines(rf(’multiplyAll.py’))
+#+END_SRC
+
+  A program analyzing itself:
+
+#+BEGIN_SRC python
+  countLines(rf(’countLines.py’))
+#+END_SRC
+
+* Some Example Decision Programs
+
+#+name: example-decision-programs
+#+BEGIN_SRC python :results silent
+  def yes(inString):
+      return 'yes'
+
+  def longerThan1K(inString):
+      if len(inString) > 1000:
+          return 'yes'
+      else:
+          return 'no'
+
+  def maybeLoop(inString):
+      if not 'secret sauce' in inString:
+          # enter an infinite loop
+          i = 0
+          while i >= 0:
+              i = i + 1
+      else:
+          # output 'yes' if input length is even, and 'no' otherwise
+          if len(inString) % 2 == 0:
+              return 'yes'
+          else:
+              return 'no'
+#+END_SRC
+
+#+name: helper-function
+#+BEGIN_SRC python :results silent
+  def readFile(fileName):
+      """Read a file, returning its contents as a single string.
+
+      Args:
+
+          fileName (str): The name of the file to be read.
+
+      Returns:
+
+          str: The contents of the file.
+      """
+
+      fileContents = ''
+      with open(fileName) as inputFile:
+          fileContents = inputFile.read()
+      return fileContents
+
+  # Define a very short convenient alias for the readFile function
+  rf = readFile
+#+END_SRC
+** Fill in this Table as a CDL
+   rf = readFile
+
+   | Code                                  | Output |
+   |---------------------------------------+--------|
+   | containsGAGA('CTGAGAT')               |        |
+   | containsGAGA(rf('geneticString.txt')  |        |
+   | containsGAGA(rf('longerThan1K.py'))   |        |
+   | containsGAGA(rf('containsGAGA.py'))   |        |
+   |                                       |        |
+   | yes('CTGAGAT')                        |        |
+   | yes(rf('geneticString.txt'))          |        |
+   | yes(rf('containsGAGA.py'))            |        |
+   | yes(rf('yes.py'))                     |        |
+   |                                       |        |
+   | longerThan1K('CTGAGAT')               |        |
+   | longerThan1K(rf('geneticString.txt')) |        |
+   | longerThan1K(rf('containsGAGA.py'))   |        |
+   | longerThan1K(rf('longerThan1K.py'))   |        |
+   |                                       |        |
+   | maybeLoop('CTGAGAT')                  |        |
+   | maybeLoop('some secret sauce')        |        |
+   | maybeLoop(rf('containsGAGA.py'))      |        |
+   | maybeLoop(rf('maybeLoop.py'))         |        |
+

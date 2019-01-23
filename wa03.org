@@ -179,3 +179,16 @@
 In this case, they would produce the same output.
 
 
+* TODO Chapter 4 Exercises
+** TODO Exercise 4.2: DFA Basics  
+*** 1.
+*** 2. 
+** TODO Exercise 4.6: DFA Lasso
+*** 1.
+*** 2.
+** TODO Exercise 4.7.2: Regular or not?
+*** 1. 
+*** 2.
+*** 3.
+
+

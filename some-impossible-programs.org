@@ -1,4 +1,4 @@
-#+TITLE: Some Impossible Programs 
+#+TITLE: Some Impossible Programs
 #+LANGUAGE: en
 #+OPTIONS: num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t d:(not "HELP" "HINT")
 #+STARTUP: showeverything entitiespretty
@@ -42,7 +42,7 @@
 ** The Difference?
 
    With [[file:proof-by-contradiction.org][Proof By Contradiction]], you get to assume more.
-   
+
 * Programs Can Analyze Things
   They can analyze other programs, and they can analyze themselves.
 
@@ -65,12 +65,16 @@
   def yes(inString):
       return 'yes'
 
+#+END_SRC
+#+BEGIN_SRC python :results silent
   def longerThan1K(inString):
       if len(inString) > 1000:
           return 'yes'
       else:
           return 'no'
+#+END_SRC
 
+#+BEGIN_SRC python :results silent
   def maybeLoop(inString):
       if not 'secret sauce' in inString:
           # enter an infinite loop
@@ -83,6 +87,7 @@
               return 'yes'
           else:
               return 'no'
+
 #+END_SRC
 
 #+name: helper-function
@@ -110,25 +115,41 @@
 ** Fill in this Table as a CDL
    rf = readFile
 
-   | Code                                  | Output |
-   |---------------------------------------+--------|
-   | containsGAGA('CTGAGAT')               |        |
-   | containsGAGA(rf('geneticString.txt')  |        |
-   | containsGAGA(rf('longerThan1K.py'))   |        |
-   | containsGAGA(rf('containsGAGA.py'))   |        |
-   |                                       |        |
-   | yes('CTGAGAT')                        |        |
-   | yes(rf('geneticString.txt'))          |        |
-   | yes(rf('containsGAGA.py'))            |        |
-   | yes(rf('yes.py'))                     |        |
-   |                                       |        |
-   | longerThan1K('CTGAGAT')               |        |
-   | longerThan1K(rf('geneticString.txt')) |        |
-   | longerThan1K(rf('containsGAGA.py'))   |        |
-   | longerThan1K(rf('longerThan1K.py'))   |        |
-   |                                       |        |
-   | maybeLoop('CTGAGAT')                  |        |
-   | maybeLoop('some secret sauce')        |        |
-   | maybeLoop(rf('containsGAGA.py'))      |        |
-   | maybeLoop(rf('maybeLoop.py'))         |        |
+   | Code                                  | Output     |
+   |---------------------------------------+------------|
+   | containsGAGA('CTGAGAT')               | yes        |
+   | containsGAGA(rf('geneticString.txt')  | yes        |
+   | containsGAGA(rf('longerThan1K.py'))   | no         |
+   | containsGAGA(rf('containsGAGA.py'))   | yes        |
+   |                                       |            |
+   | yes('CTGAGAT')                        | yes        |
+   | yes(rf('geneticString.txt'))          | yes        |
+   | yes(rf('containsGAGA.py'))            | yes        |
+   | yes(rf('yes.py'))                     | yes        |
+   |                                       |            |
+   | longerThan1K('CTGAGAT')               | no         |
+   | longerThan1K(rf('geneticString.txt')) | no         |
+   | longerThan1K(rf('containsGAGA.py'))   | no         |
+   | longerThan1K(rf('longerThan1K.py'))   | no         |
+   |                                       |            |
+   | maybeLoop('CTGAGAT')                  | N/A \infin loop |
+   | maybeLoop('some secret sauce')        | no         |
+   | maybeLoop(rf('containsGAGA.py'))      | N/A \infin loop |
+   | maybeLoop(rf('maybeLoop.py'))         | yes      |
+   |                                       |            |
 
+** Definition of yesOnString.py
+                           -
+                          { "yes" if P is a Python program,
+   yesOnString.py(P,I) = <        P(I) is defined, and P(I) = "yes";
+                          {_ "no" otherwise.
+*** Fill in this Table
+    | Code                                                       | Output |
+    |------------------------------------------------------------+--------|
+    | yesOnString('not a program','CAGT')                        | no     |
+    | yesOnString(rf('containsGAGA.py'),'CAGT')                  | no     |
+    | yesOnString(rf('containsGAGA.py'),rf('containsGAGA.py'))   | yes    |
+    | yesOnString(rf('yes.py'),'CAGT')                           | yes    |
+    | yesOnString(rf('yes.py'),rf('yes.py'))                     | yes    |
+    | yesOnString(rf('longerThan1K.py'),rf('geneticString.txt')) | no     |
+    | yesOnString(rf('longerThan1K.py'),rf('longerThan1K.py'))   | no     |

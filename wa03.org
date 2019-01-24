@@ -6,6 +6,9 @@
 #+STARTUP: showeverything entitiespretty
 
 * Wednesday Jan 23
+
+See impossible programs org file
+
 * Friday Jan 25
 
 * Chapter 3 Examples
@@ -34,16 +37,16 @@
 #+END_SRC
    { \epsilon, "((((((", ")))))))", "()()()()" ")))(((", "()())()(" }
 *** 2.
-    
+
     Yes. {0}* indicates the set of all strings of only repeating zeros. Concated
     to that is {1}* which is the set of all strings of only repeating ones. This
     is equivalent to the definition of L_7
 *** 3.
     The Empty Language where L_1 * = Unit language
     The Unit Language, where L_2 * = Unit language
-*** 4. 
+*** 4.
 
-**** Languages in English 
+**** Languages in English
     L_P0: All binary strings.
     L_P1: All binary strings which are palindromes.
     L_P2: All binary strings with some word and it's reverse split by either a 1,0, or empty string.
@@ -51,13 +54,13 @@
     L_WW: All binary strings made up of a word and it's copy without any modification.
 
 **** Solutions
-    Context-free: 
-    
+    Context-free:
+
     L_P1: It produces the language of all palindromes over the alphabet
     {0,1}, which is context-free
 
     Context-sensitive:
-    
+
     L_ww: Produces the language of all words with a pattern of 0's and 1's up to some length
     which is then followed by a carbon copy of the same pattern without any reversal.
 
@@ -69,53 +72,53 @@
 
 *** 5.
     a. Yes. L_E defines the language containing all strings of a repeated even number of 0's
-       L_O defines the language containing all strings of a repeated odd number of 0's. L_E \cup L_O 
+       L_O defines the language containing all strings of a repeated odd number of 0's. L_E \cup L_O
        would then contain all strings of repeated 0's. This is also the definition {0}*.
 
-    b. Yes. L = LL indicates that a language is the same when concatenated with itself. 
+    b. Yes. L = LL indicates that a language is the same when concatenated with itself.
        This would be possible with L_E. Concatenating strings of even length will result in
        even lengthed strings. L_E contains all even lengthed strings of repeated 0's, so it would
        equal itself when concatenated with itself.
 
     c. I believe that L_E = L_E^*. Both contain the empty string, and concatenating two strings of an even number of zeros
-       will result in another string of even zeros. 
+       will result in another string of even zeros.
 
     d. No.
        i. {\empty}
        ii. {\epsilon}
 
-    e. No. L_E^* would only contain strings of zeros which are even in length. 
+    e. No. L_E^* would only contain strings of zeros which are even in length.
     f. No.
 
-*** 6. 
+*** 6.
 
     Claim L* = L*^*
 
     For every language M, M \sube M*, thus L^* \sube (L^*)^*.
 
-    If w \in (L*)* then w = w_1... w_x for some w_1..., w_x \in L*. 
+    If w \in (L*)* then w = w_1... w_x for some w_1..., w_x \in L*.
 
-    Then for each i, w_i = w_{i,1}...w_{i,x} where w_{i,j} \in L. 
+    Then for each i, w_i = w_{i,1}...w_{i,x} where w_{i,j} \in L.
 
     Then w = w_{1,1}...w_{1,x_1}...w_{x,1} ... w_x,x_x \in L*
 
-    Therefore, (L*)* \sube L* 
+    Therefore, (L*)* \sube L*
 
     This can therefore be represented as L(*)* = L*
 
 ** Exercise 3.4.1: Language Puzzles
-   1. 
+   1.
       a. L_x is the subset of {a,b,c}* where each s \in L_x has the same number of
       a, b, and c, and is arranged in alphabetical order. b. L_x = {a^{i}b^{i}c^{i} : i \gt
-         0 } 
+         0 }
       c. L_y is the subset of {a,b,c}* where each s \in L_y begins with 0 or more c,
          followed by 1 or more a or b, followed by 0 or more c, followed by 1 or more a or b,
          and ending with 0 or more c.
 ** Exercise 3.5: Homomorphism
-   1. 
+   1.
       Yes. It meets both conditions. The reversal of \epsilon is \epsilon. And given strings a
       and b, rev(ab) = rev(a)rev(b).
-   2. 
+   2.
        No. function /f/ would not meet condition two. If f(ab) = c and f(a)f(b) = de,
        then f(ab) \ne f(a)f(b) so it is not a homomorphism.
 ** Exercise 3.6: Lexicographic Order
@@ -148,7 +151,7 @@
 
 ** Exercise 3.6: Numeric Order
 
-#+begin_src python  
+#+begin_src python
 
   def lexlt(s, t):
       if (s==""):
@@ -180,15 +183,13 @@ In this case, they would produce the same output.
 
 
 * TODO Chapter 4 Exercises
-** TODO Exercise 4.2: DFA Basics  
+** TODO Exercise 4.2: DFA Basics
 *** 1.
-*** 2. 
+*** 2.
 ** TODO Exercise 4.6: DFA Lasso
 *** 1.
 *** 2.
 ** TODO Exercise 4.7.2: Regular or not?
-*** 1. 
+*** 1.
 *** 2.
 *** 3.
-
-

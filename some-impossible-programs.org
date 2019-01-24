@@ -135,8 +135,7 @@
    | maybeLoop('CTGAGAT')                  | N/A \infin loop |
    | maybeLoop('some secret sauce')        | no         |
    | maybeLoop(rf('containsGAGA.py'))      | N/A \infin loop |
-   | maybeLoop(rf('maybeLoop.py'))         | yes      |
-   |                                       |            |
+   | maybeLoop(rf('maybeLoop.py'))         | yes        |
 
 ** Definition of yesOnString.py
                            -

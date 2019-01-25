@@ -3,7 +3,7 @@
 #+LANGUAGE: en
 #+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t
 #+OPTIONS: html-postamble:nil
-#+STARTUP: showeverything entitiespretty
+#+STARTUP: showeverything entitiespretty inlineimages
 
 * Wednesday Jan 23
 
@@ -14,27 +14,6 @@ See impossible programs org file
 * Chapter 3 Examples
 ** Exercise 3.2: Star Properties
 *** 1.
-**** Code
-#+BEGIN_SRC elisp :results silent
-  (defun unit-lang ()
-     '(""))
-
-  (defun lunion (L1 L2)
-     (logior L1 L2))
-
-  (defun lit (L1 L2)
-     (logand L1 L2))
-
-  (defun star-lang (L n)
-     (if (zerop n)
-        (unit-lang)
-      (lunion (expt L n) (star-lang L (-1 n)))))
-
-#+END_SRC
-
-#+BEGIN_SRC elisp :results raw
-(star-lang '(1 0) 0)
-#+END_SRC
    { \epsilon, "((((((", ")))))))", "()()()()" ")))(((", "()())()(" }
 *** 2.
 
@@ -148,6 +127,33 @@ See impossible programs org file
   list_pairs(L1, L2)
 #+end_src
 
+#+RESULTS:
+#+begin_example
+('dodo', 'dog')
+('abacus', 'pimento')
+('abacus', 'zebra')
+('abacus', 'zzxyz')
+('physics', 'zzxyz')
+('pig', 'pimento')
+('cat', 'zzxyz')
+('dodo', 'zzxyz')
+('abacus', 'dog')
+('dodo', 'pimento')
+('physics', 'zebra')
+('zulu', 'zzxyz')
+('cat', 'dog')
+('dodo', 'zebra')
+('cat', 'zebra')
+('bandana', 'zzxyz')
+('bandana', 'dog')
+('cat', 'pimento')
+('bandana', 'pimento')
+('physics', 'pimento')
+('pig', 'zzxyz')
+('bandana', 'zebra')
+('pig', 'zebra')
+#+end_example
+
 
 ** Exercise 3.6: Numeric Order
 
@@ -182,14 +188,161 @@ See impossible programs org file
 In this case, they would produce the same output.
 
 
-* TODO Chapter 4 Exercises
-** TODO Exercise 4.2: DFA Basics
+* Chapter 4 Exercises
+** Exercise 4.2: DFA Basics
 *** 1.
+    [[file:graphs/4.2dfa.gv.png]]
+
 *** 2.
+    State table
+
+    | State | Input | Next State |
+    | I     |     0 | A          |
+    | I     |     1 | F          |
+    | A     |     0 | I          |
+    | A     |     1 | I          |
+    | F     |     0 | 1          |
+    | F     |     1 | 1          |
+
+It is not so simple as the string must end with a 1. Yes, to exit the state
+machine the string must end with a 1, but there are also rules regarding the
+number of zeros. The string must contain no, or 2+ zeros. The string may not
+contain only one zero.
+
+I don't think it is possible. There would need to be a way to enforce that
+if a 0 is entered, at least on more is entered as well. I don't think there 
+is a way to do that with only a two state DFA.
+    
 ** TODO Exercise 4.6: DFA Lasso
 *** 1.
+    
 *** 2.
-** TODO Exercise 4.7.2: Regular or not?
+** TODO Exercise 4.7.1: Regular or not?
 *** 1.
+    L_br = { {^i}^i : i \ge 0}
+
+    All strings in L_br must have some number of opening brackets followed by an 
+    equal number of closing brackets.
+    
+**** Steps
+    If L is a regular language, then L has a pumping length P such that any
+    string S where |S| \ge P may be divided into 3 parts S = xyz such that the
+    following conditions must be true:
+    1. xy^{i}z \in L for every i \ge 0
+    2. |y| \gt 0
+    3. |xy| \le P
+
+    Prove that a language is not Regular with pumping Lemma:
+    1. Assume that L is regular
+    2. It has to have a pumping length P
+    3. All strings longer than P can be pumped |S| \ge P
+    4. Now find a string 'S' in L such that |S| \ge P
+    5. Divide S into x,y,z
+    6. Show that xy^{i}z \in L for some i
+    7. Consider all ways that S can be divided into x, y, z.
+    
+**** Proof setup
+    Proof:
+
+    Assume L_br is regular with pumping length P.
+
+    let S = {^p}^p
+
+    let P = 3
+
+    If P = 3, then S = '{{{}}}'
+
+    Case 1: y contains only '{'
+            x = '{', y = '{{', z = '}}}'
+
+    Case 2: y contains only '}' 
+            x = '{{{', y = '}}', z = '}'
+
+    Case 3: y contains both '{' and '}'
+            x = '{{', y = '{}', z = '}}'
+
+**** Case 1
+     let i = 2
+     xy^{i}z \rarr xy^{2}z then \rarr '{{{{{}}}' 
+
+***** Condition 1
+      xy^{i}z \in L for every i \ge 0
+
+     This string does not belong to L_bc as there are more opening brackets than
+     closing brackets.
+
+     if L_br = { {^j}^j : j \ge 0} and S = xy^{2}z = '{{{{{}}}', then S is not \in L_bc
+     
+***** Condition 2
+      |y| > 0
+      
+      |y| = 4. This condition is met
+
+***** Condition 3
+      |xy| \le P
+
+      |xy| = 5
+      P = 3
+
+      This condition is not met
+**** Case 2
+     let i = 2
+     xy^{i}z \rarr xy^{2}z then \rarr '{{{}}}}}' 
+
+***** Condition 1
+      xy^{i}z \in L for every i \ge 0
+
+     This string does not belong to L_bc as there are more closing brackets than
+     opening brackets.
+
+     if L_br = { {^j}^j : j \ge 0} and S = xy^{2}z = '{{{}}}}}}', then S is not \in L_bc
+
+***** Condition 2
+
+      |y| > 0
+      |y| = 4 
+
+      This condition is met
+
+***** Condition 3
+      |xy| \le P
+
+      |xy| = 5
+      P = 3
+
+      This condition is not met
+**** Case 3
+     let i = 2
+     xy^{i}z \rarr xy^{2}z then \rarr '{{{}{}}}' 
+
+***** Condition 1
+      xy^{i}z \in L for every i \ge 0
+
+    This string does not belong to L_bc as it does not follow the pattern of any
+    number of opening brackets followed by the same number of closing brackets.
+
+    
+    if L_br = { {^j}^j : j \ge 0} and S = xy^{2}z = '{{{}{}}}', then S is not \in L_bc
+
+***** Condition 2
+      |y| > 0
+      |y| = 4
+      This condition is met
+***** Condition 3
+      |xy| \le P
+
+      |xy| = 5
+      P = 3
+
+      This condition is not met
+**** Conclusion
+     For every given partition of xyz, all three conditions of a regular language are not met. 
+     Therefore, L_bc is not a regular language by proof of contradiction using the pumping lemma.
 *** 2.
+
+           [[file:graphs/dfa4.7.1.2.gv.png]]
+
+
 *** 3.
+
+

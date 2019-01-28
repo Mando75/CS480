@@ -1,0 +1,261 @@
+#+TITLE: What Is Your Problem? 
+#+LANGUAGE: en
+#+OPTIONS: num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t
+#+STARTUP: showeverything entitiespretty
+
+* What Is A COMPUTATIONAL Problem?
+  (That\rsquo{}s the real question!)
+** Informal Idea
+   a computational problem is something we want to solve using a computer
+   program
+*** A problem receives some input
+    also called the *instance* of the problem.
+*** To solve the problem
+    a computer program has to find one of the *solutions* corresponding to the
+    given input.
+**** There may be 
+     zero, one, or multiple solutions.
+*** Example
+    The computational problem *SortWords*:
+**** Input
+     A list of words separated by whitespace
+***** E.g.
+      banana grape banana apple
+**** Solution
+     A sorted version of the input list
+***** E.g.
+      apple banana banana grape
+
+* SISO program solving SortWords
+#+name: sort-words
+#+BEGIN_SRC python :results silent
+  def sortWords(inString):
+      words = sorted(inString.split())
+      return ' '.join(words)
+#+END_SRC
+
+#+BEGIN_SRC python :results output :noweb eval
+  <<sort-words>>
+  print(sortWords('banana grape banana apple'))
+#+END_SRC
+
+#+RESULTS:
+: apple banana banana grape
+
+* For formal definition
+  of computational problems, we need some definitions:
+  - Graphs
+  - Trees and Rooted Trees
+  - Alphabets
+  - Strings
+  - Languages
+** Graphs, Paths, and Cycles
+   When used as input or output for computer programs, mathematical objects such
+   as graphs and paths are converted into ASCII using any reasonable convention.
+** Trees and Rooted Trees
+  - A tree is a graph with no cycles.
+  - A rooted tree is a tree with a designated root node.
+** Alphabets, Strings Languages
+   You know the drill!
+* Recall that mathematical functions
+  map a given input to a given output.
+  
+:        +-------+
+:   n -->| add5  |-->n + 5
+:        +-------+
+
+  | input | output |
+  |-------+--------|
+  |     0 |      5 |
+  |     1 |      6 |
+  |     2 |      7 |
+  |     3 |      8 |
+  |     . |      . |
+  |     . |      . |
+  |     . |      . |
+
+** The output of a function can be a set
+
+:        +------------+
+:   n -->| allGreater |--> {k: k > n}
+:        +------------+
+
+  | input | output         |
+  |-------+----------------|
+  |     0 | {1, 2, 3, ...} |
+  |     1 | {2, 3, 4, ...} |
+  |     2 | {3, 4, 5, ...} |
+  |     3 | {4, 5, 6, ...} |
+  |     . | .              |
+  |     . | .              |
+  |     . | .              |
+** A *computational problem* is a function
+   that maps ASCII strings to sets of ASCII strings.
+
+:                 +---+
+: ASCII string -->| F |--> set of ASCII strings
+:                 +---+
+
+:                          +-------------+
+: "she ate a red apple" -->| beginsWithA | --> {"a", "ate", "apple"}
+:                          +-------------+
+
+   Because computational problems are really functions, we denote them with
+   letters like *F*, *G*, or *H*. Letters like *P* and *Q* will always represent
+   computer programs, not computational problems.
+
+** ShortestPath
+   provides a good example of a computational problem:
+
+:    (a)-----(b)
+:      \       \
+:       \       \
+:      (c)-----(d)-----(e)
+
+   By convention, the solution is “no” whenever the input is invalid or
+   incorrectly formatted.
+
+* Positive and negative instances
+  - An instance of a problem is *negative* if the only element of its solution
+    set is “no”
+  - Otherwise, the instance is *positive*
+** Examples for ShortestPath
+
+  | Instance        | Type     | Reason                               |
+  |-----------------+----------+--------------------------------------|
+  | "a,b c,d; a; c" | negative | There is no path from a to c.        |
+  | "a,b c,d"       | negative | The input is invalid --- it does not |
+  |                 |          | specify a source and destination.    |
+  | "a,b c,d; a; b" | positive | "a, b" is a solution.                |
+
+* Important types of computational problems
+** Search Problem
+   Find a solution with a given property that can be true or false.
+** Optimization Problem
+   Find a solution with the maximum or minimum value of some numerical property.
+** Threshold Problem
+   Find a solution so that the value of some numerical property is above a given
+   threshold.
+** Function Problem
+   Every instance has exactly one solution (so solution sets are all singletons).
+** Decision Problem
+   Every solution is either “yes” or “no”.
+* Decision problems
+   are especially important in theoretical computer science:
+
+   |              | Decision Problems           | General Computational Problems    |
+   |--------------+-----------------------------+-----------------------------------|
+   |              |                             |                                   |
+   | Advantage    | More elegant for stating    | Correspond to the way computers   |
+   |              | and proving *theoretical*   | are actually used in *practice*   |
+   |              | results (especially         |                                   |
+   |              | impossibility and hardness  |                                   |
+   |              | theorems)                   |                                   |
+   |              |                             |                                   |
+   | Disadvantage | Rarely employed directly    | Stating and proving *theoretical* |
+   |              | in *practical* applications | results can get messy             |
+
+*** It’s usually easy to convert 
+   between decision problems and general problems
+   while retaining the “essence” of the problem.
+
+**** General 1
+     *FindPath*: input is graph G, source node v and destination node w. Solution
+     is a path from v to w, or "no" if none exists.
+**** Decision 1
+     *HasPath*: input is G, v, w as before. Solution is "yes" if a path from v to
+     w exists, and "no" otherwise.
+**** General 2
+     *ShortestPath*: input is graph G, source node v and destination node w.
+     Solution is a shortest path from v to w or "no" if none exists.
+**** Decision 2
+     *HasShortPath*: input is G, v, w as before, and also a threshold integer K.
+     Solution is "yes" if the shortest path from v to w has length at most K,
+     and "no" otherwise.
+**** General 3
+     *Multiply*: input is positive integers M and N. Solution is M \times N.
+**** Decision 3
+     *CheckMultiply*: input is positive integers M, N and K. Solution is "yes" if
+     M \times N = K and "no" otherwise.
+* We can allow multiple input strings
+  because it’s easy to convert to a single input if desired:
+
+** Encode as single string (ESS)
+
+   ESS(I_1, I_2) = len(I_1) + space + I_1 + I_2
+
+   e.g. the pair (“CAGA”, “AAT”) becomes “4 CAGAAAT”.
+
+** Decode from single string (DESS)
+
+   DESS(I) = (I_1, I_2)
+
+   e.g. “4 CAGAAAT” becomes (“CAGA”, “AAT”)
+* Definitions
+  of solve, compute, decide, computable, decidable:
+
+  Suppose F is a computational problem on the ASCII alphabet, and P is a Python program.
+
+  - P *solves* or *computes* F if P(I) \in F(I) for all inputs I.
+
+  - If F is a decision problem solved by P, we also say that P *decides* F.
+
+  - F is *computable* if there exists some program that computes it. Otherwise,
+    F is *uncomputable*.
+
+  - *Decidable* and *undecidable* mean the same as computable and uncomputable,
+    but they apply only to decision problems.
+
+** CDL 
+   Which of the following problems are computable, decidable, uncomputable, undecidable?
+   1. YesOnString
+   2. CrashOnString
+   3. ShortestPath
+   4. HasShortPath
+   5. Multiply
+
+*** Answers
+    1. YesOnString – uncomputable and undecidable
+    2. CrashOnString – uncomputable and undecidable
+    3. ShortestPath – computable
+    4. HasShortPath – computable and decidable
+    5. Multiply – computable
+
+* Decision problems are equivalent
+  to the question of membership in a language:
+
+  - Given decision problem D, the language L_D is the set of strings that are
+    positive instances of D. For example, for ContainsGAGA, the corresponding
+    language is the set of strings that contain “GAGA”.
+
+  - Given language L, the decision problem IsMember_L has solution “yes” for
+    strings in L, and “no” otherwise. For example, given the language of all
+    strings beginning with “a”, the corresponding decision problem has solution
+    “yes” for any instance beginning with “a”, and “no” otherwise.
+
+* Definitions
+  of recognize and recognizable:
+
+  - A program P *recognizes* a language L if:
+    1. for all I \in L, P(I) = "yes"; and
+    2. for all I ∉ L, either P(I) is undefined, or P(I) = "no".
+
+  - A language is *recognizable* if there exists some program that recognizes it.
+
+  The *Key Difference* between /recognize/ and /decide/: recognizing can be
+  undefined on negative instances.
+
+* Example of a program that recognizes
+  but does not decide a problem:
+
+#+BEGIN_SRC python :results silent
+  def recognizeEvenLength(inString):
+      i = 0
+      while True:
+          if len(inString) == i:
+              return 'yes'
+          else:
+              i = i + 2
+#+END_SRC
+** Caveat
+  We will see more interesting examples later.

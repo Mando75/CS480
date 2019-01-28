@@ -210,20 +210,20 @@ number of zeros. The string must contain no, or 2+ zeros. The string may not
 contain only one zero.
 
 I don't think it is possible. There would need to be a way to enforce that
-if a 0 is entered, at least on more is entered as well. I don't think there 
+if a 0 is entered, at least on more is entered as well. I don't think there
 is a way to do that with only a two state DFA.
-    
+
 ** TODO Exercise 4.6: DFA Lasso
 *** 1.
-    
+
 *** 2.
-** TODO Exercise 4.7.1: Regular or not?
+** Exercise 4.7.1: Regular or not?
 *** 1.
     L_br = { {^i}^i : i \ge 0}
 
-    All strings in L_br must have some number of opening brackets followed by an 
+    All strings in L_br must have some number of opening brackets followed by an
     equal number of closing brackets.
-    
+
 **** Steps
     If L is a regular language, then L has a pumping length P such that any
     string S where |S| \ge P may be divided into 3 parts S = xyz such that the
@@ -240,7 +240,7 @@ is a way to do that with only a two state DFA.
     5. Divide S into x,y,z
     6. Show that xy^{i}z \in L for some i
     7. Consider all ways that S can be divided into x, y, z.
-    
+
 **** Proof setup
     Proof:
 
@@ -255,7 +255,7 @@ is a way to do that with only a two state DFA.
     Case 1: y contains only '{'
             x = '{', y = '{{', z = '}}}'
 
-    Case 2: y contains only '}' 
+    Case 2: y contains only '}'
             x = '{{{', y = '}}', z = '}'
 
     Case 3: y contains both '{' and '}'
@@ -263,7 +263,7 @@ is a way to do that with only a two state DFA.
 
 **** Case 1
      let i = 2
-     xy^{i}z \rarr xy^{2}z then \rarr '{{{{{}}}' 
+     xy^{i}z \rarr xy^{2}z then \rarr '{{{{{}}}'
 
 ***** Condition 1
       xy^{i}z \in L for every i \ge 0
@@ -272,10 +272,10 @@ is a way to do that with only a two state DFA.
      closing brackets.
 
      if L_br = { {^j}^j : j \ge 0} and S = xy^{2}z = '{{{{{}}}', then S is not \in L_bc
-     
+
 ***** Condition 2
       |y| > 0
-      
+
       |y| = 4. This condition is met
 
 ***** Condition 3
@@ -287,7 +287,7 @@ is a way to do that with only a two state DFA.
       This condition is not met
 **** Case 2
      let i = 2
-     xy^{i}z \rarr xy^{2}z then \rarr '{{{}}}}}' 
+     xy^{i}z \rarr xy^{2}z then \rarr '{{{}}}}}'
 
 ***** Condition 1
       xy^{i}z \in L for every i \ge 0
@@ -300,7 +300,7 @@ is a way to do that with only a two state DFA.
 ***** Condition 2
 
       |y| > 0
-      |y| = 4 
+      |y| = 4
 
       This condition is met
 
@@ -313,7 +313,7 @@ is a way to do that with only a two state DFA.
       This condition is not met
 **** Case 3
      let i = 2
-     xy^{i}z \rarr xy^{2}z then \rarr '{{{}{}}}' 
+     xy^{i}z \rarr xy^{2}z then \rarr '{{{}{}}}'
 
 ***** Condition 1
       xy^{i}z \in L for every i \ge 0
@@ -321,7 +321,7 @@ is a way to do that with only a two state DFA.
     This string does not belong to L_bc as it does not follow the pattern of any
     number of opening brackets followed by the same number of closing brackets.
 
-    
+
     if L_br = { {^j}^j : j \ge 0} and S = xy^{2}z = '{{{}{}}}', then S is not \in L_bc
 
 ***** Condition 2
@@ -336,7 +336,7 @@ is a way to do that with only a two state DFA.
 
       This condition is not met
 **** Conclusion
-     For every given partition of xyz, all three conditions of a regular language are not met. 
+     For every given partition of xyz, all three conditions of a regular language are not met.
      Therefore, L_bc is not a regular language by proof of contradiction using the pumping lemma.
 *** 2.
 
@@ -345,4 +345,31 @@ is a way to do that with only a two state DFA.
 
 *** 3.
 
+    [[file:graphs/4-7-1-3.png]]
+** Exercise 4.9
+   2.
+        If L is regular than that implies that there is a natural number N such
+        that for any string w \in L where w is at least length of N, we must be able
+        to read out w as hmt, were h and t are strings of aribitrary length and m
+        is length N and m can be split into strings xyz where y is non-empty and
+        xy is confined to the first N steps of m and furthermore, for all i\ge0, xy^i
+        z \in L must be true.
+   4.
+        Original:
+        \exists N \in Nat:
+        \forall w \in L : [|w| \ge N \rarr
+                       \exist x,y,z \in \Sigma^* :
+                            w = xyz
+                        \land   |xy| \le N
+                        \land   y \ne \epsilon
+                        \land   \forall i \ge 0 : xy^{i}z \in L ]
 
+       Negated Condition:
+       \forall N \in Nat:
+       \forall w \in L : [ |w| \ge N \rarr
+                       \forall x, y, z \in \Sigma^*:
+                            w = xyz
+                       \land    |xy| \le N
+                       \land    y \ne \epsilon
+                       \land    \exist i : xy^{i}z \notin L.
+   5.

@@ -1,0 +1,161 @@
+#+TITLE: Week 03 Workbook
+#+AUTHOR: Bryan Muller
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t
+#+OPTIONS: html-postamble:nil
+#+STARTUP: entitiespretty inlineimages
+
+* Monday, Jan 28th
+  CDL - Poll anywhere. I came in second :)
+
+* Wednesday, Jan 30th
+
+* Friday, Feb 1st
+
+* Chapter 5 Exercises
+
+** Exercise 5.1.1: Equal Change DFA
+*** 1.
+    It is missing the fact that there must be a strict equal number of
+    transitions between 0 \rarr 1 and 1 \rarr 0. Not every string which belongs to the
+    alternative definition also belongs to the original definition.
+*** 2.
+
+[[file:graphs/5.1.1.2.gv.png]]
+
+    Test Strings
+| String | In | Out | Correct |
+|    010 | \check  |     | \check       |
+|  10101 | \check  |     | \check       |
+|   0111 |    | \check   | \check       |
+|  10100 |    | \check   | \check       |
+
+This DFA handles the case of the empty string, strings of only 0's or 1's,
+and forces there to be a balanced number of 1 \rarr 0, 0 \rarr 1 switches based on the
+number of states required to pass through to get back to a finish state once a switch
+is made.
+
+** Exercise 5.2.1: Block-of-3 DFA
+
+*** 1.
+
+    | State | to | New State |
+    | S     |  0 | S0        |
+    | S0    |  0 | BH        |
+    | S0    |  1 | S01       |
+    | S01   |  0 | BH        |
+    | S01   |  1 | S         |
+    | S     |  1 | S1        |
+    | S1    |  0 | S10       |
+    | S10   |  1 | S         |
+    | S10   |  0 | BH        |
+    | S1    |  1 | S11       |
+    | S11   |  0 | S         |
+    | S11   |  1 | BH        |
+
+#+BEGIN_SRC python
+from graphviz import Digraph
+
+d = Digraph("5.2.1.1", filename='5.2.1.1.gv', engine='dot', format='png')
+
+d.attr('node', shape='doublecircle')
+d.node('IF')
+
+d.attr('node', shape='circle')
+d.node('BH')
+d.node('S0')
+d.node('S1')
+d.node('S01')
+d.node('S10')
+d.node('S11')
+
+d.edge('IF', 'S0', label='0')
+d.edge('S0', 'BH', label='0')
+d.edge('S0', 'S01', label='1')
+d.edge('S01', 'BH', label='0')
+d.edge('S01', 'IF', label='1')
+d.edge('IF', 'S1', label='1')
+d.edge('S1', 'S10', label='0')
+d.edge('S10', 'IF', label='1')
+d.edge('S10', 'BH', label='0')
+d.edge('S1', 'S11', label='1')
+d.edge('S11', 'IF', label='0')
+d.edge('S11', 'BH', label='1')
+d.edge('BH', 'BH', label='1')
+d.edge('BH', 'BH', label='0')
+d
+#+END_SRC
+
+[[file:graphs/5.2.1.1.gv.png]]
+
+Treat every string as if it is a 3 bit word. We know that the valid 3 bit strings are
+011, 110, 101. Make paths for these strings, and send anything else to the black hole.
+
+*** 2.
+The complement of L_b3 would be 'L_bc = { x: Every contiguous block of 3 bits in x
+must have > or < than 2 1s.
+
+| State | New State | to |
+| IF    | S0        |  0 |
+| S0    | S0        |  0 |
+| S0    | S01       |  1 |
+| S01   | BH        |  1 |
+| S01   | S010      |  0 |
+| S010  | IF        |  0 |
+| S010  | BH        |  1 |
+| IF    | S1        |  1 |
+| S1    | BH        |  1 |
+| S1    | S10       |  0 |
+| S10   | BH        |  1 |
+| S10   | IF        |  0 |
+| BH    | BH        |  0 |
+| BH    | BH        |  1 |
+
+#+BEGIN_SRC python
+from graphviz import Digraph
+
+d = Digraph("5.2.1.2", filename='5.2.1.2.gv', engine='dot', format='png')
+
+d.attr('node', shape='doublecircle')
+d.node('IF')
+
+d.attr('node', shape='circle')
+d.node('BH')
+d.node('S0')
+d.node('S01')
+d.node('S010')
+d.node('S1')
+d.node('S10')
+
+d.edge('IF', 'S0', label='0')
+d.edge('S0', 'S00', label='0')
+d.edge('S00', 'IF', label='0')
+d.edge('S00', 'S001', label='1')
+d.edge('S001', 'S010', label='0')
+d.edge('S001', 'BH', label='1')
+d.edge('S0', 'S01', label='1')
+d.edge('S01', 'BH', label='1')
+d.edge('S01', 'S010', label='0')
+d.edge('S010', 'IF', label='0')
+d.edge('S010', 'BH', label='1')
+d.edge('IF', 'S1', label='1')
+d.edge('S1', 'S11', label='1')
+d.edge('S11', 'IF', label='1')
+d.edge('S11', 'BH', label='0')
+d.edge('S1', 'S10', label='0')
+d.edge('S10', 'BH', label='1')
+d.edge('S10', 'IF', label='0')
+d.edge('BH', 'BH', label='0')
+d.edge('BH', 'BH', label='1')
+d.view()
+
+
+#+END_SRC
+
+[[file:graphs/5.2.1.2.gv.png]]
+
+*** 3.
+
+    I followed the same process, but it was much quicker now that I knew what I
+    was looking for. I just plotted out the different state switches that would
+    happen, and built the DFA from that.

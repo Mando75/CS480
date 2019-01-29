@@ -159,3 +159,77 @@ d.view()
     I followed the same process, but it was much quicker now that I knew what I
     was looking for. I just plotted out the different state switches that would
     happen, and built the DFA from that.
+** Exercise 5.2.4: DFA exp blowup
+*** 1.
+Given that adding more bits grows the length of a string exponentially, a DFA with a one-to-one
+mapping of bit values to possible states would also grow exponentially.
+
+Assume that a one-to-one mapping of bit values to DFA states was not necessary, and could be
+reduced where number of bit values > DFA states needed to know if the Nth last bit is a 1.
+
+To know if the Nth last bit is a one, we would need to track at minimum the Nth
+last bits, which would be 2^N - 1 states. As N grows, the minimum number of states
+needed would also grow exponentially, matching the 2^N - 1 minimum number of states.
+
+
+*** 2.
+
+**** MSB
+\epsilon \rarr 1 \rarr 01 \rarr 101 \rarr 1101 \rarr 01101 \rarr 101101
+
+| State | Remainder |   |
+| IF0   |         0 |   |
+| R1    |         1 |   |
+| R2    |         2 |   |
+| R3    |         3 |   |
+| R4    |         4 |   |
+
+| String | Remainder | End State |
+|      0 |         0 | IF0       |
+|      1 |         1 | R1        |
+|     10 |         2 | R2        |
+|     11 |         3 | R3        |
+|    100 |         4 | R4        |
+|    101 |         0 | IF0       |
+|    110 |         1 | R1        |
+|    111 |         2 | R2        |
+|   1000 |         3 | R3        |
+|   1001 |         4 | R4        |
+
+#+BEGIN_SRC python
+  from graphviz import Digraph
+
+  d = Digraph("5.2.4", filename="5.4.2.gv", engine='dot', format='png')
+
+  d.attr('node', shape='doublecircle')
+  d.node('IF0')
+
+  d.attr('node', shape='circle')
+  d.edge('IF0', 'IF0', label='0')
+  d.edge('IF0', 'R1', label='1')
+  d.edge('R1', 'R2', label='0')
+  d.edge('R1', 'R3', label='1')
+  d.edge('R2', 'R4', label='0')
+  d.edge('R2', 'IF0', label='1')
+  d.edge('R3', 'R1', label='0')
+  d.edge('R3', 'R2', label='1')
+  d.edge('R4', 'R3', label='0')
+  d.edge('R4', 'R4', label='1')
+  d
+#+END_SRC
+**** LSB
+| State | Remainder |   |
+| IF0   |         0 |   |
+| R1    |         1 |   |
+| R2    |         2 |   |
+| R3    |         3 |   |
+| R4    |         4 |   |
+
+| String | Remainder | End State |
+|      0 |         0 | IF0       |
+|      1 |         1 | R1        |
+|     01 |         2 | R2        |
+|     10 |         4 | R4        |
+|     11 |         3 | R3        |
+|    010 |         2 | R2        |
+|    100 |         4 |           |

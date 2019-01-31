@@ -19,6 +19,7 @@
     It is missing the fact that there must be a strict equal number of
     transitions between 0 \rarr 1 and 1 \rarr 0. Not every string which belongs to the
     alternative definition also belongs to the original definition.
+    Also \epsilon is not included in the second language.
 *** 2.
 
 [[file:graphs/5.1.1.2.gv.png]]
@@ -233,3 +234,6 @@ needed would also grow exponentially, matching the 2^N - 1 minimum number of sta
 |     11 |         3 | R3        |
 |    010 |         2 | R2        |
 |    100 |         4 |           |
+
+
+* Chapter 6 Exercises

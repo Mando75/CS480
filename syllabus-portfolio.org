@@ -4,7 +4,12 @@
 #+OPTIONS: html-postamble:nil
 #+STARTUP: entitiespretty
 
-* What\rsquo{}s It All About?
+#+Begin_Latex
+\pagebreak
+#+End_Latex
+
+
+* What\rsquo{}s It All About? :noexport:
   This course is about the *theory of computation.*
 
   The following is a partial list of topics that will be covered:
@@ -21,7 +26,7 @@
 
   In other words, it\rsquo{}s a blast!
 
-* Objectives
+* Objectives :noexport:
  1. Examine the theoretical basis of computer science.
  2. Learn the real limitations and opportunities in computing. This includes:
    - What can and can not be computed (computability),
@@ -34,20 +39,20 @@
    proof techniques.
  4. Learn how to apply theoretical concepts to practical problems.
 
-* Prerequisites
+* Prerequisites :noexport:
   You must have successfully completed the following courses:
 
   - CS 238 Discrete Mathematics II (concurrent enrollment okay)
   - CS 306 Algorithms and Complexity
 
-* Requirements
+* Requirements :noexport:
 You are required to
 + attend class each class period (but then again, why wouldn\rsquo{}t you?),
 + read assigned portions of the course materials /before/ the class meeting when they will be discussed,
 + complete weekly preparation assessments, and
 + do weekly homework assignments to deepen your understanding of selected topics.
 
-* Text
+* Text :noexport:
    /Automata and Computability: A Programmer\rsquo{}s Perspective/
 
    (abbreviated ACAPP)
@@ -56,7 +61,7 @@ You are required to
 
    /First Edition, 2019, Taylor & Francis/
 
-* Software
+* Software :noexport:
   (For the first two, see installation instructions [[https://rickneff.github.io][here]] and go to the /Tools/
   section. For the third and fourth, more information will be given later.)
 + git
@@ -73,14 +78,14 @@ You are required to
 
   [[file:~/Jove/README.md]]
 
-* Behavioral Requirements
+* Behavioral Requirements :noexport:
 You are required to\dots{}
 + attend class, as assessments will happen in class each day that are not reproducible outside of class.
 + read assigned portions of the course materials /before/ class meetings when they will be discussed.
 + complete all team and personal assessments to deepen your understanding of selected topics.
 + acquire and maintain a three-ring binder that will hold your portfolio of completed work (see below).
 
-* Course Periodicity
+* Course Periodicity :noexport:
 This course has a weekly period, i.e., you can count on knowing ahead of time
 what you will be doing each day of each week. Each class period consists of two
 30-minute sections.
@@ -98,26 +103,26 @@ On Fridays these sections are:
  - Class Directed Learning :: --- You will participate in a class-wide activity that
       reinforces what you\rsquo{}ve read and what I\rsquo{}ve shown you.
 
-* Questions
+* Questions :noexport:
 + The questions answered on Friday are generalized from those you submit via
   the slack channel on Wednesday Evenings.
 + You must submit any and all unanswered questions on Wednesday evening. Not
   submitting questions leads to a reduced learning experience.
 + You will have plenty of questions. Submit them! Choose knowledge over ignorance.
 
-* Exercises
+* Exercises :noexport:
 Exercises are smaller experiences that are designed to float uncertainties and
 questions you have to the surface of your mind. They are designed to be smaller
 so you can find out what you don\rsquo{}t know and then take the steps necessary to
 know.
 
-* Problems
+* Problems  :noexport:
 Problems are weightier experiences that invite you to explore topics in
 theoretical computer science --- and especially mathematical proofs --- as well
 as increase your logical thinking and problem solving prowess. All involve
 writing mathematically.
 
-* Assessment
+* Assessment :noexport:
 Every four weeks you will meet with me in my office. The purpose
 of this meeting is for you to present your portfolio of work to me, make a
 grade-to-date claim, and provide evidence justifying that claim.
@@ -129,13 +134,13 @@ are required to produce the portfolio using Spacemacs, export it as a pdf file,
 and print it. To accmoplish this you will need @@latex:\LaTeX{}@@ installed on
 your machine.
 
-* Late Work
+* Late Work :noexport:
 Late work is accepted /only if/ the reason is extraordinary, and acceptance is
 reached through private and prolonged negotiation. Also, you must come talk to
 me in person in my office --- *NOT* by email, nor any other means of
 communication.
 
-* Grades
+* Grades :noexport:
 In each of our three personal meetings, you will present your portfolio and a
 letter-based grade-to-date claim. Afterwards I will give you my thoughts on the
 strength of your claim. The last claim that you make, taking into account any
@@ -185,7 +190,7 @@ self-aggrandizement wrong? Should we seek our own good?\rdquo Listen to his answ
 and that is to elevate, benefit, and bless others first. If you will elevate
 others, the very work itself will exalt you. Upon no other plan can a man justly
 and permanently aggrandize himself.\rdquo
-* Harassment
+* Harassment :noexport:
 	Title IX of the Education Amendments of 1972 prohibits sex discrimination
   against any participant in an education program or activity that receives
   federal funds, including Federal loans and grants. Title IX also covers
@@ -193,7 +198,7 @@ and permanently aggrandize himself.\rdquo
   harassment or gender based discrimination, please contact the Personnel Office
   at 496-1130.
 
-* Disability
+* Disability :noexport:
   Brigham Young University-Idaho is committed to providing a working and
   learning atmosphere which reasonably accommodates qualified persons with
   disabilities. If you have any disability which may impair your ability to
@@ -205,14 +210,14 @@ and permanently aggrandize himself.\rdquo
   the basis of disability, you may seek resolution through established grievance
   policy and procedures. You should contact the Personnel Office at 496-1130.
 
-* Other
+* Other :noexport:
   This document may be modified by the instructor at any time without notification.
 
 #+Begin_Latex
 \pagebreak
 #+End_Latex
 
-* Readings
+* Readings :noexport:
 
 These readings are to be completed *before* each listed week\rsquo{}s Wednesday\rsquo{}s
 class. The exercises from each chapter (all of them) are to be completed
@@ -235,7 +240,7 @@ class. The exercises from each chapter (all of them) are to be completed
   |   13 | Chapter 18                       |
   |   14 | Finals Week                      |
 
-* Tracker Acronym Key
+* Tracker Acronym Key :noexport:
 Course Tracker acronyms and their meanings.
 
 	+ CRU - I Completed the Reading and achieved a level of Understanding *before* the start of Wednesday\rsquo{}s class and recorded questions about the items I didn\rsquo{}t understand.
@@ -296,6 +301,11 @@ This is an honest and true record of my work for this course.
 
 Signature: @@latex:\underline{\makebox[4in]{}}@@
 
+#+Begin_Latex
+\pagebreak
+#+End_Latex
+
+
 * Grade Claims
 
 On the week indicated, bring this updated document to my office and make your claim.
@@ -321,21 +331,20 @@ Fill in your evidences here each week to build your portfolio.
 The number of pieces of evidence are determined by you. However,
 the more you have the better off you will be.
 
-** TODO Week 1
-   
-*** Initial Take Home Exam
-    I have included another copy of my Initial Take Home Exam. I also wanted to
-    include a few additional thoughts I have been pondering after our class
-    discussion on the topic. 
+** Week 1
 
-    I realize that the paper I turned in was very abstract in a lot of ways. I
-    think that was due to me not fully understanding the direction I wanted to
-    take the assignment. After rereading my submission, I realize it was full of
-    rambling. 
+*** Initial Take Home Exam
+    I have included another copy of my Initial Take Home Exam.
+
+
+#+Begin_Latex
+\pagebreak
+#+End_Latex
+
 
 ** Week 2
    Selections from Chapter 2 Exercises
-   
+
 *** Exercises 2.1.3: Language Operations
 **** 1.
     No, it cannot. Our definition of an alphabet is /finite/ and /non-empty/ set
@@ -380,7 +389,7 @@ the more you have the better off you will be.
 **** 1.
     As we've defined language, it must equal the empty set (\empty) or possibly
     infinite set of finite strings which must meet the constraint
-         \{a^{i}b^j : i,j \ge 0, and i < j}\
+         /a^{i}b^j : i,j \ge 0, and i < j.
 
    This means our language either has /no/ strings (\epsilon is a string, albiet empty)
    OR the string must match the contraints. The constraints specify that the
@@ -393,7 +402,7 @@ the more you have the better off you will be.
 **** 2.
    For \epsilon to be a valid string in this language, we would need to modify second
    part of the condition. If we change the condition to be
-         \{a^{i}b^j : i,j \ge 0, and i \le j}\
+         /a^{i}b^j : i,j \ge 0, and i \le j/
    \epsilon would be a valid string in our language (note: change /i < j/ to /i \le j/)
 
 *** Exercises 2.2: Languages- Python
@@ -500,15 +509,23 @@ print((a * c) + (b * c))
 *** Exercises 2.2.5: Languages(review)
 **** 1.
     \Sigma = {0,1}
+
     a. \Sigma^2 = {00, 01, 10, 11}
+
     b. \Sigma^0 = {\epsilon} (see pg 24)
+
     c. \Sigma^1 = {0, 1}
+
     d. \Sigma^3 = {000, 001, 010, 011, 100, 101, 110, 111}
 **** 2.
     M = {0, 10}
+
     a. M^2 = {00, 010, 100, 1010}
+
     b. M^0 = {\epsilon} (see pg 24)
+
     c. M^1 = {0, 10}
+
     d. M^3 = {000, 0010, 0100, 01010, 1000, 10010, 10100, 101010}
 **** 3.
     #+begin_src elisp :results silent
@@ -528,8 +545,11 @@ print((a * c) + (b * c))
 |   | () | (()) | ((())) |
 
     a. \epsilon, '()', '(())'
+
     b. '()()()'
+
     c. '()'.
+
        We previously established that L_1 \sub L_2 \sub L_3,
        so we would need to take the smallest member of L_1. We could
        go with \epsilon, but that seemed a little too much of a given :)
@@ -537,24 +557,39 @@ print((a * c) + (b * c))
 *** Exercises 2.2.6
 **** 1.
      a. L_1 \cup L_2 would match L_2 because L_1 \sub L_2
+
      b. L_1 \cup L_3 would match L_3 because L_1 \sub L_3
+
      c. L_1 \cap L_2 would match L_1 because L_1 \sub L_2
-    
+
 **** 2.
      a. star({0, 1}, 2) = {\epsilon, 0, 1, 00, 01, 10, 11}
+
      b. star({0, 1}, 0) = {\epsilon}
+
      c. star({0, 1}, 1) = {\epsilon, 0, 1}
+
      d. star({0, 1}, 3) = {\epsilon, 0, 1, 00, 01, 10, 11, 000, 001, 010, 011, 100, 101, 110, 111}
+
      e. star({0, 10}, 2) = {\epsilon, 0, 10, 00, 010, 100, 1010}
+
      f. star({0, 10}, 0) =  {\epsilon}
+
      g. star({0, 10}, 1) = {\epsilon, 0, 10}
+
      h. star({0, 10}, 3) = {\epsilon, 0, 10, 00, 010, 100, 1010, 000, 0010, 0100, 01010, 1000, 10010, 10100, 101010}
+
      i. star({0, 1, 00, \epsilon}, 2) = {\epsilon, 0, 1,00, 01, 000, 10, 11, 100, 001, 0000}
+
      j. star({0, 10}, 0) = {\epsilon}
+
      k. star({0, 10}, 1) = {\epsilon, 0, 10}
+
      l. star({0, 10}, 3) = {\epsilon, 0, 10, 00, 010, 100, 1010, 000, 0010, 0100, 01010, 1000, 10010, 10100, 101010}
+
      m. It is \sum_0^n 2^n. The size of each set which results from L^n = 2^n. Because /star/ unions these sets together,
         we some the cardinalities of each exponentiated set to find the total number of items
+
      n. An arbitrary string that is finite/infinite and each symbol in the string is a combintation of the characters 1 or 0
 
 *** Exercises 2.3: Slippery Concepts
@@ -573,32 +608,46 @@ print((a * c) + (b * c))
      and ending with a finite/infinite number of ones.
 **** 5.
      a. They are equal. The only thing that is different is the variable used to represent the exponenent.
+
      b. They are equal. The first constraint creates a finite/infinite list of zeros, which is multiplied together
         with a finite/infinite list of ones formed by the second contstraint. This is an equivalent definition.
+
      c. They are equal. Both sets create words with a finite/infinite number of preceding zeros followed by a
         finite/infinite number of ones. Both sets have a cardinality of \aleph_0, so they are equal.
+
      d. They are not equal. L_4 does not contain \epsilon
+
      e. Yes. This is a union of L_3 and {\epsilon} (which should already be in L_3) so we've already established that they are
         the same.
+
      f. Yes. Although the variable names have changed, they are fixed to be equal to each other, rendering the same result
 **** 6.
      No. as L_7 is defined, i and j can be different values, which allows there to be unequal numbers of ones and zeros.
      {0^i : i \ge 0}{1^i : i \ge 0} is using the samve value, which means there will always be an equal number of ones and zeros.
 **** 7.
      a. No, it is not the true complement of L_6
+
      b. 10, 110, 11100000, 1010101
+
      c. Any string with a 1 coming before a 0.
         Any string with alternating 1's and 0's.
         [{1^{j}0^i}: i, j > 0]
         [{w : w \in ({0}^i {1}^j)^n, i,j,n > 0)
+
      d. No, L_8 \sub 'L_6
+
+
+#+Begin_Latex
+\pagebreak
+#+End_Latex
+
 
 ** Week 3
 I was quite ill this week which is why I was not able to complete all of the
 exercises. Once my schedule has settled down a bit, I plan on going back and
 completing the ones I skipped. Even though I did not complete all of the
 exercises, I did leave the chapters confident I understood all of the material
-well enough to apply it in future problems. 
+well enough to apply it in future problems.
 
 Selections from Week 3 exercises:
 
@@ -612,14 +661,19 @@ Selections from Week 3 exercises:
      is equivalent to the definition of L_7
 **** 3.
      The Empty Language where L_1 * = Unit language
+
      The Unit Language, where L_2 * = Unit language
 **** 4.
 
 ***** Languages in English
      L_P0: All binary strings.
+
      L_P1: All binary strings which are palindromes.
+
      L_P2: All binary strings with some word and it's reverse split by either a 1,0, or empty string.
+
      L_P3: All binary strings made up by word and it's reverse split by either a 1 or a 0.
+
      L_WW: All binary strings made up of a word and it's copy without any modification.
 
 ***** Solutions
@@ -653,10 +707,13 @@ Selections from Week 3 exercises:
         will result in another string of even zeros.
 
      d. No.
+
         i. {\empty}
+
         ii. {\epsilon}
 
      e. No. L_E^* would only contain strings of zeros which are even in length.
+
      f. No.
 
 **** 6.
@@ -678,19 +735,23 @@ Selections from Week 3 exercises:
 *** Exercise 3.4.1: Language Puzzles
     1.
        a. L_x is the subset of {a,b,c}* where each s \in L_x has the same number of
-       a, b, and c, and is arranged in alphabetical order. b. L_x = {a^{i}b^{i}c^{i} : i \gt
-          0 }
-       c. L_y is the subset of {a,b,c}* where each s \in L_y begins with 0 or more c,
-          followed by 1 or more a or b, followed by 0 or more c, followed by 1 or more a or b,
-          and ending with 0 or more c.
+       a, b, and c, and is arranged in alphabetical order.
+
+       b. L_x = {a^{i}b^{i}c^{i} : i \gt
+       0 }
+
+       c. L_y is the subset of {a,b,c}* where each s \in L_y begins with 0 or
+       more c, followed by 1 or more a or b, followed by 0 or more c, followed
+       by 1 or more a or b, and ending with 0 or more c.
 
 *** Exercise 3.5: Homomorphism
     1.
-       Yes. It meets both conditions. The reversal of \epsilon is \epsilon. And given strings a
-       and b, rev(ab) = rev(a)rev(b).
+        Yes. It meets both conditions. The reversal of \epsilon is \epsilon. And given strings a
+        and b, rev(ab) = rev(a)rev(b).
+
     2.
-        No. function /f/ would not meet condition two. If f(ab) = c and f(a)f(b) = de,
-        then f(ab) \ne f(a)f(b) so it is not a homomorphism.
+         No. function /f/ would not meet condition two. If f(ab) = c and f(a)f(b) = de,
+         then f(ab) \ne f(a)f(b) so it is not a homomorphism.
 
 *** Exercise 3.6: Lexicographic Order
  First Python, then elisp :)
@@ -765,8 +826,8 @@ Selections from Week 3 exercises:
               (cartesian-product L1 L2)))
  #+end_src
 
- #+begin_src elisp  
- (list-pairs 
+ #+begin_src elisp
+ (list-pairs
     '("abacus" "bandana" "pig" "cat" "dodo" "zulu" "physics")
     '("dog" "zebra" "zzxyz" "pimento"))
  #+end_src
@@ -799,6 +860,10 @@ Selections from Week 3 exercises:
 
 *** Exercise 4.2: DFA Basics
 **** 1.
+
+#+NAME: fig:Exercise 4.2 DFA
+#+ATTR_ORG: :width 200/250/300/400/500/600
+#+ATTR_LATEX: :width 2.0in
      [[file:graphs/4.2dfa.gv.png]]
 
 **** 2.
@@ -832,9 +897,10 @@ Selections from Week 3 exercises:
      If L is a regular language, then L has a pumping length P such that any
      string S where |S| \ge P may be divided into 3 parts S = xyz such that the
      following conditions must be true:
-     1. xy^{i}z \in L for every i \ge 0
-     2. |y| \gt 0
-     3. |xy| \le P
+
+:     1. xy^{i}z \in L for every i \ge 0
+:     2. |y| \gt 0
+:     3. |xy| \le P
 
      Prove that a language is not Regular with pumping Lemma:
      1. Assume that L is regular
@@ -942,13 +1008,28 @@ Selections from Week 3 exercises:
 ***** Conclusion
       For every given partition of xyz, all three conditions of a regular language are not met.
       Therefore, L_bc is not a regular language by proof of contradiction using the pumping lemma.
-**** 2.
+#+Begin_Latex
+\pagebreak
+#+End_Latex
 
+
+
+**** 2.
+     #+NAME: fig:Exercise 4.7.1.2 DFA
+#+ATTR_ORG: :width 200/250/300/400/500/600
+#+ATTR_LATEX: :width 2.0in
             [[file:graphs/dfa4.7.1.2.gv.png]]
+
+#+Begin_Latex
+\pagebreak
+#+End_Latex
+
 
 
 **** 3.
-
+#+NAME: fig:Exercise 4.7.1.2 DFA
+#+ATTR_ORG: :width 200/250/300/400/500/600
+#+ATTR_LATEX: :width 2.0in
      [[file:graphs/4-7-1-3.png]]
 *** Exercise 4.9
     2.
@@ -960,28 +1041,33 @@ Selections from Week 3 exercises:
          z \in L must be true.
     4.
          Original:
-         \exists N \in Nat:
-         \forall w \in L : [|w| \ge N \rarr
-                        \exist x,y,z \in \Sigma^* :
-                             w = xyz
-                         \land   |xy| \le N
-                         \land   y \ne \epsilon
-                         \land   \forall i \ge 0 : xy^{i}z \in L ]
-
+:         \exists N \in Nat:
+:         \forall w \in L : [|w| \ge N \rarr
+:                        \exist x,y,z \in \Sigma^* :
+:                             w = xyz
+:                         \land   |xy| \le N
+:                         \land   y \ne \epsilon
+:                         \land   \forall i \ge 0 : xy^{i}z \in L ]
         Negated Condition:
-        \forall N \in Nat:
-        \forall w \in L : [ |w| \ge N \rarr
-                        \forall x, y, z \in \Sigma^*:
-                             w = xyz
-                        \land    |xy| \le N
-                        \land    y \ne \epsilon
-                        \land    \exist i : xy^{i}z \notin L.
+:        \forall N \in Nat:
+:        \forall w \in L : [ |w| \ge N \rarr
+:                        \forall x, y, z \in \Sigma^*:
+:                             w = xyz
+:                        \land    |xy| \le N
+:                        \land    y \ne \epsilon
+:                        \land    \exist i : xy^{i}z \notin L.
+
+#+Begin_Latex
+\pagebreak
+#+End_Latex
+
+
 ** Week 4
 A lot of this week's work was in Jove. I tried to include as much evidence for
 the work I did in Jove without actually importing the notebooks. This is shown
 in the copied Python code and imported DFA images for some of the exercises.
 
- 
+
 Selections from Week 4 exercises:
 
 
@@ -992,7 +1078,9 @@ Selections from Week 4 exercises:
      alternative definition also belongs to the original definition.
      Also \epsilon is not included in the second language.
 **** 2.
-
+#+NAME: fig:Exercise 5.1.1.2 DFA
+#+ATTR_ORG: :width 200/250/300/400/500/600
+#+ATTR_LATEX: :width 2.0in
  [[file:graphs/5.1.1.2.gv.png]]
 
      Test Strings
@@ -1057,7 +1145,9 @@ Selections from Week 4 exercises:
  d.edge('BH', 'BH', label='0')
  d
  #+END_SRC
-
+#+NAME: fig:Exercise 5.2.1.1 DFA
+#+ATTR_ORG: :width 200/250/300/400/500/600
+#+ATTR_LATEX: :width 2.0in
  [[file:graphs/5.2.1.1.gv.png]]
 
  Treat every string as if it is a 3 bit word. We know that the valid 3 bit strings are
@@ -1123,7 +1213,9 @@ Selections from Week 4 exercises:
 
 
  #+END_SRC
-
+#+NAME: fig:Exercise 5.2.1.2 DFA
+#+ATTR_ORG: :width 200/250/300/400/500/600
+#+ATTR_LATEX: :width 2.0in
  [[file:graphs/5.2.1.2.gv.png]]
 
 **** 3.
@@ -1131,12 +1223,12 @@ Selections from Week 4 exercises:
      I followed the same process, but it was much quicker now that I knew what I
      was looking for. I just plotted out the different state switches that would
      happen, and built the DFA from that.
- 
+
 
 
 *** Exercise 6.2: DFA Jove \cup, \cap
-**** 1. 
- Complement: 
+**** 1.
+ Complement:
 
  #+begin_src python
    DFA_fig47_comp = {'Q': {'A', 'B', 'IF'},
@@ -1152,18 +1244,20 @@ Selections from Week 4 exercises:
  #+end_src
 
  Union of complement and base:
-
+#+NAME: fig:Exercise 6.2.1 DFA
+#+ATTR_ORG: :width 200/250/300/400/500/600
+#+ATTR_LATEX: :width 2.0in
  [[file:graphs/union47_comp47.png]]
 
  Yes, this is still a DFA. A DFA is allowed to have disconnected states.
-**** 2. 
+**** 2.
      It begins from the initial state and moves through every state transition in
      the language for each state it comes ac. It then constructs a new DFA from
      only the states it encountered, removing all of the unreachable, and
      therefore unneeded states.
 
 *** Exercise 6.5: DFA, DeMorgan's Laws
-**** 1. 
+**** 1.
 
      The isomorphic property indicates that not only are two DFA language
      equivalent, but that they have the same number of states. Two DFA can be
@@ -1175,14 +1269,14 @@ Selections from Week 4 exercises:
      map a minimal DFA state-to-state with its isomorphic sibling. Therefore, if
      two DFA are not isomorphic to each other, they will not have a bijection
      even if they are language equivalent.
-    
-**** 2. 
+
+**** 2.
 
      #+begin_example
  DFA_6.5.2 = {
-   
+
     I       : 0 -> I
-    I       : 1 -> S1 
+    I       : 1 -> S1
     S1      : 0 -> S10
     S1      : 1 -> I
     S10     : 0 -> S10
@@ -1193,11 +1287,11 @@ Selections from Week 4 exercises:
     S1010   : 1 -> F10101
     F10101  : 0 -> S10
     F10101  : 1 -> I
-   
- } 
+
+ }
      #+end_example
 **** 3.
-    
+
 ***** Check intersection:
      |    String | In Language | Accepted? | Correct? |
      |     10101 | \check           | \check         | \check        |
@@ -1207,10 +1301,10 @@ Selections from Week 4 exercises:
      |    100000 | \empty           | \empty         | \check        |
      |  00000101 | \empty           | \empty         | \check        |
 
-***** Using Tools: 
+***** Using Tools:
 
       Done in Jove
-**** 4. 
+**** 4.
 
      #+begin_example
      DFA_oa = {
@@ -1244,8 +1338,8 @@ Selections from Week 4 exercises:
 
      # True
      #+end_example
-**** 5. 
-    
+**** 5.
+
      |    | I1 | F2 | F3 | S8 | S5 | S7 | S4 | F6 | F9 |
      | I1 | x  | x  | x  | x  | x  | x  | x  | x  | x  |
      | F2 | \check  | x  | x  | x  | x  | x  | x  | x  | x  |
@@ -1293,23 +1387,14 @@ Selections from Week 4 exercises:
 
 
      Output from Jove:
-    
+
+#+NAME: fig:Exercise 6.5.5 DFA
+#+ATTR_ORG: :width 200/250/300/400/500/600
+#+ATTR_LATEX: :width 2.0in
  [[file:graphs/Chapter6BlimpMin.png]]
 
-** Week 5
 
-** Week 6
 
-** Week 7
-
-** Week 8
-
-** Week 9
-
-** Week 10
-
-** Week 11
-
-** Week 12
-
-** Week 13
+#+Begin_Latex
+\pagebreak
+#+End_Latex

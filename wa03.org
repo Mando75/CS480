@@ -154,6 +154,54 @@ See impossible programs org file
 ('pig', 'zebra')
 #+end_example
 
+In ELISP!!!! :)
+#+begin_src elisp :results silent
+  (defun cartesian-product (x y)
+    "Produces the Cartesian product of two lists"
+    (mapcan (lambda (x-item)
+              (mapcar (lambda (y-item)
+                        (if (listp x-item)
+                            (append x-item (list y-item))
+                          (list x-item y-item)))
+                      y))
+            x))
+
+  (defun list-pairs (L1 L2)
+    (-filter (lambda (pair)
+               (string-lessp (car pair) (cadr pair)))
+             (cartesian-product L1 L2)))
+#+end_src
+
+#+begin_src elisp  
+(list-pairs 
+   '("abacus" "bandana" "pig" "cat" "dodo" "zulu" "physics")
+   '("dog" "zebra" "zzxyz" "pimento"))
+#+end_src
+
+#+RESULTS:
+| abacus  | dog     |
+| abacus  | zebra   |
+| abacus  | zzxyz   |
+| abacus  | pimento |
+| bandana | dog     |
+| bandana | zebra   |
+| bandana | zzxyz   |
+| bandana | pimento |
+| pig     | zebra   |
+| pig     | zzxyz   |
+| pig     | pimento |
+| cat     | dog     |
+| cat     | zebra   |
+| cat     | zzxyz   |
+| cat     | pimento |
+| dodo    | dog     |
+| dodo    | zebra   |
+| dodo    | zzxyz   |
+| dodo    | pimento |
+| zulu    | zzxyz   |
+| physics | zebra   |
+| physics | zzxyz   |
+| physics | pimento |
 
 ** Exercise 3.6: Numeric Order
 
@@ -372,4 +420,3 @@ is a way to do that with only a two state DFA.
                        \land    |xy| \le N
                        \land    y \ne \epsilon
                        \land    \exist i : xy^{i}z \notin L.
-   5.

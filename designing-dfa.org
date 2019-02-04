@@ -1,0 +1,88 @@
+#+TITLE: Designing DFA
+#+DATE: 4 February 2019
+#+OPTIONS: H:4 num:nil toc:t \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t |:t
+#+STARTUP: showeverything entitiespretty
+
+* Based on an Exercise in ACAPP
+
+  This approach to solving Exercise 5.2.4.2 is based on suggestions by Ganesh,
+  which expand on the analysis/design methodology presented on pages 61 and 62
+  in Chapter 5.
+
+  The idea is to capture the \ldquo{}in your head\rdquo thoughts about state name and
+  transition choices. There are P equivalence classes under the mod operation,
+  where P is the modulus. A representative of each equivalence class is all that
+  is needed to keep track of \ldquo{}input bits seen so far\rdquo.
+
+  1. Let Modulus P > 2 (P = 5 for the exercise, but let P = 3 below).
+  2. Use % for mod.
+  3. Use a pair of numbers for a state name.
+  4. Use -b-> to indicate bit b arriving in the input.
+
+  This is how the LSB-first series goes (call it \ldquo{}ORIG\rdquo). After \ldquo{}modding\rdquo we call it \ldquo{}ALT\rdquo below.
+
+  ORIG: (2^k, N) -b-> (2^{k+1}, N+2^{k\times{}b}) -b-> (2^{k+2}, (N+2^{k\times{}b}) + (b\times{}2^{k+1}^{})) ...
+
+  Example bits arriving LSB-first:
+
+:         0
+:       0 0
+:     1 0 0
+:   1 1 0 0
+: 1 1 1 0 0
+
+  Here is ORIG line by line: it starts at the pair (1,0) where so far, yes, % 3 = 0:
+
+  | Input bit | To Pair | So far % 3 = 0? |
+  |-----------+---------+-----------------|
+  | -0->      | (2,0)   | yes             |
+  | -0->      | (4,0)   | yes             |
+  | -1->      | (8,4)   | no              |
+  | -1->      | (16,12) | yes             |
+  | -1->      | (32,28) | no              |
+
+  This goes unbounded, but we don\rsquo{}t need all that info if we just do the
+  mod-based summarization of essential information.
+
+  We only need the \ldquo{}N % P\rdquo part; thus, let\rsquo{}s apply the % operator and use its
+  properties to simplify what we see:
+
+  (N + 2^{k\times{}b}) % P
+
+  = (N % P + (2^{k\times{}b}) % P) % P
+
+  = (N % P + (2^k % P \times b % P) % P) % P
+
+  = (N % P + 2^k % P \times b) % P --- why?
+
+  Thus maintain just 2^k % P for \ldquo{}exponent so far\rdquo and N % P for \ldquo{}number so far\rdquo.
+
+  Call them ModExp and ModNum for crispness.
+
+  How does ModExp evolve?
+
+  2^k -> 2^{k+1} becomes (2^k) % P -> (2 % P \times 2^k % P) % P which is (2\times{}2^k % P) % P.
+
+  I.e., ModExp ALWAYS goes to (2 \times ModExp) % P.
+
+  Thus the ALT series becomes
+
+  ALT: (2^k % P, N % P) -b-> ((2 \times (2^k % P)) % P,  (N % P + 2^k % P \times b) % P)
+
+  or in more readable form
+
+  ALT: (ModExp, ModNum) -b->  ((2 \times ModExp) % P, (ModNum + ModExp \times b) % P)
+
+  Let\rsquo{}s calculate the ALT series for P = 3 now, line by line.
+
+  ALT starts at (1,0), where so far, yes, % 3 = 0.
+
+  | From pair | Input bit | Calculation               | To pair | So far % 3 = 0? |
+  |-----------+-----------+---------------------------+---------+-----------------|
+  | (1,0)     | -0->      | ((2\times{}1)%3, (0 + (1\times{}0))%3)) | (2,0)   | yes             |
+  | (2,0)     | -0->      | ((2\times{}2)%3, (0 + (0\times{}0))%3)) | (1,0)   | yes             |
+  | (1,0)     | -1->      | ((2\times{}1)%3, (0 + (1\times{}1))%3)) | (2,1)   | no              |
+  | (2,1)     | -1->      | ((2\times{}2)%3, (1 + (2\times{}1))%3)) | (1,0)   | yes             |
+  | (1,0)     | -1->      | (continue as before)      | (2,1)   | no              |
+
+* TODO Proceed to Design the DFA Where P = 5

@@ -52,9 +52,9 @@
 
   = (N % P + (2^{k}\cdot{}b) % P) % P
 
-  = (N % P + (2^k % P \times b % P) % P) % P
+  = (N % P + (2^k % P \cdot b % P) % P) % P
 
-  = (N % P + 2^k % P \times b) % P --- why?
+  = (N % P + 2^k % P \cdot b) % P --- why?
 
   Thus maintain just 2^k % P for \ldquo{}exponent so far\rdquo and N % P for \ldquo{}number so far\rdquo.
 
@@ -62,17 +62,17 @@
 
   How does ModExp evolve?
 
-  2^k -> 2^{k+1} becomes (2^k) % P -> (2 % P \times 2^k % P) % P which is (2\cdot{}2^k % P) % P.
+  2^k -> 2^{k+1} becomes (2^k) % P -> (2 % P \cdot 2^k % P) % P which is (2\cdot{}2^k % P) % P.
 
-  I.e., ModExp ALWAYS goes to (2 \times ModExp) % P.
+  I.e., ModExp ALWAYS goes to (2 \cdot ModExp) % P.
 
   Thus the ALT series becomes
 
-  ALT: (2^k % P, N % P) -b-> ((2 \times (2^k % P)) % P,  (N % P + 2^k % P \times b) % P)
+  ALT: (2^k % P, N % P) -b-> ((2 \cdot (2^k % P)) % P,  (N % P + 2^k % P \cdot b) % P)
 
   or in more readable form
 
-  ALT: (ModExp, ModNum) -b->  ((2 \times ModExp) % P, (ModNum + ModExp \times b) % P)
+  ALT: (ModExp, ModNum) -b->  ((2 \cdot ModExp) % P, (ModNum + ModExp \cdot b) % P)
 
   Let\rsquo{}s calculate the ALT series for P = 3 now, line by line.
 

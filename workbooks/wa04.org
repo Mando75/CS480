@@ -1,0 +1,400 @@
+#+TITLE: Week 03 Workbook
+#+AUTHOR: Bryan Muller
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t
+#+OPTIONS: html-postamble:nil
+#+STARTUP: entitiespretty inlineimages
+
+* Monday, Jan 28th
+  CDL - Poll anywhere. I came in second :)
+
+* Wednesday, Jan 30th
+
+* Friday, Feb 1st
+
+* Chapter 5 Exercises
+
+** Exercise 5.1.1: Equal Change DFA
+*** 1.
+    It is missing the fact that there must be a strict equal number of
+    transitions between 0 \rarr 1 and 1 \rarr 0. Not every string which belongs to the
+    alternative definition also belongs to the original definition.
+    Also \epsilon is not included in the second language.
+*** 2.
+
+[[file:graphs/5.1.1.2.gv.png]]
+
+    Test Strings
+| String | In | Out | Correct |
+|    010 | \check  |     | \check       |
+|  10101 | \check  |     | \check       |
+|   0111 |    | \check   | \check       |
+|  10100 |    | \check   | \check       |
+
+This DFA handles the case of the empty string, strings of only 0's or 1's,
+and forces there to be a balanced number of 1 \rarr 0, 0 \rarr 1 switches based on the
+number of states required to pass through to get back to a finish state once a switch
+is made.
+
+** Exercise 5.2.1: Block-of-3 DFA
+
+*** 1.
+
+    | State | to | New State |
+    | S     |  0 | S0        |
+    | S0    |  0 | BH        |
+    | S0    |  1 | S01       |
+    | S01   |  0 | BH        |
+    | S01   |  1 | S         |
+    | S     |  1 | S1        |
+    | S1    |  0 | S10       |
+    | S10   |  1 | S         |
+    | S10   |  0 | BH        |
+    | S1    |  1 | S11       |
+    | S11   |  0 | S         |
+    | S11   |  1 | BH        |
+
+#+BEGIN_SRC python
+from graphviz import Digraph
+
+d = Digraph("5.2.1.1", filename='5.2.1.1.gv', engine='dot', format='png')
+
+d.attr('node', shape='doublecircle')
+d.node('IF')
+
+d.attr('node', shape='circle')
+d.node('BH')
+d.node('S0')
+d.node('S1')
+d.node('S01')
+d.node('S10')
+d.node('S11')
+
+d.edge('IF', 'S0', label='0')
+d.edge('S0', 'BH', label='0')
+d.edge('S0', 'S01', label='1')
+d.edge('S01', 'BH', label='0')
+d.edge('S01', 'IF', label='1')
+d.edge('IF', 'S1', label='1')
+d.edge('S1', 'S10', label='0')
+d.edge('S10', 'IF', label='1')
+d.edge('S10', 'BH', label='0')
+d.edge('S1', 'S11', label='1')
+d.edge('S11', 'IF', label='0')
+d.edge('S11', 'BH', label='1')
+d.edge('BH', 'BH', label='1')
+d.edge('BH', 'BH', label='0')
+d
+#+END_SRC
+
+[[file:graphs/5.2.1.1.gv.png]]
+
+Treat every string as if it is a 3 bit word. We know that the valid 3 bit strings are
+011, 110, 101. Make paths for these strings, and send anything else to the black hole.
+
+*** 2.
+The complement of L_b3 would be 'L_bc = { x: Every contiguous block of 3 bits in x
+must have > or < than 2 1s.
+
+| State | New State | to |
+| IF    | S0        |  0 |
+| S0    | S0        |  0 |
+| S0    | S01       |  1 |
+| S01   | BH        |  1 |
+| S01   | S010      |  0 |
+| S010  | IF        |  0 |
+| S010  | BH        |  1 |
+| IF    | S1        |  1 |
+| S1    | BH        |  1 |
+| S1    | S10       |  0 |
+| S10   | BH        |  1 |
+| S10   | IF        |  0 |
+| BH    | BH        |  0 |
+| BH    | BH        |  1 |
+
+#+BEGIN_SRC python
+from graphviz import Digraph
+
+d = Digraph("5.2.1.2", filename='5.2.1.2.gv', engine='dot', format='png')
+
+d.attr('node', shape='doublecircle')
+d.node('IF')
+
+d.attr('node', shape='circle')
+d.node('BH')
+d.node('S0')
+d.node('S01')
+d.node('S010')
+d.node('S1')
+d.node('S10')
+
+d.edge('IF', 'S0', label='0')
+d.edge('S0', 'S00', label='0')
+d.edge('S00', 'IF', label='0')
+d.edge('S00', 'S001', label='1')
+d.edge('S001', 'S010', label='0')
+d.edge('S001', 'BH', label='1')
+d.edge('S0', 'S01', label='1')
+d.edge('S01', 'BH', label='1')
+d.edge('S01', 'S010', label='0')
+d.edge('S010', 'IF', label='0')
+d.edge('S010', 'BH', label='1')
+d.edge('IF', 'S1', label='1')
+d.edge('S1', 'S11', label='1')
+d.edge('S11', 'IF', label='1')
+d.edge('S11', 'BH', label='0')
+d.edge('S1', 'S10', label='0')
+d.edge('S10', 'BH', label='1')
+d.edge('S10', 'IF', label='0')
+d.edge('BH', 'BH', label='0')
+d.edge('BH', 'BH', label='1')
+d.view()
+
+
+#+END_SRC
+
+[[file:graphs/5.2.1.2.gv.png]]
+
+*** 3.
+
+    I followed the same process, but it was much quicker now that I knew what I
+    was looking for. I just plotted out the different state switches that would
+    happen, and built the DFA from that.
+** Exercise 5.2.4: DFA exp blowup
+*** 1.
+Given that adding more bits grows the length of a string exponentially, a DFA with a one-to-one
+mapping of bit values to possible states would also grow exponentially.
+
+Assume that a one-to-one mapping of bit values to DFA states was not necessary, and could be
+reduced where number of bit values > DFA states needed to know if the Nth last bit is a 1.
+
+To know if the Nth last bit is a one, we would need to track at minimum the Nth
+last bits, which would be 2^N - 1 states. As N grows, the minimum number of states
+needed would also grow exponentially, matching the 2^N - 1 minimum number of states.
+
+
+*** 2.
+
+**** MSB
+\epsilon \rarr 1 \rarr 01 \rarr 101 \rarr 1101 \rarr 01101 \rarr 101101
+
+| State | Remainder |   |
+| IF0   |         0 |   |
+| R1    |         1 |   |
+| R2    |         2 |   |
+| R3    |         3 |   |
+| R4    |         4 |   |
+
+| String | Remainder | End State |
+|      0 |         0 | IF0       |
+|      1 |         1 | R1        |
+|     10 |         2 | R2        |
+|     11 |         3 | R3        |
+|    100 |         4 | R4        |
+|    101 |         0 | IF0       |
+|    110 |         1 | R1        |
+|    111 |         2 | R2        |
+|   1000 |         3 | R3        |
+|   1001 |         4 | R4        |
+
+#+BEGIN_SRC python
+  from graphviz import Digraph
+
+  d = Digraph("5.2.4", filename="5.4.2.gv", engine='dot', format='png')
+
+  d.attr('node', shape='doublecircle')
+  d.node('IF0')
+
+  d.attr('node', shape='circle')
+  d.edge('IF0', 'IF0', label='0')
+  d.edge('IF0', 'R1', label='1')
+  d.edge('R1', 'R2', label='0')
+  d.edge('R1', 'R3', label='1')
+  d.edge('R2', 'R4', label='0')
+  d.edge('R2', 'IF0', label='1')
+  d.edge('R3', 'R1', label='0')
+  d.edge('R3', 'R2', label='1')
+  d.edge('R4', 'R3', label='0')
+  d.edge('R4', 'R4', label='1')
+  d
+#+END_SRC
+**** LSB
+| State | Remainder |   |
+| IF0   |         0 |   |
+| R1    |         1 |   |
+| R2    |         2 |   |
+| R3    |         3 |   |
+| R4    |         4 |   |
+
+| String | Remainder | End State |
+|      0 |         0 | IF0       |
+|      1 |         1 | R1        |
+|     01 |         2 | R2        |
+|     10 |         4 | R4        |
+|     11 |         3 | R3        |
+|    010 |         2 | R2        |
+|    100 |         4 |           |
+
+
+* Chapter 6 Exercises
+** Exercise 6.2: DFA Jove \cup, \cap
+*** 1. 
+Complement: 
+
+#+begin_src python
+  DFA_fig47_comp = {'Q': {'A', 'B', 'IF'},
+   'Sigma': {'0', '1'},
+   'Delta': {('IF', '0'): 'A',
+    ('IF', '1'): 'IF',
+    ('A', '0'): 'B',
+    ('A', '1'): 'A',
+    ('B', '0'): 'IF',
+    ('B', '1'): 'B'},
+   'q0': 'IF',
+   'F': {'A', 'B'}}
+#+end_src
+
+Union of complement and base:
+
+[[file:graphs/union47_comp47.png]]
+
+Yes, this is still a DFA. A DFA is allowed to have disconnected states.
+*** 2. 
+    It begins from the initial state and moves through every state transition in
+    the language for each state it comes ac. It then constructs a new DFA from
+    only the states it encountered, removing all of the unreachable, and
+    therefore unneeded states.
+
+** Exercise 6.5: DFA, DeMorgan's Laws
+*** 1. 
+
+    The isomorphic property indicates that not only are two DFA language
+    equivalent, but that they have the same number of states. Two DFA can be
+    language equivalent without being isomorphic. Take for instance, a bloated
+    and minimal DFA for a given language. Although the two DFA are language
+    equivalent, they are not isomorphic because they do not have the same number
+    of states. The bijection mentioned in Myhill-Nerod Theorem is a byproduct of
+    the isomorphic nature of language equivalent minimal DFA and being able to
+    map a minimal DFA state-to-state with its isomorphic sibling. Therefore, if
+    two DFA are not isomorphic to each other, they will not have a bijection
+    even if they are language equivalent.
+    
+*** 2. 
+
+    #+begin_example
+DFA_6.5.2 = {
+   
+   I       : 0 -> I
+   I       : 1 -> S1 
+   S1      : 0 -> S10
+   S1      : 1 -> I
+   S10     : 0 -> S10
+   S10     : 1 -> S101
+   S101    : 0 -> S1010
+   S101    : 1 -> S01
+   S1010   : 0 -> I
+   S1010   : 1 -> F10101
+   F10101  : 0 -> S10
+   F10101  : 1 -> I
+   
+} 
+    #+end_example
+*** 3.
+    
+**** Check intersection:
+    |    String | In Language | Accepted? | Correct? |
+    |     10101 | \check           | \check         | \check        |
+    |    110101 | \empty           | \empty         | \check        |
+    |   1000101 | \check           | \check         | \check        |
+    | 111000101 | \check           | \check         | \check        |
+    |    100000 | \empty           | \empty         | \check        |
+    |  00000101 | \empty           | \empty         | \check        |
+
+**** Using Tools: 
+
+     Done in Jove
+*** 4. 
+
+    #+begin_example
+    DFA_oa = {
+       I : a -> F
+       I : b -> I
+       F : a -> I
+       F : b -> I
+    }
+
+
+    DFA_eb = {
+       IF : a -> Sa
+       IF : b -> IF
+       Sa : a -> IF
+       Sa : b -> Sa
+    }
+    #+end_example
+
+    D_ea \cup D_ob = (D_oa \cap D_eb)^c
+
+    Steps followed in Jove:
+
+    #+begin_example
+    inter_Doa_Deq = intersect_dfa(DFA_oa, DFA_eb)
+
+    comp_inter_Doa_Deq = comp_dfa(inter_Doa_Deq)
+
+    min_comp_inter_Doa_Deq = min_dfa(comp_inter_Doa_Deq)
+
+    iso_dfa(min_comp_inter_Doa_Deq, union_dfa(comp_dfa(D_oa), comp_dfa(D_eq)))
+
+    # True
+    #+end_example
+*** 5. 
+    
+    |    | I1 | F2 | F3 | S8 | S5 | S7 | S4 | F6 | F9 |
+    | I1 | x  | x  | x  | x  | x  | x  | x  | x  | x  |
+    | F2 | \check  | x  | x  | x  | x  | x  | x  | x  | x  |
+    | F3 | \check  | -  | x  | x  | x  | x  | x  | x  | x  |
+    | S8 | +  | \check  | \check  | x  | x  | x  | x  | x  | x  |
+    | S5 | +  | \check  | \check  | -  | x  | x  | x  | x  | x  |
+    | S7 | +  | \check  | \check  | -  | -  | x  | x  | x  | x  |
+    | S4 | +  | \check  | \check  | -  | -  | -  | x  | x  | x  |
+    | F6 | \check  | +  | +  | \check  | \check  | \check  | \check  | x  | x  |
+    | F9 | \check  | +  | +  | \check  | \check  | \check  | \check  | -  | x  |
+
+
+    | Pair   | Input | Output         | Marked? |
+    | I1, S8 | a     | F2, F6         | Yes     |
+    | I1, S5 | a     | F2, F6         | Yes     |
+    | I1, S7 | a     | F2, F6         | Yes     |
+    | I1, S4 | a     | F2, F6         | Yes     |
+    | F2, F3 | a     | S8, S7         | No      |
+    | F2, F3 | b     | S5, S4         | No      |
+    | S5, S8 | a,b   | F6, F6, F6, F9 | No      |
+    | S7, S8 | a     | F6, F6         | No      |
+    | S7, S8 | b     | F6, F9         | No      |
+    | S7, S5 | a,b   | F6, F6         | No      |
+    | S4, S8 | a     | F6, F6         | No      |
+    | S4, S8 | b     | F6, F9         | No      |
+    | S4, S5 | a,b   | F6, F6         | No      |
+    | S4, S7 | a,b   | F6, F6         | No      |
+    | F6, F2 | a     | F6, S5         | Yes     |
+    | F6, F3 | a     | F6, S7         | Yes     |
+    | F9, F2 | a     | F9, S8         | Yes     |
+    | F9, F3 | a     | F9, S7         | Yes     |
+    | F9, F6 | a     | F9, F6         | No      |
+    | F9, F6 | b     | F6, F6         | No      |
+
+
+    Combine:
+    (F3, F2), (S5, S8), (S7, S8), (S7, S5), (S4, S8), (S4, S5), (S4, S7), (F9, F6)
+
+
+:
+:      a      *    a                a      *
+:  I1 --->  F2_F3 ---> S4_S5_S7_S8 --->  F6_F9 --
+:      b      *    b                b      * ^  |  a
+:                                            |__|  b
+
+
+    Output from Jove:
+    
+[[file:graphs/Chapter6BlimpMin.png]]

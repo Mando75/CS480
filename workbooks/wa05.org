@@ -1,0 +1,26 @@
+#+TITLE: Week 05 Workbook
+#+AUTHOR: Bryan Muller
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t
+#+OPTIONS: html-postamble:nil
+#+STARTUP: entitiespretty inlineimages
+
+* Chapter 7 Exercises
+** Exercise 7.5: NFA to DFA
+*** 1.
+
+#+BEGIN_EXAMPLE
+NFA
+I    : 0|1   -> I
+I    : 0|''  -> S0
+S0   : 1     -> S01
+S01  : 0     -> S010
+S010 : 1     -> F
+F    : 0|1   -> F
+#+END_EXAMPLE
+
+#+BEGIN_SRC python
+strings = ["{0:b}".format(i).zfill(4) for i in range(0, 20)]
+accepts = ["accepts" if accepts_nfa(nfa7_5, s) else "rejects" for s in strings]
+list(zip(strings, accepts))
+#+END_SRC

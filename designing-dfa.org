@@ -80,10 +80,55 @@
 
   | From pair | Input bit | Calculation               | To pair | So far % 3 = 0? |
   |-----------+-----------+---------------------------+---------+-----------------|
-  | (1,0)     | -0->      | ((2\cdot{}1)%3, (0 + (1\cdot{}0))%3)) | (2,0)   | yes             |
+  | (1,0)     | -0->      | ((2\cdot1)%3, (0 + (1\cdot{}0))%3)) | (2,0)   | yes             |
   | (2,0)     | -0->      | ((2\cdot{}2)%3, (0 + (0\cdot{}0))%3)) | (1,0)   | yes             |
   | (1,0)     | -1->      | ((2\cdot{}1)%3, (0 + (1\cdot{}1))%3)) | (2,1)   | no              |
   | (2,1)     | -1->      | ((2\cdot{}2)%3, (1 + (2\cdot{}1))%3)) | (1,0)   | yes             |
   | (1,0)     | -1->      | (continue as before)      | (2,1)   | no              |
 
 * TODO Proceed to Design the DFA Where P = 5
+
+S1\under0,
+
+| From Pair | Input bit | Calculation               | To Pair | So far % 3 = 0 |
+|-----------+-----------+---------------------------+---------+----------------|
+| (1,0)     | -0->      | ((2\cdot1)%5 , (0 + (1\cdot0))%5)) | (       |                |
+
+#+BEGIN_SRC elisp :results silent
+  (setq remainders '(0 1 2 3 4)
+        alphabet '(0 1)
+        k '(1 2))
+
+  (defun get-to-pair (from-pair bit P)
+    (list
+     (mod (* 2 (car from-pair)) P)
+     (mod (+ (cadr from-pair) (* (car from-pair) bit)) P)))
+
+  (defun pair-inp (pair)
+     (zerop (mod (cadr pair) 5)))
+
+  (defun gen-dfa-for-string-lsb (list-of-bits)
+     (let* ((initial-pair '(1 0))
+           (last-pair '((get-to-pair initial-pair (car list-of-bits) 5)))
+     (loop for i in (number-sequence 0 10)
+         collect (loop for j in (number-sequence 0 1)
+                                 do (setq last-pair (get-pair last-pair j 5))
+                                 collect last-pair))))
+#+END_SRC
+
+#+BEGIN_SRC elisp
+(gen-dfa-for-string-lsb input-string)
+#+END_SRC
+
+#+RESULTS:
+| (4 0) | (3 4) |
+| (1 4) | (2 0) |
+| (4 0) | (3 4) |
+| (1 4) | (2 0) |
+| (4 0) | (3 4) |
+| (1 4) | (2 0) |
+| (4 0) | (3 4) |
+| (1 4) | (2 0) |
+| (4 0) | (3 4) |
+| (1 4) | (2 0) |
+| (4 0) | (3 4) |

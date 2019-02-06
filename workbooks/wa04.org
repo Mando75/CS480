@@ -219,12 +219,12 @@ needed would also grow exponentially, matching the 2^N - 1 minimum number of sta
   d
 #+END_SRC
 **** LSB
-| State | Remainder |   |
-| IF0   |         0 |   |
-| R1    |         1 |   |
-| R2    |         2 |   |
-| R3    |         3 |   |
-| R4    |         4 |   |
+| State | Remainder |
+| IF0   |         0 |
+| R1    |         1 |
+| R2    |         2 |
+| R3    |         3 |
+| R4    |         4 |
 
 | String | Remainder | End State |
 |      0 |         0 | IF0       |
@@ -238,8 +238,8 @@ needed would also grow exponentially, matching the 2^N - 1 minimum number of sta
 
 * Chapter 6 Exercises
 ** Exercise 6.2: DFA Jove \cup, \cap
-*** 1. 
-Complement: 
+*** 1.
+Complement:
 
 #+begin_src python
   DFA_fig47_comp = {'Q': {'A', 'B', 'IF'},
@@ -259,14 +259,14 @@ Union of complement and base:
 [[file:graphs/union47_comp47.png]]
 
 Yes, this is still a DFA. A DFA is allowed to have disconnected states.
-*** 2. 
+*** 2.
     It begins from the initial state and moves through every state transition in
     the language for each state it comes ac. It then constructs a new DFA from
     only the states it encountered, removing all of the unreachable, and
     therefore unneeded states.
 
 ** Exercise 6.5: DFA, DeMorgan's Laws
-*** 1. 
+*** 1.
 
     The isomorphic property indicates that not only are two DFA language
     equivalent, but that they have the same number of states. Two DFA can be
@@ -278,14 +278,14 @@ Yes, this is still a DFA. A DFA is allowed to have disconnected states.
     map a minimal DFA state-to-state with its isomorphic sibling. Therefore, if
     two DFA are not isomorphic to each other, they will not have a bijection
     even if they are language equivalent.
-    
-*** 2. 
+
+*** 2.
 
     #+begin_example
 DFA_6.5.2 = {
-   
+
    I       : 0 -> I
-   I       : 1 -> S1 
+   I       : 1 -> S1
    S1      : 0 -> S10
    S1      : 1 -> I
    S10     : 0 -> S10
@@ -296,11 +296,11 @@ DFA_6.5.2 = {
    S1010   : 1 -> F10101
    F10101  : 0 -> S10
    F10101  : 1 -> I
-   
-} 
+
+}
     #+end_example
 *** 3.
-    
+
 **** Check intersection:
     |    String | In Language | Accepted? | Correct? |
     |     10101 | \check           | \check         | \check        |
@@ -310,10 +310,10 @@ DFA_6.5.2 = {
     |    100000 | \empty           | \empty         | \check        |
     |  00000101 | \empty           | \empty         | \check        |
 
-**** Using Tools: 
+**** Using Tools:
 
      Done in Jove
-*** 4. 
+*** 4.
 
     #+begin_example
     DFA_oa = {
@@ -347,8 +347,8 @@ DFA_6.5.2 = {
 
     # True
     #+end_example
-*** 5. 
-    
+*** 5.
+
     |    | I1 | F2 | F3 | S8 | S5 | S7 | S4 | F6 | F9 |
     | I1 | x  | x  | x  | x  | x  | x  | x  | x  | x  |
     | F2 | \check  | x  | x  | x  | x  | x  | x  | x  | x  |
@@ -396,5 +396,5 @@ DFA_6.5.2 = {
 
 
     Output from Jove:
-    
+
 [[file:graphs/Chapter6BlimpMin.png]]

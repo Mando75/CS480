@@ -1,0 +1,138 @@
+#+TITLE: [[file:converting-fa-to-re.org][Converting Finite Automata to Regular Expressions]]
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty inlineimages
+
+* Introduction
+  Let G be a GNFA (Generalized Nondeterministic Finite Automaton). Here is a recursive
+  procedure to convert G to a Regular Expression.
+
+  CONVERT(G):
+  1. Let k be the number of states of G.
+  2. If k = 2, then G must consist of a start state, an accept state, and a
+     single arrow connnecting them labeled with a regular expression R.
+     Return the expression R.
+  3. If k > 2, select any state S_{del} \in Q different from S_{start} and S_{accept} 
+     and let G' be the GNFA
+
+     (Q', \Sigma, \delta', S_{start}, S_{accept}), where
+
+     Q' = Q - {S_{del}} and for any S_i \in Q' - {S_{accept}} and any S_j \in Q' - {S_{start}} let
+
+     \delta'(S_i, S_j) = (R_1)(R_2)^*(R_3) \cup (R_4)
+
+     for R_1 = \delta(S_i, S_{del}), R_2 = \delta(S_{del}, S_{del}), R_3 = \delta(S_{del}, S_j), and R_4 = \delta(S_i, S_j).
+  4. Compute CONVERT(G') and return this value.
+
+* Simple Example 
+  Refer to these two figures:
+#+BEGIN_SRC dot :file before-deleting-state.png
+  digraph {
+    node [shape=circle fontname=Monospace]
+    Si -> Sj     [label=R4 fontname=Monospace]
+    Si -> Sdel   [label=R1 fontname=Monospace]
+    Sdel -> Sdel [label=R2 fontname=Monospace]
+    Sdel -> Sj   [label=R3 fontname=Monospace]
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:before-deleting-state.png]]
+
+#+BEGIN_SRC dot :file after-deleting-state.png
+  digraph {
+    node [shape=circle fontname=Monospace]
+    Si -> Sj     [label="(R1)(R2)*(R3) U (R4)" fontname=Monospace]
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:after-deleting-state.png]]
+
+#+BEGIN_SRC dot :file simple-dfa.png 
+  digraph {
+	  graph [rankdir=LR]
+    node [shape=circle fontname=Monospace] S1
+    node [shape=doublecircle fontname=Monospace] S2
+    EMPTY [label="" shape=plaintext]
+    EMPTY -> S1
+    S1 -> S1 [label=a]
+    S1 -> S2 [label=b]
+    S2 -> S1 [label=b]
+    S2 -> S2 [label=a]
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:simple-dfa.png]]
+
+  Conversion from an NFA to a GNFA starts by first adding a new start state and
+  a new accept state. After that, the CONVERT procedure can produce several
+  solutions depending on the order the original states are deleted. For
+  simplicity, just remove them in order (1, 2, 3, etc.):
+
+  0 \rightarrow 1 \rightarrow 2 \rightarrow 3
+
+  If you call 0 the new start state and 3 the new accept state, then transitions
+  from 0 to 1 and 2 to 3 are labeled with \epsilon (the empty string). Now if
+  you squint your eyes and look at states 0, 1 and 2 as if they were states
+  $S_i$, $S_{del}$ and $S_j$ respectively, as in the above figures, then 
+  step 3 of the CONVERT procedure goes like this:
+
+  R_1 = \epsilon, R_2 = a, R_3 = b, and R_4 = \emptyset.
+
+  So with those substitutions, a new label from state 0 to state 2 is
+  $a^{\ast}b$, which is just
+
+  \((R_1)(R_2)^{\ast}(R_3)\ {\cup}\ (R_4).\)
+
+  But wait --- we can't totally remove state 1 yet, as it still has transitions
+  going to it!
+
+  So if you repeat this procedure with state 2 being *both* state $S_i$ *and*
+  state $S_j$, and state 1 being $S_{del}$, then you get $(ba^{\ast}b\ {\cup}\ a)$ as
+  the regular expression labeling the transition from state 2 to itself. (Here
+  R_1 = b, R_2 = a, R_3 = b and R_4 = a.)
+
+  Finally, using state 0 as $S_i$ and state 3 as $S_j$, and state 2 as $S_{del}$,
+  then you get $a^{\ast}b(ba^{\ast}b\ {\cup}\ a)^{\ast}$ as the single regular expression
+  that results when the procedure ends. (Here $R_1 = a^{\ast}b, R_2 = ba^{\ast}b\
+  {\cup}\ a, R_3 = \epsilon\ \mbox{and}\ R_4 = \emptyset$.)
+
+  So, $a^{\ast}b(ba^{\ast}b\ {\cup}\ a)^{\ast}$ is the answer.
+
+** A more \ldquo{}systematized\rdquo version
+  First, show existing transitions as \ldquo{}xy = RE\rdquo using juxtaposed digits $x$ and
+  $y$ to represent the \ldquo{}from\rdquo state and the \ldquo{}to\rdquo state, and $RE$ the regular
+  expression labeling the transition between them:
+
+  | 11 | = | a |
+  | 12 | = | b |
+  | 21 | = | b |
+  | 22 | = | a |
+
+  Next, add initial state 0 and new final state 3:
+
+  | 01 | = | \epsilon  |
+  | 02 | = | \emptyset |
+  | 03 | = | \emptyset |
+  | 23 | = | \epsilon  |
+
+  Recall that \epsilon, representing the empty string, is not the same as \emptyset, the empty
+  set. Note that $02$ and $03$ are \ldquo{}empty\rdquo (as in empty set, not empty string)
+  transitions. Any transitions not listed (e.g., $13$) are assumed empty, and
+  would be included and labeled as such if we were being meticulous!
+
+  Next, remove state 1 and relabel transitions between all the remaining states
+  (0, 2 and 3):
+
+  | 02 | = | (01)(11)^{\ast}(12) \cup 02 | = | (\epsilon)(a)\ast(b) \cup \emptyset | = | a^{\ast}b |
+  | 22 | = | (21)(11)^{\ast}(12) \cup 22 | = | ba^{\ast}b \cup a       |   |     |
+  | 23 | = | (21)(11)^{\ast}(13) \cup 23 | = | ba^{\ast}\emptyset \cup \epsilon       | = | \epsilon   |
+  | 32 | = | (31)(11)^{\ast}(12) \cup 32 | = | \emptyset a^{\ast}b \cup \emptyset      | = | \emptyset   |
+  | 33 | = | (31)(11)^{\ast}(13) \cup 33 | = | \emptyset a^{\ast}a \cup \emptyset      | = | \emptyset   |
+
+  Finally, remove state 2 and relabel the transition between the remaining
+  states (0 and 3):
+
+  | 03 | = | (02)(22)^{\ast}(23) \cup 03 | = | a^{\ast}b(ba^{\ast}b \cup a)^{\ast}\epsilon \cup \emptyset | = | a^{\ast}b(ba^{\ast}b \cup a)^{\ast} |

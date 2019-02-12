@@ -12,7 +12,7 @@
   2. If k = 2, then G must consist of a start state, an accept state, and a
      single arrow connnecting them labeled with a regular expression R.
      Return the expression R.
-  3. If k > 2, select any state S_{del} \in Q different from S_{start} and S_{accept} 
+  3. If k > 2, select any state S_{del} \in Q different from S_{start} and S_{accept}
      and let G' be the GNFA
 
      (Q', \Sigma, \delta', S_{start}, S_{accept}), where
@@ -24,7 +24,7 @@
      for R_1 = \delta(S_i, S_{del}), R_2 = \delta(S_{del}, S_{del}), R_3 = \delta(S_{del}, S_j), and R_4 = \delta(S_i, S_j).
   4. Compute CONVERT(G') and return this value.
 
-* Simple Example 
+* Simple Example
   Refer to these two figures:
 #+BEGIN_SRC dot :file before-deleting-state.png
   digraph {
@@ -49,7 +49,7 @@
 #+RESULTS:
 [[file:after-deleting-state.png]]
 
-#+BEGIN_SRC dot :file simple-dfa.png 
+#+BEGIN_SRC dot :file simple-dfa.png
   digraph {
 	  graph [rankdir=LR]
     node [shape=circle fontname=Monospace] S1
@@ -76,7 +76,7 @@
   If you call 0 the new start state and 3 the new accept state, then transitions
   from 0 to 1 and 2 to 3 are labeled with \epsilon (the empty string). Now if
   you squint your eyes and look at states 0, 1 and 2 as if they were states
-  $S_i$, $S_{del}$ and $S_j$ respectively, as in the above figures, then 
+  $S_i$, $S_{del}$ and $S_j$ respectively, as in the above figures, then
   step 3 of the CONVERT procedure goes like this:
 
   R_1 = \epsilon, R_2 = a, R_3 = b, and R_4 = \emptyset.
@@ -118,6 +118,7 @@
   | 03 | = | \emptyset |
   | 23 | = | \epsilon  |
 
+Let's test it out...
   Recall that \epsilon, representing the empty string, is not the same as \emptyset, the empty
   set. Note that $02$ and $03$ are \ldquo{}empty\rdquo (as in empty set, not empty string)
   transitions. Any transitions not listed (e.g., $13$) are assumed empty, and
@@ -135,4 +136,65 @@
   Finally, remove state 2 and relabel the transition between the remaining
   states (0 and 3):
 
+Let's test it out...
   | 03 | = | (02)(22)^{\ast}(23) \cup 03 | = | a^{\ast}b(ba^{\ast}b \cup a)^{\ast}\epsilon \cup \emptyset | = | a^{\ast}b(ba^{\ast}b \cup a)^{\ast} |
+
+Let's test it out...
+
+  | Even (CONVERT by hand) | Odd (Jove) |
+  |------------------------+------------|
+  | Bryan                  |            |
+  | James                  |            |
+  | Matt                   |            |
+  |                        | Seth       |
+  |                        | Adam       |
+  |                        | Jonathan   |
+  |                        | Daniel     |
+  |                        | Andrew     |
+* TODO Harder Example
+  This DFA has one more state than the previous one. Half of you will use the
+  above procedure to convert it to a Regular Expression. The other half will use
+  the Jove tools!
+
+#+name: dfa4REconversion
+#+BEGIN_SRC python :results output :cache yes
+  from jove.Def_DFA import *
+  from jove.DotBashers import *
+  from jove.Def_md2mc import md2mc
+
+  dfa = '''
+    DFA
+    IF1 : a|b -> S2
+    S2  : a   -> S2
+    S2  : b   -> F3
+    F3  : a   -> IF1
+    F3  : b   -> S2
+  '''
+  print(dotObj_dfa(md2mc(dfa)))
+#+END_SRC
+
+#+RESULTS[4dc1be4dbb4ce7932323d4cec2443842d1505dae]: dfa4REconversion
+#+begin_example
+// do_St1
+digraph {
+	graph [rankdir=LR]
+	EMPTY [label="" shape=plaintext]
+	S2 [label=S2 peripheries=1 shape=circle]
+	IF1 [label=IF1 peripheries=2 shape=circle]
+	F3 [label=F3 peripheries=2 shape=circle]
+	EMPTY -> IF1
+	IF1 -> S2 [label=a]
+	IF1 -> S2 [label=b]
+	S2 -> S2 [label=a]
+	S2 -> F3 [label=b]
+	F3 -> IF1 [label=a]
+	F3 -> S2 [label=b]
+}
+#+end_example
+
+#+BEGIN_SRC dot :file dfa4REconversion.png :var dotObj=dfa4REconversion
+  $dotObj
+#+END_SRC
+
+#+RESULTS:
+[[file:dfa4REconversion.png]]

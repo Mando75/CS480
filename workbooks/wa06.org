@@ -4,3 +4,31 @@
 #+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t
 #+OPTIONS: html-postamble:nil
 #+STARTUP: entitiespretty inlineimages
+
+* Monday, Feb 11
+** CDL
+
+#+BEGIN_SRC dot :file cdlFeb11.png
+digraph {
+	graph [rankdir=LR]
+	EMPTY [label="" shape=plaintext]
+	S2 [label=S2 peripheries=1 shape=circle]
+  B [label=B peripheries=1 shape=circle]
+  E [label=E peripheries=2 shape=circle]
+	IF1 [label=IF1 peripheries=1 shape=circle]
+	F3 [label=F3 peripheries=1 shape=circle]
+  EMPTY -> B
+	B -> IF1 [label=""]
+	IF1 -> S2 [label=a]
+	IF1 -> S2 [label=b]
+	S2 -> S2 [label=a]
+	S2 -> F3 [label=b]
+	F3 -> IF1 [label=a]
+	F3 -> S2 [label=b]
+  IF1 -> E [label=""]
+  F3 -> E [label=""]
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:cdlFeb11.png]]

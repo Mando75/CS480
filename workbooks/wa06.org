@@ -30,5 +30,87 @@ digraph {
 }
 #+END_SRC
 
-#+RESULTS:
 [[file:cdlFeb11.png]]
+
+
+* Chapter 9
+** Exercise 9.2: NFA to RE
+*** 1.
+Deleting the "X" state last produced the smaller regular expression. This is due
+to the nature of how states are removed from the NFA. If we remove the "busy"
+state last, then most of the states leading to it have already been collapsed,
+leading to less states needing to be collapsed in the final iteration.
+**** a.
+Delete Order:
+#+BEGIN_EXAMPLE
+["I1", "I2","I3", "F1","F2", "X"]
+#+END_EXAMPLE
+
+Produced Regex:
+#+BEGIN_EXAMPLE
+'(((c + ((b + a) + a)) + ((b + a) + a)) (((p + q))* ((n + m) + m)))'
+#+END_EXAMPLE
+
+Delete Order
+
+**** b
+Delete order:
+#+BEGIN_EXAMPLE
+["X", "I1", "I2", "I3", "F1", "F2"]
+#+END_EXAMPLE
+Produced Regex:
+#+BEGIN_EXAMPLE
+'(((((c (((p + q))* n)) + (((b (((p + q))* n)) + (a (((p + q))* n))) + (a (((p + q))* n)))) + (((b (((p + q))* n)) + (a (((p + q))* n))) + (a (((p + q))* n)))) + (((c (((p + q))* m)) + (((b (((p + q))* m)) + (a (((p + q))* m))) + (a (((p + q))* m)))) + (((b (((p + q))* m)) + (a (((p + q))* m))) + (a (((p + q))* m))))) + (((c (((p + q))* m)) + (((b (((p + q))* m)) + (a (((p + q))* m))) + (a (((p + q))* m)))) + (((b (((p + q))* m)) + (a (((p + q))* m))) + (a (((p + q))* m)))))'
+#+END_EXAMPLE
+
+*** 2.
+Heuristically, it seems better to eliminate the busy state last. This is due to
+the reason I explained above. This could perhaps change based on the nfa and the
+number of "busy" states.
+
+*** 3.
+We could always convert them back to an nfa and check for language equivelance.
+
+** Exercise 9.5: nfa2re: RE Size
+*** 1.
+#+BEGIN_SRC python
+  md2mc('''
+  NFA
+  I : '' -> A
+  I : '' -> G
+  A : '' -> C
+  A : '' -> B
+  B : 1 -> D
+  C : 0 -> E
+  D : '' -> G
+  E : '' -> A
+  E : '' -> G
+  G : 1 -> F
+  ''')
+#+END_SRC
+
+**** Step 1.
+     Add real I and real F
+#+BEGIN_SRC python
+  md2mc('''
+  NFA
+  RI : '' -> I
+  I : '' -> A
+  I : '' -> G
+  A : '' -> C
+  A : '' -> B
+  B : 1 -> D
+  C : 0 -> E
+  D : '' -> G
+  E : '' -> A
+  E : '' -> G
+  G : 1 -> F
+  F : '' -> RF
+  ''')
+#+END_SRC
+
+
+*** 2.
+
+Very large, 2^N large.
+*** 3.

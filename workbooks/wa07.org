@@ -95,7 +95,38 @@ S => NP VP
    | B -> b B b B a |
    | B -> \epsilon         |
 
-* TODO Chapter 11 Exercises [50%]
+* DONE Friday, FEB 22, 2019 [100%]
+  CLOSED: [2019-02-22 Fri 18:43]
+** DONE CDL
+   CLOSED: [2019-02-22 Fri 18:43]
+
+Build two PDA
+
+One to recognize the language of EvenPalindromes over \Sigma = {0, 1}, {ww^R : w \in \Sigma }
+(4 states)
+
+The other to recognize the language of MarkedPalindromes over \Sigma = {0, 1} with #
+as the the *marked* character.
+
+{w#w^R : w \in \Sigma } (4 states)
+
+#+BEGIN_EXAMPLE
+I: 0, # : 0# -> A
+I: 1, # : 1# -> A
+A : 0, 0 : 00 -> A
+A : 1, 0 : 01 -> A
+A : 0, 1 : 01 -> A
+A : 1, 1 : 11 -> A
+A : #, 0 : 0  -> B
+A : #, 1 : 1  -> B
+B : 1, 1 : '' -> B
+B : 0, 0 : '' -> B
+B : '', #: # -> F
+#+END_EXAMPLE
+
+
+* DONE Chapter 11 Exercises [100%]
+  CLOSED: [2019-02-22 Fri 19:50]
 
 ** DONE 11.5.1 [100%]
    CLOSED: [2019-02-20 Wed 21:24]
@@ -186,13 +217,11 @@ functions are not the same, (CFG1 is ambigious), they can produce language
 equivalent parse trees, meaning any sentance that can be turned into a parse
 tree with CFG1 can also be turned into a parse tree with CFG2 (and vice versa)
 
-** TODO 11.10.1 [0%]
+** DONE 11.10.1 [100%]
+   CLOSED: [2019-02-22 Fri 19:50]
 
-*** TODO 11.10.1.5
-
-*** TODO 11.10.1.
-
-*** TODO 11.10.1.5
+*** DONE 11.10.1.5
+    CLOSED: [2019-02-22 Fri 18:46]
 **** Case 1 (OP is AND)
   L_{abcd} = {a^{i}b^{j}c^{k}d^{l} : i,j,k,l \ge 0 and ((i = j) AND (k = l))}
 
@@ -216,4 +245,34 @@ tree with CFG1 can also be turned into a parse tree with CFG2 (and vice versa)
   D => '' | dD
 #+END_EXAMPLE
 
-*** TODO 11.10.1.6
+*** DONE 11.10.1.6
+    CLOSED: [2019-02-22 Fri 19:50]
+
+L_acbd = {a^i c^k b^j d^l : i,j,k,l, \ge 0 and ((i = j) OP (k = l))
+
+**** Case 1 OP=AND
+Assume L_acbd = {a^i c^k b^j d^l : i,j,k,l, \ge 0 and ((i = j) AND (k = l)) is context
+free.
+
+Pumping Lemma applies & garuntees an N > 0
+
+Pick N of the pumping lemma. Pick z = a^n c^n b^n d^n.
+Break z into uvwxy, with |vwx| \le n and vx \ne \epsilon.
+Then vwx contains one or two different symbols. In both cases, the string uwy
+connot be in L.
+
+Context Free Languages cannot match two substrings of arbitrary length over an
+alphabet of at least two symbols.
+
+**** Case 2 OP=OR
+
+L_acbd = {a^i c^k b^j d^l : i,j,k,l, \ge 0 and ((i = j) OR (k = l))
+
+This isn't complete, but I fee like it is close
+#+BEGIN_EXAMPLE
+  S => '' | AcBd | aCbD
+  A => '' | aA
+  B => '' | bB
+  C => '' | cC
+  D => '' | dD
+#+END_EXAMPLE

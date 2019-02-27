@@ -1,0 +1,108 @@
+#+TITLE: TM R Us 
+#+DATE: 27 February 2019
+#+OPTIONS: H:4 num:nil toc:t \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t |:t
+#+STARTUP: showeverything entitiespretty
+
+* TODO Work Day
+  #+name: tm1-desc
+  | Current | Symbol | Next  |  Symbol | Move      |
+  | State   |   Read | State | Written | Direction |
+  |---------+--------+-------+---------+-----------|
+  | i0      |      x | q1    |       x | R         |
+  | q1      |      0 | q1    |       0 | R         |
+  | q1      |      1 | q1    |       1 | R         |
+  | q1      |      x | q2    |       x | L         |
+  | q2      |      1 | q2    |       0 | L         |
+  | q2      |      x | fhalt |       1 | S         |
+  | q2      |      0 | q3    |       1 | L         |
+  | q3      |      x | fhalt |       x | S         |
+  | q3      |      0 | q3    |       0 | L         |
+  | q3      |      1 | q3    |       1 | L         |
+
+#+name: tm1-description
+#+BEGIN_SRC elisp :results output :var table=tm1-desc
+  (princ "TM\n")
+  (loop for (cs sr ns sw md) in (cddr table)
+        do (princ (format "%s : %s ; %s , %s -> %s\n" cs sr sw md ns)))
+#+END_SRC
+
+#+RESULTS: tm1-description
+#+begin_example
+TM
+i0 : x ; x , R -> q1
+q1 : 0 ; 0 , R -> q1
+q1 : 1 ; 1 , R -> q1
+q1 : x ; x , L -> q2
+q2 : 1 ; 0 , L -> q2
+q2 : x ; 1 , S -> fhalt
+q2 : 0 ; 1 , L -> q3
+q3 : x ; x , S -> fhalt
+q3 : 0 ; 0 , L -> q3
+q3 : 1 ; 1 , L -> q3
+#+end_example
+
+#+name: tm1
+#+BEGIN_SRC python :results output :cache yes :var md=tm1-description
+  from jove.Def_TM import *
+  from jove.DotBashers import * 
+  from jove.Def_md2mc import md2mc
+
+  tm1 = md2mc(md)
+  print(dotObj_tm(tm1, FuseEdges=True))
+#+END_SRC
+
+#+RESULTS[4f8abf859dbcc28afd43606690b56040994a066a]: tm1
+#+begin_example
+Detailing the halted configs now.
+Accepted at  ('fhalt', 0, 'x1010x', 89)
+ via .. 
+ ->('i0', 0, 'x1001x', 100)
+ ->('q1', 1, 'x1001x', 99)
+ ->('q1', 2, 'x1001x', 98)
+ ->('q1', 3, 'x1001x', 97)
+ ->('q1', 4, 'x1001x', 96)
+ ->('q1', 5, 'x1001x', 95)
+ ->('q2', 4, 'x1001x', 94)
+ ->('q2', 3, 'x1000x', 93)
+ ->('q3', 2, 'x1010x', 92)
+ ->('q3', 1, 'x1010x', 91)
+ ->('q3', 0, 'x1010x', 90)
+ ->('fhalt', 0, 'x1010x', 89)
+None
+#+end_example
+
+#+BEGIN_SRC dot :file tm1.png :var dotObj=tm1
+  $dotObj
+#+END_SRC
+
+#+RESULTS:
+[[file:tm1.png]]
+
+#+name: tm1-explore
+#+BEGIN_SRC python :results output :var md=tm1-description
+  from jove.Def_TM import *
+  from jove.DotBashers import * 
+  from jove.Def_md2mc import md2mc
+
+  tm1 = md2mc(md)
+  explore_tm(tm1, 'x1011x', 100)
+#+END_SRC
+
+#+RESULTS: tm1-explore
+#+begin_example
+Detailing the halted configs now.
+Accepted at  ('fhalt', 0, 'x1100x', 89)
+ via .. 
+ ->('i0', 0, 'x1011x', 100)
+ ->('q1', 1, 'x1011x', 99)
+ ->('q1', 2, 'x1011x', 98)
+ ->('q1', 3, 'x1011x', 97)
+ ->('q1', 4, 'x1011x', 96)
+ ->('q1', 5, 'x1011x', 95)
+ ->('q2', 4, 'x1011x', 94)
+ ->('q2', 3, 'x1010x', 93)
+ ->('q2', 2, 'x1000x', 92)
+ ->('q3', 1, 'x1100x', 91)
+ ->('q3', 0, 'x1100x', 90)
+ ->('fhalt', 0, 'x1100x', 89)
+#+end_example

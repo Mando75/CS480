@@ -158,19 +158,20 @@ Let's test it out...
 
 #+name: dfa4REconversion
 #+BEGIN_SRC python :results output :cache yes
-  from jove.Def_DFA import *
-  from jove.DotBashers import *
-  from jove.Def_md2mc import md2mc
+  # from jove.Def_DFA import *
+  # from jove.DotBashers import *
+  # from jove.Def_md2mc import md2mc
 
-  dfa = '''
-    DFA
-    IF1 : a|b -> S2
-    S2  : a   -> S2
-    S2  : b   -> F3
-    F3  : a   -> IF1
-    F3  : b   -> S2
-  '''
-  print(dotObj_dfa(md2mc(dfa)))
+  # dfa = '''
+    # DFA
+    # IF1 : a|b -> S2
+    # S2  : a   -> S2
+    # S2  : b   -> F3
+    # F3  : a   -> IF1
+    # F3  : b   -> S2
+  # '''
+  # print(dotObj_dfa(md2mc(dfa)))
+  None
 #+END_SRC
 
 #+RESULTS[4dc1be4dbb4ce7932323d4cec2443842d1505dae]: dfa4REconversion

@@ -1,0 +1,159 @@
+#+TITLE: Week 08 Workbook
+#+AUTHOR: Bryan Muller
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t
+#+OPTIONS: html-postamble:nil
+#+STARTUP: entitiespretty inlineimages
+
+
+* DONE Monday, Feb 25th
+  CLOSED: [2019-02-27 Wed 19:57]
+The Simple Language
+
+Increment
+Decrement
+While loop
+nonnegative integer data types only
+boolean type
+implicit i/o only
+
+** CDL
+#+BEGIN_EXAMPLE
+T1 \larr X
+T2 \larr Y
+
+while T1
+{
+   decr T1
+   if T2 then decr T2 else T1 \larr 0
+}
+if T2 then A1 else A2
+#+END_EXAMPLE
+
+* DONE Wednesday, Feb 27th
+  CLOSED: [2019-02-27 Wed 19:57]
+* Friday, March 1st
+
+* DONE Chapter 13 Exercises [100%]
+  CLOSED: [2019-02-27 Wed 19:57]
+
+** DONE Exercise 13.8: DTM and NDTM Design [100%]
+   CLOSED: [2019-02-27 Wed 19:57]
+
+*** DONE 1
+    CLOSED: [2019-02-27 Wed 19:57]
+#+name: tm1-end
+| Current | Symbol | Next  |  Symbol | Move      |
+| State   |   Read | State | Written | Direction |
+|---------+--------+-------+---------+-----------|
+| i0      |      . | fhalt |       0 | S         |
+| i0      |      0 | fhalt |       1 | S         |
+| i0      |      1 | q1    |       0 | R         |
+| q1      |      0 | fhalt |       1 | S         |
+| q1      |      1 | q1    |       0 | R         |
+| q1      |      . | fhalt |       1 | S         |
+
+#+name: tm1-desc
+#+BEGIN_SRC elisp :results output :var table=tm1-end
+  (princ "TM\n")
+  (loop for (cs sr ns sw md) in (cddr table)
+        do (princ (format "%s : %s ; %s , %s -> %s\n" cs sr sw md ns)))
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+ TM
+ i0 : . ; . , S -> fhalt
+ i0 : 0 ; 1 , S -> fhalt
+ i0 : 1 ; 0 , R -> q1
+ q1 : 0 ; 1 , S -> fhalt
+ q1 : 1 ; 0 , R -> q1
+ q1 : . ; 1 , S -> fhalt
+#+END_EXAMPLE
+
+*** DONE 2
+    CLOSED: [2019-02-27 Wed 18:20]
+
+Assuming there is a '#' at the start of the string and a '$' at the end.
+If they do not exist, I would just add the states to add them before starting
+the "count".
+
+Basic idea, bounce back and forth "matching up" pairs of 1's and 0's until you
+run out. Depending on which number you've started on, you will need to accept or
+reject upon reaching a specific side of the tape. q2 handles switching between
+matching an initial 0 to a 1, or an initial 1 to a 0. Note, that a string such
+as 10011 would start with an initial 1, match it to the first zero, and then
+"restart" on the second zero. The q2 state handles that restart.
+
+I am making no claim that this is the "best" program for this particular
+problem, but it has worked on every string I've thrown at it.
+
+#+name: tm2-end
+| Current | Symbol | Symbol  | Move      | Next  |
+| State   | Read   | Written | Direction | State |
+|---------+--------+---------+-----------+-------|
+| i0      | #      | #       | R         | q2    |
+| q1      | *      | *       | R         | q1    |
+| q1      | 1      | 1       | S         | q2    |
+| q1      | $      | $       | S         | A     |
+| q1      | 0      | 0       | S         | q2    |
+| q2      | 1      | X       | R         | q3    |
+| q2      | 0      | Y       | R         | q5    |
+| q2      | *      | #       | R         | q2    |
+| q2      | #      | #       | S         | R     |
+| q3      | 0      | *       | L         | q4    |
+| q3      | 1      | 1       | R         | q3    |
+| q3      | *      | *       | R         | q3    |
+| q3      | $      | $       | S         | A     |
+| q4      | X      | #       | R         | q1    |
+| q4      | 1      | 1       | L         | q4    |
+| q4      | *      | *       | L         | q4    |
+| q5      | 0      | 0       | R         | q5    |
+| q5      | 1      | *       | L         | q6    |
+| q5      | #      | #       | S         | R     |
+| q5      | *      | *       | R         | q5    |
+| q5      | $      | $       | S         | R     |
+| q6      | 0      | 0       | L         | q6    |
+| q6      | 1      | 1       | L         | q6    |
+| q6      | Y      | #       | R         | q2    |
+| q6      | *      | *       | L         | q6   |
+
+
+#+name: tm2-desc
+#+BEGIN_SRC elisp :results output :var table=tm2-end
+  (princ "TM\n")
+  (loop for (cs sr sw md ns) in (cddr table)
+        do (princ (format "%s : %s ; %s , %s -> %s\n" cs sr sw md ns)))
+#+END_SRC
+
+#+RESULTS: tm2-desc
+#+begin_example
+TM
+i0 : # ; # , R -> q2
+q1 : * ; * , R -> q1
+q1 : 1 ; 1 , S -> q2
+q1 : $ ; $ , S -> A
+q1 : 0 ; 0 , S -> q2
+q2 : 1 ; X , R -> q3
+q2 : 0 ; Y , R -> q5
+q2 : * ; # , R -> q2
+q2 : # ; # , S -> R
+q3 : 0 ; * , L -> q4
+q3 : 1 ; 1 , R -> q3
+q3 : * ; * , R -> q3
+q3 : $ ; $ , S -> A
+q4 : X ; # , R -> q1
+q4 : 1 ; 1 , L -> q4
+q4 : * ; * , L -> q4
+q5 : 0 ; 0 , R -> q5
+q5 : 1 ; * , L -> q6
+q5 : # ; # , S -> R
+q5 : * ; * , R -> q5
+q5 : $ ; $ , S -> R
+q6 : 0 ; 0 , L -> q6
+q6 : 1 ; 1 , L -> q6
+q6 : Y ; # , R -> q2
+q6 : * ; * , L -> q6
+#+end_example
+
+TM Graph
+[[./graphs/tm2.png]]

@@ -1404,6 +1404,7 @@ Selections from Week 4 exercises:
 \pagebreak
 #+End_Latex
 
+
 ** Week 5
 *** Chapter 7 Exercises [100%]
 **** DONE Exercise 7.5: NFA to DFA
@@ -1669,3 +1670,655 @@ Selections from Week 4 exercises:
         F(p,q,r) = 13
 
 ***** 2.
+
+** Week 6
+*** Monday, Feb 11
+**** CDL
+
+  #+BEGIN_SRC dot :file cdlFeb11.png
+  digraph {
+	  graph [rankdir=LR]
+	  EMPTY [label="" shape=plaintext]
+	  S2 [label=S2 peripheries=1 shape=circle]
+    B [label=B peripheries=1 shape=circle]
+    E [label=E peripheries=2 shape=circle]
+	  IF1 [label=IF1 peripheries=1 shape=circle]
+	  F3 [label=F3 peripheries=1 shape=circle]
+    EMPTY -> B
+	  B -> IF1 [label=""]
+	  IF1 -> S2 [label=a]
+	  IF1 -> S2 [label=b]
+	  S2 -> S2 [label=a]
+	  S2 -> F3 [label=b]
+	  F3 -> IF1 [label=a]
+	  F3 -> S2 [label=b]
+    IF1 -> E [label=""]
+    F3 -> E [label=""]
+  }
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:cdlFeb11.png]]
+
+
+
+
+*** Chapter 9 [100%]
+**** DONE Exercise 9.2: NFA to RE
+     CLOSED: [2019-02-13 Wed 20:29]
+***** 1.
+  Deleting the "X" state last produced the smaller regular expression. This is due
+  to the nature of how states are removed from the NFA. If we remove the "busy"
+  state last, then most of the states leading to it have already been collapsed,
+  leading to less states needing to be collapsed in the final iteration.
+****** a.
+  Delete Order:
+  #+BEGIN_EXAMPLE
+  ["I1", "I2","I3", "F1","F2", "X"]
+  #+END_EXAMPLE
+
+  Produced Regex:
+  #+BEGIN_EXAMPLE
+  '(((c + ((b + a) + a)) + ((b + a) + a)) (((p + q))* ((n + m) + m)))'
+  #+END_EXAMPLE
+
+  Delete Order
+
+****** b
+  Delete order:
+  #+BEGIN_EXAMPLE
+  ["X", "I1", "I2", "I3", "F1", "F2"]
+  #+END_EXAMPLE
+  Produced Regex:
+  #+BEGIN_EXAMPLE
+  '(((((c (((p + q))* n)) + (((b (((p + q))* n)) + (a (((p + q))* n))) + (a (((p + q))* n)))) + (((b (((p + q))* n)) + (a (((p + q))* n))) + (a (((p + q))* n)))) + (((c (((p + q))* m)) + (((b (((p + q))* m)) + (a (((p + q))* m))) + (a (((p + q))* m)))) + (((b (((p + q))* m)) + (a (((p + q))* m))) + (a (((p + q))* m))))) + (((c (((p + q))* m)) + (((b (((p + q))* m)) + (a (((p + q))* m))) + (a (((p + q))* m)))) + (((b (((p + q))* m)) + (a (((p + q))* m))) + (a (((p + q))* m)))))'
+  #+END_EXAMPLE
+
+***** 2.
+  Heuristically, it seems better to eliminate the busy state last. This is due to
+  the reason I explained above. This could perhaps change based on the nfa and the
+  number of "busy" states.
+
+***** 3.
+  We could always convert them back to an nfa and check for language equivelance.
+
+**** DONE Exercise 9.5: nfa2re: RE Size
+     CLOSED: [2019-02-28 Thu 15:04]
+***** 1.
+  #+BEGIN_SRC python
+    md2mc('''
+    NFA
+    I : '' -> A
+    I : '' -> G
+    A : '' -> C
+    A : '' -> B
+    B : 1 -> D
+    C : 0 -> E
+    D : '' -> G
+    E : '' -> A
+    E : '' -> G
+    G : 1 -> F
+    ''')
+  #+END_SRC
+
+  Delete Order: I, A, B, C, D, E, G, F.
+****** Step 1.
+       Add real I (S) and real F (Q)
+  #+BEGIN_SRC python
+    md2mc('''
+    NFA
+    S : '' -> I
+    I : '' -> A
+    I : '' -> G
+    A : '' -> C
+    A : '' -> B
+    B : 1 -> D
+    C : 0 -> E
+    D : '' -> G
+    E : '' -> A
+    E : '' -> G
+    G : 1 -> F
+    F : '' -> Q 
+    ''')
+  #+END_SRC
+  | SI | = | \epsilon |
+  | IA | = | \epsilon |
+  | IG | = | \epsilon |
+  | AB | = | \epsilon |
+  | AC | = | \epsilon |
+  | BD | = | 1 |
+  | CE | = | 0 |
+  | DG | = | \epsilon |
+  | EA | = | \epsilon |
+  | EG | = | \epsilon |
+  | GF | = | 1 |
+  | FQ | = | \epsilon |
+
+****** Remove I
+  i = S, j = a
+  R1_a = \epsilon, R2_a = \empty, R3_a = \epsilon, R4_a = \empty
+  i = S, j = g
+  R1_g = \epsilon, R2_g = \empty, R3_g = \epsilon, R4_g = \empty
+  | SA | = | (\epsilon)(\empty)^*(\epsilon) \cup (\empty) | = | \epsilon |
+  | SG | = | (\epsilon)(\empty)^*(\epsilon) \cup (\empty) | = | \epsilon |
+  | AB | = | \epsilon                | = | \epsilon |
+  | AC | = | \epsilon                | = | \epsilon |
+  | BD | = | 1                | = | 1 |
+  | CE | = | 0                | = | 0 |
+  | DG | = | \epsilon                | = | \epsilon |
+  | EA | = | \epsilon                | = | \epsilon |
+  | EG | = | \epsilon                | = | \epsilon |
+  | GF | = | 1                | = | 1 |
+  | FQ | = | \epsilon                | = | \epsilon |
+
+****** Remove A
+  i = S, j = b
+  R1_B = \epsilon, R2_B = \empty, R3_B = \epsilon, R4_B = \empty
+  i = S, j = c
+  R1_C = \epsilon, R2_C = \empty, R3_C = \epsilon, R4_C = \empty
+  i = E, j = E
+  R1_E = \epsilon, R2_E = \empty, R3_E = \empty, R4_C = \empty
+  | SB | = | (\epsilon)(\empty)^*(\epsilon) \cup (\empty) | = | \epsilon |
+  | SC | = | (\epsilon)(\empty)^*(\epsilon) \cup (\empty) | = | \epsilon |
+  | SG | = | (\epsilon)(\empty)^*(\epsilon) \cup (\empty) | = | \epsilon |
+  | BD | = | 1                | = | 1 |
+  | CE | = | 0                | = | 0 |
+  | DG | = | \epsilon                | = | \epsilon |
+  | ES | = | (\epsilon)(\empty)^*(\epsilon) \cup (\empty) | = | \epsilon |
+  | EG | = | \epsilon                | = | \epsilon |
+  | GF | = | 1                | = | 1 |
+  | FQ | = | \epsilon                | = | \epsilon |
+
+****** Remove B
+  i = S, j = D
+  R1 = \epsilon, R2 = \empty, R3 = 1, R4 = \empty 
+  | SC | = | (\epsilon)(\empty)^*(\epsilon) \cup (\empty) | = | \epsilon |
+  | SD | = | (\epsilon)(\empty)^*(1) \cup (\empty) | = | 1 |
+  | SG | = | (\epsilon)(\empty)^*(\epsilon) \cup (\empty) | = | \epsilon |
+  | CE | = | 0                | = | 0 |
+  | DG | = | \epsilon                | = | \epsilon |
+  | ES | = | (\epsilon)(\empty)^*(\epsilon) \cup (\empty) | = | \epsilon |
+  | EG | = | \epsilon                | = | \epsilon |
+  | GF | = | 1                | = | 1 |
+  | FQ | = | \epsilon                | = | \epsilon |
+
+****** Remove C
+  i = S, j = E
+  R1 = \epsilon, R2 = \empty, R3 = 0, R4 = \empty
+  | SD | = | (\epsilon)(\empty)^*(1) \cup (\empty) | = | 1 |
+  | SE | = | (\epsilon)(\empty)^*(0) \cup (\empty) | = | 0 |
+  | SG | = | (\epsilon)(\empty)^*(\epsilon) \cup (\empty) | = | \epsilon |
+  | DG | = | \epsilon                | = | \epsilon |
+  | ES | = | (\epsilon)(\empty)^*(\epsilon) \cup (\empty) | = | \epsilon |
+  | EG | = | \epsilon                | = | \epsilon |
+  | GF | = | 1                | = | 1 |
+  | FQ | = | \epsilon                | = | \epsilon |
+
+****** Remove D
+  i = S, j = G
+  R1 = 1, R2 = \empty, R3 = \epsilon, R4 = \epsilon 
+
+  | SE | = | (\epsilon)(\empty)^*(0) \cup (\empty) | = | 0 |
+  | SG | = | (1)(\empty)^*(\epsilon) \cup (\epsilon) | = | 1 |
+  | ES | = | (\epsilon)(\empty)^*(\epsilon) \cup (\empty) | = | \epsilon |
+  | EG | = | \epsilon                | = | \epsilon |
+  | GF | = | 1                | = | 1 |
+  | FQ | = | \epsilon                | = | \epsilon |
+
+****** Remove E
+  i = S, j = S
+  R1 = 0, R2 = \empty, R3 = \epsilon, R4 = \empty
+  i = S, j = G
+  R1 = 0, R2 = \empty, R3 = \epsilon, R4 = 1 
+  | SS | = | (0)(\empty)^*(\epsilon) \cup (\empty) | = |   0 |
+  | SG | = | (0)(\empty)^*(\epsilon) \cup (1) | = | 0+1 |
+  | GF | = | 1                | = |   1 |
+  | FQ | = | \epsilon                | = |   \epsilon |
+
+****** Remove G
+  i = S, j = F
+  R1 = 0+1, R2 = \empty, R3 = 1, R4 = \empty
+  | SS | = | (0)(\empty)^*(\epsilon) \cup (\empty) | = |   0 |
+  |SF| = |(0+1)(\empty)^*(1) \cup (\empty) | = |(0+1)1
+  | FQ | = | \epsilon                | = |   \epsilon |
+
+****** Remove F
+  i = S, j = Q
+  R1 = (0+1)1, R2 = \empty, R3 = \epsilon, R4 = \empty
+  | SS | = | (0)(\empty)^*(\epsilon) \cup (\empty)    | = |      0 |
+  | SQ | = | (0+1)1(\empty)^*(\epsilon) \cup (\empty) | = | (0+1)1 |
+
+****** Final REGEX
+     ((((0 ((0)* ((1 + "") + ""))) + ((1 + "") + "")) + ((1 + "") + "")) 1)
+
+     | SI | = | \epsilon |
+     | IA | = | \epsilon |
+     | IG | = | \epsilon |
+     | AC | = | \epsilon |
+     | AB | = | \epsilon |
+     | BD | = | 1 |
+     | CE | = | 0 |
+     | DG | = | \epsilon |
+     | EA | = | \epsilon |
+     | EG | = | \epsilon |
+     | GF | = | 1 |
+     | FQ | = | \epsilon |
+
+
+** Week 7
+
+*** DONE Wednesday, FEB 20, 2019 [100%]
+    CLOSED: [2019-02-20 Wed 14:04]
+
+**** DONE Warmup CDL
+     CLOSED: [2019-02-20 Wed 13:07]
+  the boy sees a flower
+  | Noun Phrase  | Verb Phrase  |
+  | Complex Noun | Complex Verb |
+
+  | Arcticle | Noun | Verb | Noun Phrase |
+
+  | the | boy | sees | Article | Noun   |
+  | the | boy | sees | a       | flower |
+
+  SENTANCE => NOUN-PHRASE VERB-PHRASE
+
+           => COMPLEX-NOUN COMPLEX-VERB
+
+           => ARTICLE NOUN VERB NOUN-PHRASE
+
+           => the boy sees COMPLEX-NOUN
+
+           => the boy sees ARTICLE NOUN
+
+           => the boy sees a flower
+
+**** DONE 2nd Warmup CDL
+     CLOSED: [2019-02-20 Wed 13:09]
+  a girl with a flower likes the boy
+  SENTANCE => NP VP
+
+           => CN PP VP
+
+           => A N P CN CV
+
+           => a girl with A N V NP
+
+           => a girl with a flower likes CN
+
+           => a girl with a flower likes A N
+
+           => a girl with a flower likes the boy
+
+**** DONE 3rd Warmpup CDL
+     CLOSED: [2019-02-20 Wed 13:18]
+
+  the girl touches the boy with the flower
+  S => NP VP
+
+    => NP CV PP
+
+    => CN V NP P CN
+
+    => CN V CN P CN
+
+    => A N V A N P A N
+
+    => the girl touches the boy with the flower
+
+**** DONE 4th Warmup CDL
+     CLOSED: [2019-02-20 Wed 13:32]
+
+
+  | S -> aB |
+  | B -> '' | bbB |
+  | B -> bb | bbB |
+
+**** DONE 5th Warmup CDL
+     CLOSED: [2019-02-20 Wed 13:32]
+     | S -> ''   |
+     | S -> aSbb |
+
+**** DONE 6th Warmup CDL
+     CLOSED: [2019-02-20 Wed 13:32]
+
+     | S -> \lambda  |
+     | S -> B  |
+     | B -> bB |
+     | B -> \lambda  |
+
+**** DONE REAL CDL
+     CLOSED: [2019-02-20 Wed 13:43]
+
+     L = {s : s \in {a, b}^* and #_b (s) = 2#_a (s)}
+
+     | S -> a S b S b |
+     | S -> b S a S b |
+     | S -> b S b S a |
+     | S -> \epsilon         |
+
+
+**** REAL CDL pt 2
+
+     L = {s : s \in {a, b}^* and #_b (s) = 2#_a (s) + 3}
+
+     | S -> A         |
+     | S -> \epsilon         |
+     | A -> B b b b   |
+     | A -> b B b b   |
+     | A -> b b B b   |
+     | A -> b b b B   |
+     | B -> a B b B b |
+     | B -> b B a B b |
+     | B -> b B b B a |
+     | B -> \epsilon         |
+
+*** DONE Friday, FEB 22, 2019 [100%]
+    CLOSED: [2019-02-22 Fri 18:43]
+**** DONE CDL
+     CLOSED: [2019-02-22 Fri 18:43]
+
+  Build two PDA
+
+  One to recognize the language of EvenPalindromes over \Sigma = {0, 1}, {ww^R : w \in \Sigma }
+  (4 states)
+
+  The other to recognize the language of MarkedPalindromes over \Sigma = {0, 1} with #
+  as the the *marked* character.
+
+  {w#w^R : w \in \Sigma } (4 states)
+
+  #+BEGIN_EXAMPLE
+  I: 0, # : 0# -> A
+  I: 1, # : 1# -> A
+  A : 0, 0 : 00 -> A
+  A : 1, 0 : 01 -> A
+  A : 0, 1 : 01 -> A
+  A : 1, 1 : 11 -> A
+  A : #, 0 : 0  -> B
+  A : #, 1 : 1  -> B
+  B : 1, 1 : '' -> B
+  B : 0, 0 : '' -> B
+  B : '', #: # -> F
+  #+END_EXAMPLE
+
+*** DONE Chapter 11 Exercises [100%]
+    CLOSED: [2019-02-22 Fri 19:50]
+
+**** DONE 11.5.1 [100%]
+     CLOSED: [2019-02-20 Wed 21:24]
+
+***** DONE 11.5.1.1
+      CLOSED: [2019-02-20 Wed 20:41]
+  Sentance 1 + 2 * 3
+  #+BEGIN_EXAMPLE
+  E -> E+T | T
+  T -> T*F | F
+  F -> 1 | 2 | 3 | ~F | (E)
+  #+END_EXAMPLE
+
+  E => E + T
+    => F + T * F
+    => 1 + F * 3
+    => 1 + 2 * 3
+
+  as parse tree:
+:               E
+:              /|\
+:             E + T
+:            /   /|\
+:           F   T * F
+:           |   |   |
+:           1   F   3
+:               |
+:               2
+
+***** DONE 11.5.1.2
+      CLOSED: [2019-02-20 Wed 21:14]
+
+  Sentence: 1 + ~ 2 * 3
+
+****** CFG1
+
+  #+NAME CFG 1
+  #+BEGIN_EXAMPLE
+  E -> 1 | 2 | 3 | ~E | E+E | E*E | (E)
+  #+END_EXAMPLE
+
+  Parse Tree 1
+  :           E
+  :          /|\
+  :         E + E
+  :         |  /|\
+  :         1 E * E
+  :           |   |
+  :          ~E   3
+  :           |
+  :           2
+
+  Parse Tree 2
+  :           E
+  :          /|\
+  :         E * E
+  :        /|\  |
+  :       E + E 3
+  :       |   |
+  :       1  ~E
+  :           |
+  :           2
+****** CFG2
+  #+NAME CFG 2
+  #+BEGIN_EXAMPLE
+  E -> E+T | T
+  T -> T*F | F
+  F -> 1 | 2 | 3 | ~F | (E)
+  #+END_EXAMPLE
+
+  :           E
+  :          /|\
+  :         / | \
+  :        E  +  T
+  :        |    /|\
+  :        T   T * F
+  :        |   |   |
+  :        F   F   3
+  :        |   |
+  :        1  ~F
+  :            |
+  :            2
+***** DONE 11.5.1.3
+      CLOSED: [2019-02-20 Wed 21:24]
+  I would argue that they denote the same context free language because they
+  contain the same set of terminals and transitions. While the transition
+  functions are not the same, (CFG1 is ambigious), they can produce language
+  equivalent parse trees, meaning any sentance that can be turned into a parse
+  tree with CFG1 can also be turned into a parse tree with CFG2 (and vice versa)
+
+**** DONE 11.10.1 [100%]
+     CLOSED: [2019-02-22 Fri 19:50]
+
+***** DONE 11.10.1.5
+      CLOSED: [2019-02-22 Fri 18:46]
+****** Case 1 (OP is AND)
+    L_{abcd} = {a^{i}b^{j}c^{k}d^{l} : i,j,k,l \ge 0 and ((i = j) AND (k = l))}
+
+  #+BEGIN_EXAMPLE
+    S => '' | AB
+    A => '' | aAb
+    B => '' | cBd
+  #+END_EXAMPLE
+
+****** Case 2 (OP is OR)
+
+    L_{abcd} = {a^{i}b^{j}c^{k}d^{l} : i,j,k,l \ge 0 and ((i = j) OR (k = l))}
+
+  #+BEGIN_EXAMPLE
+    S => '' | XY | ABY | XCD
+    X => '' | aXb
+    Y => '' | cYd
+    A => '' | aA
+    B => '' | bB
+    C => '' | cC
+    D => '' | dD
+  #+END_EXAMPLE
+
+***** DONE 11.10.1.6
+      CLOSED: [2019-02-22 Fri 19:50]
+
+  L_acbd = {a^i c^k b^j d^l : i,j,k,l, \ge 0 and ((i = j) OP (k = l))
+
+****** Case 1 OP=AND
+  Assume L_acbd = {a^i c^k b^j d^l : i,j,k,l, \ge 0 and ((i = j) AND (k = l)) is context
+  free.
+
+  Pumping Lemma applies & garuntees an N > 0
+
+  Pick N of the pumping lemma. Pick z = a^n c^n b^n d^n.
+  Break z into uvwxy, with |vwx| \le n and vx \ne \epsilon.
+  Then vwx contains one or two different symbols. In both cases, the string uwy
+  connot be in L.
+
+  Context Free Languages cannot match two substrings of arbitrary length over an
+  alphabet of at least two symbols.
+
+****** Case 2 OP=OR
+
+  L_acbd = {a^i c^k b^j d^l : i,j,k,l, \ge 0 and ((i = j) OR (k = l))
+
+  This isn't complete, but I feel like it is close
+  #+BEGIN_EXAMPLE
+    S => '' | AcBd | aCbD
+    A => '' | aA
+    B => '' | bB
+    C => '' | cC
+    D => '' | dD
+  #+END_EXAMPLE
+
+
+
+** Week 8
+
+*** DONE Chapter 13 Exercises [100%]
+    CLOSED: [2019-02-27 Wed 19:57]
+
+**** DONE Exercise 13.8: DTM and NDTM Design [100%]
+     CLOSED: [2019-02-27 Wed 19:57]
+   
+***** DONE 1
+      CLOSED: [2019-02-27 Wed 19:57]
+  #+name: tm1-end
+  | Current | Symbol | Next  |  Symbol | Move      |
+  | State   |   Read | State | Written | Direction |
+  |---------+--------+-------+---------+-----------|
+  | i0      |      . | fhalt |       0 | S         |
+  | i0      |      0 | fhalt |       1 | S         |
+  | i0      |      1 | q1    |       0 | R         |
+  | q1      |      0 | fhalt |       1 | S         |
+  | q1      |      1 | q1    |       0 | R         |
+  | q1      |      . | fhalt |       1 | S         |
+
+  #+name: tm1-desc
+  #+BEGIN_SRC elisp :results output :var table=tm1-end
+    (princ "TM\n")
+    (loop for (cs sr ns sw md) in (cddr table)
+          do (princ (format "%s : %s ; %s , %s -> %s\n" cs sr sw md ns)))
+  #+END_SRC
+
+  #+BEGIN_EXAMPLE
+   TM
+   i0 : . ; . , S -> fhalt
+   i0 : 0 ; 1 , S -> fhalt
+   i0 : 1 ; 0 , R -> q1
+   q1 : 0 ; 1 , S -> fhalt
+   q1 : 1 ; 0 , R -> q1
+   q1 : . ; 1 , S -> fhalt
+  #+END_EXAMPLE
+
+***** DONE 2
+      CLOSED: [2019-02-27 Wed 18:20]
+
+  Assuming there is a '#' at the start of the string and a '$' at the end.
+  If they do not exist, I would just add the states to add them before starting
+  the "count".
+
+  Basic idea, bounce back and forth "matching up" pairs of 1's and 0's until you
+  run out. Depending on which number you've started on, you will need to accept or
+  reject upon reaching a specific side of the tape. q2 handles switching between
+  matching an initial 0 to a 1, or an initial 1 to a 0. Note, that a string such
+  as 10011 would start with an initial 1, match it to the first zero, and then
+  "restart" on the second zero. The q2 state handles that restart.
+
+  I am making no claim that this is the "best" program for this particular
+  problem, but it has worked on every string I've thrown at it.
+
+  #+name: tm2-end
+  | Current | Symbol | Symbol  | Move      | Next  |
+  | State   | Read   | Written | Direction | State |
+  |---------+--------+---------+-----------+-------|
+  | i0      | #      | #       | R         | q2    |
+  | q1      | *      | *       | R         | q1    |
+  | q1      | 1      | 1       | S         | q2    |
+  | q1      | $      | $       | S         | A     |
+  | q1      | 0      | 0       | S         | q2    |
+  | q2      | 1      | X       | R         | q3    |
+  | q2      | 0      | Y       | R         | q5    |
+  | q2      | *      | #       | R         | q2    |
+  | q2      | #      | #       | S         | R     |
+  | q3      | 0      | *       | L         | q4    |
+  | q3      | 1      | 1       | R         | q3    |
+  | q3      | *      | *       | R         | q3    |
+  | q3      | $      | $       | S         | A     |
+  | q4      | X      | #       | R         | q1    |
+  | q4      | 1      | 1       | L         | q4    |
+  | q4      | *      | *       | L         | q4    |
+  | q5      | 0      | 0       | R         | q5    |
+  | q5      | 1      | *       | L         | q6    |
+  | q5      | #      | #       | S         | R     |
+  | q5      | *      | *       | R         | q5    |
+  | q5      | $      | $       | S         | R     |
+  | q6      | 0      | 0       | L         | q6    |
+  | q6      | 1      | 1       | L         | q6    |
+  | q6      | Y      | #       | R         | q2    |
+  | q6      | *      | *       | L         | q6   |
+
+
+  #+name: tm2-desc
+  #+BEGIN_SRC elisp :results output :var table=tm2-end
+    (princ "TM\n")
+    (loop for (cs sr sw md ns) in (cddr table)
+          do (princ (format "%s : %s ; %s , %s -> %s\n" cs sr sw md ns)))
+  #+END_SRC
+
+  #+RESULTS: tm2-desc
+  #+begin_example
+  TM
+  i0 : # ; # , R -> q2
+  q1 : * ; * , R -> q1
+  q1 : 1 ; 1 , S -> q2
+  q1 : $ ; $ , S -> A
+  q1 : 0 ; 0 , S -> q2
+  q2 : 1 ; X , R -> q3
+  q2 : 0 ; Y , R -> q5
+  q2 : * ; # , R -> q2
+  q2 : # ; # , S -> R
+  q3 : 0 ; * , L -> q4
+  q3 : 1 ; 1 , R -> q3
+  q3 : * ; * , R -> q3
+  q3 : $ ; $ , S -> A
+  q4 : X ; # , R -> q1
+  q4 : 1 ; 1 , L -> q4
+  q4 : * ; * , L -> q4
+  q5 : 0 ; 0 , R -> q5
+  q5 : 1 ; * , L -> q6
+  q5 : # ; # , S -> R
+  q5 : * ; * , R -> q5
+  q5 : $ ; $ , S -> R
+  q6 : 0 ; 0 , L -> q6
+  q6 : 1 ; 1 , L -> q6
+  q6 : Y ; # , R -> q2
+  q6 : * ; * , L -> q6
+  #+end_example
+
+  TM Graph
+[[file:workbooks/graphs/tm2.png]]
+

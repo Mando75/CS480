@@ -90,8 +90,10 @@ We could always convert them back to an nfa and check for language equivelance.
   ''')
 #+END_SRC
 
+Delete Order: I, A, B, C, D, E, G, F.
 **** Step 1.
      Add real I (S) and real F (Q)
+<<<<<<< HEAD
 #+BEGIN_SRC python
   md2mc('''
   NFA
@@ -218,10 +220,30 @@ R1 = (0+1)1, R2 = \empty, R3 = \epsilon, R4 = \empty
 
 **** Final REGEX
    ((((0 ((0)* ((1 + "") + ""))) + ((1 + "") + "")) + ((1 + "") + "")) 1)
+=======
 
+   | SI | = | \epsilon |
+   | IA | = | \epsilon |
+   | IG | = | \epsilon |
+   | AC | = | \epsilon |
+   | AB | = | \epsilon |
+   | BD | = | 1 |
+   | CE | = | 0 |
+   | DG | = | \epsilon |
+   | EA | = | \epsilon |
+   | EG | = | \epsilon |
+   | GF | = | 1 |
+   | FQ | = | \epsilon |
+>>>>>>> f83b87c179a55506e01c54e12faeb0c2eef8cbbd
+
+**** Remove I:
+     | IA | = | \epsilon |
+     | IG | = | \epsilon |
+     |    |   |   |
 *** 2.
 
 Very large, 2^N large.
+
 *** 3.
 
 Commented output: '(((((((a r) + "") + "") ((s)* p)) + (a q)) + (a q)) (((((t r)

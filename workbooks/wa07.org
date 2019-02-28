@@ -1,0 +1,278 @@
+#+TITLE: Week 07 Workbook
+#+AUTHOR: Bryan Muller
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t
+#+OPTIONS: html-postamble:nil
+#+STARTUP: entitiespretty inlineimages
+
+* DONE Wednesday, FEB 20, 2019 [100%]
+  CLOSED: [2019-02-20 Wed 14:04]
+
+** DONE Warmup CDL
+   CLOSED: [2019-02-20 Wed 13:07]
+the boy sees a flower
+| Noun Phrase  | Verb Phrase  |
+| Complex Noun | Complex Verb |
+
+| Arcticle | Noun | Verb | Noun Phrase |
+
+| the | boy | sees | Article | Noun   |
+| the | boy | sees | a       | flower |
+
+SENTANCE => NOUN-PHRASE VERB-PHRASE
+         => COMPLEX-NOUN COMPLEX-VERB
+         => ARTICLE NOUN VERB NOUN-PHRASE
+         => the boy sees COMPLEX-NOUN
+         => the boy sees ARTICLE NOUN
+         => the boy sees a flower
+
+** DONE 2nd Warmup CDL
+   CLOSED: [2019-02-20 Wed 13:09]
+a girl with a flower likes the boy
+SENTANCE => NP VP
+         => CN PP VP
+         => A N P CN CV
+         => a girl with A N V NP
+         => a girl with a flower likes CN
+         => a girl with a flower likes A N
+         => a girl with a flower likes the boy
+
+** DONE 3rd Warmpup CDL
+   CLOSED: [2019-02-20 Wed 13:18]
+
+the girl touches the boy with the flower
+S => NP VP
+  => NP CV PP
+  => CN V NP P CN
+  => CN V CN P CN
+  => A N V A N P A N
+  => the girl touches the boy with the flower
+
+** DONE 4th Warmup CDL
+   CLOSED: [2019-02-20 Wed 13:32]
+
+
+| S -> aB |
+| B -> '' | bbB |
+| B -> bb | bbB |
+
+** DONE 5th Warmup CDL
+   CLOSED: [2019-02-20 Wed 13:32]
+   | S -> ''   |
+   | S -> aSbb |
+
+** DONE 6th Warmup CDL
+   CLOSED: [2019-02-20 Wed 13:32]
+
+   | S -> \lambda  |
+   | S -> B  |
+   | B -> bB |
+   | B -> \lambda  |
+
+** DONE REAL CDL
+   CLOSED: [2019-02-20 Wed 13:43]
+
+   L = {s : s \in {a, b}^* and #_b (s) = 2#_a (s)}
+
+   | S -> a S b S b |
+   | S -> b S a S b |
+   | S -> b S b S a |
+   | S -> \epsilon         |
+
+
+** REAL CDL pt 2
+
+   L = {s : s \in {a, b}^* and #_b (s) = 2#_a (s) + 3}
+
+   | S -> A         |
+   | S -> \epsilon         |
+   | A -> B b b b   |
+   | A -> b B b b   |
+   | A -> b b B b   |
+   | A -> b b b B   |
+   | B -> a B b B b |
+   | B -> b B a B b |
+   | B -> b B b B a |
+   | B -> \epsilon         |
+
+* DONE Friday, FEB 22, 2019 [100%]
+  CLOSED: [2019-02-22 Fri 18:43]
+** DONE CDL
+   CLOSED: [2019-02-22 Fri 18:43]
+
+Build two PDA
+
+One to recognize the language of EvenPalindromes over \Sigma = {0, 1}, {ww^R : w \in \Sigma }
+(4 states)
+
+The other to recognize the language of MarkedPalindromes over \Sigma = {0, 1} with #
+as the the *marked* character.
+
+{w#w^R : w \in \Sigma } (4 states)
+
+#+BEGIN_EXAMPLE
+I: 0, # : 0# -> A
+I: 1, # : 1# -> A
+A : 0, 0 : 00 -> A
+A : 1, 0 : 01 -> A
+A : 0, 1 : 01 -> A
+A : 1, 1 : 11 -> A
+A : #, 0 : 0  -> B
+A : #, 1 : 1  -> B
+B : 1, 1 : '' -> B
+B : 0, 0 : '' -> B
+B : '', #: # -> F
+#+END_EXAMPLE
+
+
+* DONE Chapter 11 Exercises [100%]
+  CLOSED: [2019-02-22 Fri 19:50]
+
+** DONE 11.5.1 [100%]
+   CLOSED: [2019-02-20 Wed 21:24]
+
+*** DONE 11.5.1.1
+    CLOSED: [2019-02-20 Wed 20:41]
+Sentance 1 + 2 * 3
+#+BEGIN_EXAMPLE
+E -> E+T | T
+T -> T*F | F
+F -> 1 | 2 | 3 | ~F | (E)
+#+END_EXAMPLE
+
+E => E + T
+  => F + T * F
+  => 1 + F * 3
+  => 1 + 2 * 3
+
+as parse tree:
+             E
+            /|\
+           E + T
+          /   /|\
+         F   T * F
+         |   |   |
+         1   F   3
+             |
+             2
+
+*** DONE 11.5.1.2
+    CLOSED: [2019-02-20 Wed 21:14]
+
+Sentance: 1 + ~ 2 * 3
+
+**** CFG1
+
+#+NAME CFG 1
+#+BEGIN_EXAMPLE
+E -> 1 | 2 | 3 | ~E | E+E | E*E | (E)
+#+END_EXAMPLE
+
+Parse Tree 1
+:           E
+:          /|\
+:         E + E
+:         |  /|\
+:         1 E * E
+:           |   |
+:          ~E   3
+:           |
+:           2
+
+Parse Tree 2
+:           E
+:          /|\
+:         E * E
+:        /|\  |
+:       E + E 3
+:       |   |
+:       1  ~E
+:           |
+:           2
+**** CFG2
+#+NAME CFG 2
+#+BEGIN_EXAMPLE
+E -> E+T | T
+T -> T*F | F
+F -> 1 | 2 | 3 | ~F | (E)
+#+END_EXAMPLE
+
+:           E
+:          /|\
+:         / | \
+:        E  +  T
+:        |    /|\
+:        T   T * F
+:        |   |   |
+:        F   F   3
+:        |   |
+:        1  ~F
+:            |
+:            2
+*** DONE 11.5.1.3
+    CLOSED: [2019-02-20 Wed 21:24]
+I would argue that they denote the same context free language because they
+contain the same set of terminals and transitions. While the transition
+functions are not the same, (CFG1 is ambigious), they can produce language
+equivalent parse trees, meaning any sentance that can be turned into a parse
+tree with CFG1 can also be turned into a parse tree with CFG2 (and vice versa)
+
+** DONE 11.10.1 [100%]
+   CLOSED: [2019-02-22 Fri 19:50]
+
+*** DONE 11.10.1.5
+    CLOSED: [2019-02-22 Fri 18:46]
+**** Case 1 (OP is AND)
+  L_{abcd} = {a^{i}b^{j}c^{k}d^{l} : i,j,k,l \ge 0 and ((i = j) AND (k = l))}
+
+#+BEGIN_EXAMPLE
+  S => '' | AB
+  A => '' | aAb
+  B => '' | cBd
+#+END_EXAMPLE
+
+**** Case 2 (OP is OR)
+
+  L_{abcd} = {a^{i}b^{j}c^{k}d^{l} : i,j,k,l \ge 0 and ((i = j) OR (k = l))}
+
+#+BEGIN_EXAMPLE
+  S => '' | XY | ABY | XCD
+  X => '' | aXb
+  Y => '' | cYd
+  A => '' | aA
+  B => '' | bB
+  C => '' | cC
+  D => '' | dD
+#+END_EXAMPLE
+
+*** DONE 11.10.1.6
+    CLOSED: [2019-02-22 Fri 19:50]
+
+L_acbd = {a^i c^k b^j d^l : i,j,k,l, \ge 0 and ((i = j) OP (k = l))
+
+**** Case 1 OP=AND
+Assume L_acbd = {a^i c^k b^j d^l : i,j,k,l, \ge 0 and ((i = j) AND (k = l)) is context
+free.
+
+Pumping Lemma applies & garuntees an N > 0
+
+Pick N of the pumping lemma. Pick z = a^n c^n b^n d^n.
+Break z into uvwxy, with |vwx| \le n and vx \ne \epsilon.
+Then vwx contains one or two different symbols. In both cases, the string uwy
+connot be in L.
+
+Context Free Languages cannot match two substrings of arbitrary length over an
+alphabet of at least two symbols.
+
+**** Case 2 OP=OR
+
+L_acbd = {a^i c^k b^j d^l : i,j,k,l, \ge 0 and ((i = j) OR (k = l))
+
+This isn't complete, but I fee like it is close
+#+BEGIN_EXAMPLE
+  S => '' | AcBd | aCbD
+  A => '' | aA
+  B => '' | bB
+  C => '' | cC
+  D => '' | dD
+#+END_EXAMPLE

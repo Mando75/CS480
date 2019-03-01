@@ -1,0 +1,143 @@
+#+TITLE: Word Problems
+#+AUTHOR: Various Authors
+#+OPTIONS: toc:nil num:nil \n:nil 
+
+* Excerpt from Roger Penrose\rsquo{}s /The Emperor\rsquo{}s New Mind/
+
+  Let us consider a different type of problem, called the word problem.
+
+  Suppose that we have some alphabet of symbols, and we consider various strings
+  of these symbols, referred to as words. The words need not in themselves have
+  any meaning, but we shall be given a certain (finite) list of \lsquo{}equivalences\rsquo
+  between them which we are allowed to use in order to derive further such
+  \lsquo{}equivalences\rsquo. This is done by making substitutions of words from the initial
+  list into other (normally longer) words which contain them as portions. Each
+  such portion may be replaced by another portion which is deemed to be
+  equivalent to it according to the list. The problem is then to decide, for
+  some given pair of words, whether or not they are \lsquo{}equivalent\rsquo according to
+  these rules.
+
+  As an example, we might have, for our initial list:
+
+  1. EAT \equiv AT
+  2. ATE \equiv A
+  3. LATER \equiv LOW
+  4. PAN \equiv PILLOW
+  5. CARP \equiv ME.
+
+  From these we can derive, for example, LAP \equiv LEAP by use of successive
+  substitutions from the second, the first, and again the second of the
+  relations from the initial list:
+
+  LAP \equiv LATEP \equiv LEATEP \equiv LEAP.
+
+  The problem now is, given some pair of words, can we get from one to the other
+  simply using such substitutions? Can we, for example, get from CATERPILLAR to
+  MAN, or, say, from CARPET to MEAT? The answer in the first case happens to be
+  \lsquo{}yes\rsquo, while in the second it is \lsquo{}no\rsquo.
+
+  When the answer is \lsquo{}yes\rsquo, the normal way to show this would be simply to
+  exhibit a string of equivalences where each word is obtained from the
+  preceding one by use of an allowed relation. Thus:
+
+  CATERPILLAR \equiv CARPILLAR \equiv CARPILLATER \equiv CARPILLOW \equiv CARPAN \equiv MEAN \equiv MEATEN \equiv
+  MATEN \equiv MAN.
+
+  How can we tell that it is impossible to get from CARPET to MEAT by means of
+  the allowed rules? For this, we need to think a little more, but it is not
+  hard to see, in a variety of different ways. The simplest appears to be the
+  following: in every \lsquo{}equivalence\rsquo in our initial list, the number of As plus
+  the number of Ws plus the number of Ms is the same on each side. Thus the
+  total number of As, Ws, and Ms cannot change throughout any succession of
+  allowed substitutions.
+
+  However, for CARPET this number is 1 whereas for MEAT it is 2.
+
+  Consequently, there is no way of getting from CARPET to MEAT by allowed
+  substitutions.
+
+  Notice that when the two words are \lsquo{}equivalent\rsquo we can show this simply by
+  exhibiting an allowed formal string of symbols, using the rules that we had been
+  given; whereas in the case where they are \lsquo{}inequivalent\rsquo, we had to resort to
+  arguments about the rules that we had been given. There is a clear algorithm
+  that we can use to establish \lsquo{}equivalence\rsquo between words whenever the words are
+  in fact \lsquo{}equivalent\rsquo. All we need do is to make a lexicographical listing of all
+  the possible sequences of words, and then strike from this list any such string
+  for which there is a pair of consecutive words where the second does not follow
+  from the first by an allowed rule. The remaining sequences will provide all the
+  sought-for \lsquo{}equivalences\rsquo between words. However, there is no such obvious
+  algorithm, in general, for deciding when two words are not \lsquo{}equivalent\rsquo, and we
+  may have to resort to \lsquo{}intelligence\rsquo in order to establish that fact. (Indeed,
+  it took me some while before I noticed the above \lsquo{}trick\rsquo for establishing that
+  CARPET and MEAT are not \lsquo{}equivalent\rsquo. With another example, quite a different
+  kind of \lsquo{}trick\rsquo might be needed.)
+
+  Intelligence, incidentally, is useful although not necessary also for
+  establishing the existence of an \lsquo{}equivalence\rsquo. In fact, for the particular list
+  of five \lsquo{}equivalences\rsquo that constitute the initial list in the above case, it is
+  not unduly difficult to provide an algorithm for ascertaining that two words are
+  \lsquo{}inequivalent\rsquo when they are indeed \lsquo{}inequivalent\rsquo. However, in order to find
+  the algorithm that works in this case we need to exercise a certain amount of
+  intelligence! Indeed, it turns out that there is no single algorithm which can
+  be used universally for all possible choices of initial list. In this sense
+  there is no algorithmic solution to the word problem.
+
+  The general word problem belongs to non-recursive mathematics!
+
+  There are even certain particular selections of initial list for which there is
+  no algorithm for deciding when two words are \lsquo{}inequivalent\rsquo. One such is given
+  by
+
+  1. AH \equiv HA
+  2. OH \equiv HO
+  3. AT \equiv TA
+  4. OF \equiv TO
+  5. TAI \equiv IT
+  6. HOI \equiv IH
+  7. THAT \equiv ITHT
+
+  (This list is adapted from one given in 1955 by G. S. Tseitin and Dana Scott;
+  see Gardner 1958, p. 144.) Thus this particular word problem by itself is an
+  example of non-recursive mathematics, in the sense that using this particular
+  initial list we cannot algorithmically decide whether or not two given words are
+  \lsquo{}equivalent\rsquo.
+
+  The general word problem arose from considerations of formalized mathematical
+  logic (\lsquo{}formal systems\rsquo etc., as we considered earlier).
+
+  The initial list plays the role of an axiom system and the substitution rule for
+  words, the role of the formal rules of procedure. The proof of non-recursiveness
+  for the word problem arises from such considerations.
+
+* Try It
+ 
+  1. EAT \equiv AT
+  2. ATE \equiv A
+  3. LATER \equiv LOW
+  4. PAN \equiv PILLOW
+  5. CARP \equiv ME
+
+** An Easy One
+   Is LAP \equiv LEAP?
+*** Answer
+  | Equivalence    | By Which? | Forwards or Backwards? |
+  |----------------+-----------+------------------------|
+  | LAP \equiv LATEP    |         2 | Backwards              |
+  | LATEP \equiv LEATEP |         1 | Backwards              |
+  | LEATEP \equiv LEAP  |         2 | Forwards               |
+
+** What About?
+   Is CATERPILLAR \equiv MAN?
+*** Answer
+  | Equivalence             | By Which? | Forwards or Backwards? |
+  |-------------------------+-----------+------------------------|
+  | CATERPILLAR \equiv CARPILLAR |         2 | Forwards               |
+  | CARPILLAR \equiv CARPILLATER |         2 | Backwards              |
+  | CARPILLATER \equiv CARPILLOW |         3 | Forwards               |
+  | CARPILLOW \equiv CARPAN      |         4 | Backwards              |
+  | CARPAN \equiv MEAN           |         5 | Forwards               |
+  | MEAN \equiv MEATEN           |         2 | Backwards              |
+  | MEATEN \equiv MATEN          |         1 | Forwards               |
+  | MATEN \equiv MAN             |         2 | Forwards               |
+** And What About?
+   Is CARPET \equiv MEAT?

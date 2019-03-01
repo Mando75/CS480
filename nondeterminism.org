@@ -1,0 +1,73 @@
+#+TITLE: Nondeterminism
+#+AUTHOR: Ganesh
+#+LANGUAGE:  en
+#+OPTIONS:   H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP:   showeverything
+
+* Excerpts
+
+** From Ganesh's /Computation Engineering/ book:
+
+   Nondeterminism has many uses in computer science. It can help designers
+   describe the systems they are about to build even at stages of the design
+   where they have not determined all the details. In some cases, while these
+   details may be known to designers, they may still choose /not/ to include
+   them to avoid inundating their audience with excess information. (In the
+   modern society that suffers from /information pollution/, nondeterminism can
+   be the breath of oxygen that saves us from asphyxiation.)
+
+   To understand nondeterminism in a real-world context, consider the act of
+   summoning an elevator car in a busy building that has multiple elevators.
+   After one presses the call button, it is not entirely predictable what will
+   happen. One may, if lucky, get a car headed in the same direction as they
+   intend to travel. If unlucky, one would get a car going in the opposite
+   direction, or a car that is full, etc. If one had perfect knowledge about the
+   entire building and its occupants, they could predict the outcome with
+   certainty. However, most people (except perhaps *control freaks*) /do not/
+   want to keep track of all such information, instead preferring to live
+   according to a nondeterministic protocol that goes as follows: /if I am fated
+   not to get an empty car, I should try again./ In short, by employing
+   nondeterminism, one can write system descriptions at a high level, without
+   worrying about pinning down details too early. It has been said that pinning
+   down details too early (/premature optimization/) is at the root of all that
+   is evil in software design.
+
+   Nondeterministic descriptions have another property: they tend to
+   /over-approximate/ the system being described. Over-approximation helps
+   ignore special cases in the behavior of a system (it is akin to packaging a
+   delicate, but odd-shaped, electronic gadget by inserting it between a pair of
+   molded Styrofoam carriers, thus smoothening the overall appearance). By
+   adding behaviors, over-approximation often helps /round/ things up, hence
+   simplifying the whole system.
+
+   To better understand the ramifications of over-approximation, consider a
+   building where all north side elevators are designed /not/ to be interrupted
+   during their upward journey during early mornings (perhaps to ensure the
+   speedy progression of the janitorial staff and their accouterments to top
+   floors). In other words, each elevator control algorithm has an
+   /if-then-else/ in it that tests whether it is running inside a north side
+   elevator, checks what time of day it is, and prevents interruption if the
+   tests confirm *north* and *morning*. Now, if one were to hire formal
+   verification specialists to mathematically verify that all the elevator
+   control algorithms are working correctly, here is how they could employ
+   nondeterminism to simplify their activities. They could simply replace the
+   /if-then-else/ with a nondeterministic jump to both cases. Such a modified
+   control algorithm has more behaviors than the original, in which /every/
+   elevator could nondeterministically decide whether to ignore the user's
+   interrupt or to heed to it. Now, if a verification specialist is handed the
+   property to verify; /If I ring for a car, it will eventually come to my
+   floor/, that property would pass on the nondeterministically
+   over-approximated system. The specialist would end up having verified this
+   property more easily, by ignoring the /if-then-else/. On the other hand, if
+   they are handed another property, namely, /if the car/ /is below my floor, is
+   headed to a floor above my floor and I press the up button, it will stop for
+   me/, the verification will fail for the over-approximated model because every
+   elevator can exercise the *ignore interrupt* option. The verification
+   specialist will realize that this is a /false positive/ --- a false alarm ---
+   and then add the missing detail, which is the /if-then-else/ statement.
+   During system design and verification, one can then add just enough
+   information to prove each property of interest. The alternative approach of
+   revealing all internal information (popular with many legal departments, who
+   do so in fine print) both taxes the mind and adds to verification time.
+   Computer science's essential mission is complexity management, and
+   nondeterminism plays an essential role in this regard.

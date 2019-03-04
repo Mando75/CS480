@@ -1,0 +1,438 @@
+#+TITLE: Universal Turing Machines and Computer Programs
+#+OPTIONS: H:4 num:nil toc:t \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t |:t
+#+STARTUP: showeverything entitiespretty inlineimages
+
+  Let\rsquo{}s see what the *Big Picture So Far* is:
+
+* Big Idea #1
+   There exist undecidable/uncomputable problems.
+* Big Idea #2
+   There exist universal computers --- computers that can
+   simulate any other computer or program.
+* Some important experiments
+   • Different ways of doing the same computation (make sure you can
+   explain each one):
+   >>> simulateTM(rf(’containsGAGA.tm’), ’TTGAGATT’)
+   >>> containsGAGA(’TTGAGATT’)
+   • Here is yet another way of doing the same computation:
+   >>> universal(rf(’containsGAGA.py’), ’TTGAGATT’)
+   • Try it for yourself. What do you think this does? How do you think it works?
+   • What is the difference between the above three methods of doing
+   the same computation?
+* The Python exec function
+  executes strings of Python code:
+
+#+BEGIN_SRC python :results output
+  command = "print('abc', 5+2)"
+  exec(command)
+#+END_SRC
+
+#+BEGIN_SRC elisp :results raw
+  (eval (read "(print (list \"abc\" (+ 5 2)))"))
+#+END_SRC
+
+** We can use exec
+   to write a *universal* Python program that executes other Python
+   programs.
+#+BEGIN_SRC python
+  def universal(progString, inString):
+     # Execute the definition of the function in progString.
+     # This defines the program, but doesn't invoke it.
+     exec(progString)
+     # Now that the function is defined, we can extract a reference to it.
+     progFunction = extractMainFunction(progString, locals())
+     # Invoke the desired function with the desired input string.
+     return progFunction(inString)
+#+END_SRC
+#+name: utils
+#+BEGIN_SRC python :results silent :tangle utils.py
+  import re
+
+  def extractMainFunctionName(progString):
+     """Extract the name of the main function in a Python program.
+
+      Args:
+
+          progString (str): string containing the Python program to be
+          examined.
+
+      Returns:
+
+          str: The name of the main function if one could be found,
+             otherwise the empty string.
+
+      """
+
+     # This is the regular expression that searches for the main
+     # function using the heuristic described above.
+     mainFunctionRegex = r'^def\s+([a-zA-Z0-9_]*)'
+     matchResult = re.search(mainFunctionRegex, progString, re.MULTILINE )
+     if matchResult:
+        return matchResult.group(1)
+     else:
+        # Return empty string if we couldn't find any function
+        # definitions. This should never happen when processing a
+        # legitimate SISO program.
+        return ''
+
+  def extractMainFunction(progString, localVars):
+     """Given a Python program, return a reference
+      to the "main" function: that is, the first
+      Python function defined within progString.
+      The localVars parameter should be
+
+      Args:
+
+          progString (str): string containing the Python program to be
+              examined.
+
+          localVars (dict): the "locals()" dictionary of the calling
+              function, as explained further in the source code comment.
+
+      Returns:
+
+          fn: A reference to the main function if one could be
+              found. Otherwise a WcbcException is raised.
+
+      """
+
+     functionName = extractMainFunctionName(progString)
+     # Python has a standard built-in dictionary called "locals()"
+     # which contains, among other things, all the functions that are
+     # currently defined. We can get a reference to the desired
+     # function by looking it up in this dictionary, using the name of
+     # the function as the key.
+     if functionName in localVars:
+        progFunction = localVars[functionName]
+     else:
+        raise Exception('function ' + functionName + \
+                        ' not defined, so cannot extract or simulate it')
+     return progFunction
+
+  def readFile(fileName):
+     """Read a file, returning its contents as a single string.
+
+      Args:
+
+          fileName (str): The name of the file to be read.
+
+      Returns:
+
+          str: The contents of the file.
+      """
+
+     fileContents = ''
+     with open(fileName) as inputFile:
+        fileContents = inputFile.read()
+     return fileContents
+
+  # Define a very short convenient alias for the readFile function
+  rf = readFile
+
+  def writeFile(fileName, fileContents):
+     """Write a file, overwriting any existing content with the given content.
+
+      Args:
+
+          fileName (str): The name of the file to be written or overwritten.
+
+          fileContents (str): The contents of the file to be written,
+              stored as a single string that may contain newlines.
+      """
+     with open(fileName, 'w') as outputFile:
+        outputFile.write(fileContents)
+
+  def ESS(inString1, inString2):
+     """Encode two strings as a single string.
+
+      ESS is an acronym for Encode as Single String.  This function uses
+      the encoding method suggested in the textbook: the encoding
+      consists of the length of the first string, followed by a space
+      character, followed by the two strings concatenated together.
+
+      Args:
+
+          inString1 (str): The first string to be encoded
+
+          inString2 (str): The second string to be encoded
+
+      Returns:
+
+          str: A single string encoding inString1 and inString2
+
+      Example:
+
+          >>> ESS('abc', 'defg')
+          '3 abcdefg'
+      """
+     return str(len(inString1)) + ' ' + inString1 + inString2
+
+  def DESS(inString):
+     """Decode a single string into two strings (inverse of ESS).
+
+      DESS is an acronym for DEcode from Single String. This function converts a
+      single string that encodes two strings back into the original two strings.
+      DESS is the inverse of the function ESS.
+
+      Args:
+
+         inString (str): The string to be decoded
+
+      Returns:
+
+         (str, str): A 2-tuple containing the two strings they were decoded from the input.
+
+      Example:
+
+         >>> DESS('3 abcdefg')
+         ('abc', 'defg')
+
+      """
+     # split on the first space character
+     (theLength, remainder) = inString.split(' ', 1)
+     inString1 = remainder[:int(theLength)]
+     inString2 = remainder[int(theLength):]
+     return (inString1, inString2)
+
+  def universal(progString, inString):
+     # Execute the definition of the function in progString.
+     # This defines the program, but doesn't invoke it.
+     exec(progString)
+     # Now that the function is defined, we can extract a reference to it.
+     progFunction = extractMainFunction(progString, locals())
+     # Invoke the desired function with the desired input string.
+     return progFunction(inString)
+#+END_SRC
+
+   Examples (what do these output?):
+
+    >>> universal(rf('containsGAGA.py'), 'GTTGAGA')
+
+    >>> universal(rf('containsGAGA.py'), 'GTTAA')
+* Universal Turing machines exist too
+   • High-level argument:
+   • Any Python program can be converted to a Turing machine
+   • We just saw the universal Python program universal.py
+   • Therefore, universal.py can be converted into an equivalent Turing machine,
+     which is universal by definition (and can be made to receive only one parameter)
+   • Universal Turing machines can be constructed explicitly
+   • Alan Turing gave a suitable construction in his 1936 paper
+   • Marvin Minsky published a 7-state, 4-symbol universal Turing machine in the 1960s
+* Universal computation occurs in the real world
+   |------------+------------------+----------------|
+   |            | Minsky's machine |                |
+   | artificial | Rule 110 CA      | real computers |
+   |            | Conway's GoL     |                |
+   |            | \darr                |                |
+   | natural    | ?                | human brain    |
+   |------------+------------------+----------------|
+   |            | simple           | complex        |
+   |------------+------------------+----------------|
+
+* The Rule 110
+  The “Rule 110 Cellular Automaton” is a famous example of universal
+  computation resulting from extremely simple rules:
+#+name: rule-110
+#+BEGIN_SRC python :results silent :tangle rule110.py
+  # Conceptually, we think of the cells of the automaton being filled
+  # with zeros and ones, but we will encode these as '-' and 'G'
+  # respectively, since those characters happen to give a more appealing
+  # visual appearance when successive results are printed out.
+  zero = '-'
+  one = 'G'
+
+  # updateRule is a dictionary mapping a triple of cells to the new
+  # value of the middle cell of that triple in the next timestep.
+  updateRule = {
+      (zero, zero, zero): zero,
+      (zero, zero, one): one,
+      (zero, one, zero): one,
+      (zero, one, one): one,
+      (one, zero, zero): zero,
+      (one, zero, one): one,
+      (one, one, zero): one,
+      (one, one, one): zero,
+      }
+
+  def rule110(tape):
+      """Implements a single timestep of the Rule 110 automaton.
+
+      Args:
+
+          tape (str): A string representing the current tape of zeros
+              and ones.
+
+      Returns:
+
+          str: The updated contents of the tape after a single
+              timestep. The left and right ends of the tape are assumed
+              to be padded with zeros.
+
+      """
+    
+      L = len(tape)
+      updatedTape = []
+      for i in range(L):
+          # The left and right ends of the tape need to be treated
+          # separately since they should be padded with a zero.
+          if i==0:
+              # pad with a zero on the left
+              (left, middle, right) = (zero, tape[i], tape[i+1])
+          elif i==L-1:
+              # pad with a zero on the right
+              (left, middle, right) = (tape[i-1], tape[i], zero)
+          else:
+              # no padding required as we are in the interior of the tape
+              (left, middle, right) = (tape[i-1], tape[i], tape[i+1])
+          newSymbol = updateRule[ (left, middle, right) ]
+          updatedTape.append(newSymbol)
+      return ''.join(updatedTape)
+
+  def testRule110():
+      stringLength = 64
+      iterations = 40
+      startString = [zero for x in range(stringLength)]
+      oneLocations = [stringLength-25, stringLength-1]
+      # put a single one at each specified location
+      for location in oneLocations:
+          startString[location] = one
+
+      tape = startString
+      for i in range(iterations):
+          print(tape)
+          tape = rule110(tape)
+
+      expectedTape = 'GGGGGG----G-GGG-GGGG---GGG---G-GGG--GG---G--GG-GGGGGG-----GG---G'
+      assert tape == expectedTape
+#+END_SRC
+
+#+BEGIN_SRC python :results output :noweb eval
+  <<rule-110>>
+  testRule110()
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', 'G', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', 'G']
+--------------------------------------GG----------------------GG
+-------------------------------------GGG---------------------GGG
+------------------------------------GG-G--------------------GG-G
+-----------------------------------GGGGG-------------------GGGGG
+----------------------------------GG---G------------------GG---G
+---------------------------------GGG--GG-----------------GGG--GG
+--------------------------------GG-G-GGG----------------GG-G-GGG
+-------------------------------GGGGGGG-G---------------GGGGGGG-G
+------------------------------GG-----GGG--------------GG-----GGG
+-----------------------------GGG----GG-G-------------GGG----GG-G
+----------------------------GG-G---GGGGG------------GG-G---GGGGG
+---------------------------GGGGG--GG---G-----------GGGGG--GG---G
+--------------------------GG---G-GGG--GG----------GG---G-GGG--GG
+-------------------------GGG--GGGG-G-GGG---------GGG--GGGG-G-GGG
+------------------------GG-G-GG--GGGGG-G--------GG-G-GG--GGGGG-G
+-----------------------GGGGGGGG-GG---GGG-------GGGGGGGG-GG---GGG
+----------------------GG------GGGG--GG-G------GG------GGGG--GG-G
+---------------------GGG-----GG--G-GGGGG-----GGG-----GG--G-GGGGG
+--------------------GG-G----GGG-GGGG---G----GG-G----GGG-GGGG---G
+-------------------GGGGG---GG-GGG--G--GG---GGGGG---GG-GGG--G--GG
+------------------GG---G--GGGGG-G-GG-GGG--GG---G--GGGGG-G-GG-GGG
+-----------------GGG--GG-GG---GGGGGGGG-G-GGG--GG-GG---GGGGGGGG-G
+----------------GG-G-GGGGGG--GG------GGGGG-G-GGGGGG--GG------GGG
+---------------GGGGGGG----G-GGG-----GG---GGGGG----G-GGG-----GG-G
+--------------GG-----G---GGGG-G----GGG--GG---G---GGGG-G----GGGGG
+-------------GGG----GG--GG--GGG---GG-G-GGG--GG--GG--GGG---GG---G
+------------GG-G---GGG-GGG-GG-G--GGGGGGG-G-GGG-GGG-GG-G--GGG--GG
+-----------GGGGG--GG-GGG-GGGGGG-GG-----GGGGG-GGG-GGGGGG-GG-G-GGG
+----------GG---G-GGGGG-GGG----GGGG----GG---GGG-GGG----GGGGGGGG-G
+---------GGG--GGGG---GGG-G---GG--G---GGG--GG-GGG-G---GG------GGG
+--------GG-G-GG--G--GG-GGG--GGG-GG--GG-G-GGGGG-GGG--GGG-----GG-G
+-------GGGGGGGG-GG-GGGGG-G-GG-GGGG-GGGGGGG---GGG-G-GG-G----GGGGG
+------GG------GGGGGG---GGGGGGGG--GGG-----G--GG-GGGGGGGG---GG---G
+-----GGG-----GG----G--GG------G-GG-G----GG-GGGGG------G--GGG--GG
+----GG-G----GGG---GG-GGG-----GGGGGGG---GGGGG---G-----GG-GG-G-GGG
+---GGGGG---GG-G--GGGGG-G----GG-----G--GG---G--GG----GGGGGGGGGG-G
+--GG---G--GGGGG-GG---GGG---GGG----GG-GGG--GG-GGG---GG--------GGG
+-GGG--GG-GG---GGGG--GG-G--GG-G---GGGGG-G-GGGGG-G--GGG-------GG-G
+GG-G-GGGGGG--GG--G-GGGGG-GGGGG--GG---GGGGG---GGG-GG-G------GGGGG
+#+end_example
+
+* Using a universal program
+  we can alter the effects of other programs in real time:
+#+BEGIN_SRC python :results silent :tangle repeatCAorGA.py
+  def repeatCAorGA(inString):
+      if inString == 'CA':
+          return 'CACA'
+      elif inString == 'GA':
+          return 'GAGA'
+      else:
+          return 'unknown'
+#+END_SRC
+
+#+name: alter
+#+BEGIN_SRC python :results silent :tangle alterGAGAtoTATA.py
+  def alterGAGAtoTATA(inString):
+      (progString, newInString) = DESS(inString)
+      val = universal(progString, newInString)
+      if val == 'GAGA':
+          return 'TATA'
+      else:
+          return val
+#+END_SRC
+** Test your understanding
+   What do the following produce?
+#+BEGIN_SRC python :results raw :noweb eval
+  <<utils>>
+  <<alter>>
+  return alterGAGAtoTATA(ESS(rf('repeatCAorGA.py'), 'CA'))
+#+END_SRC
+
+#+BEGIN_SRC python :results raw :noweb eval
+  <<utils>>
+  <<alter>>
+  return alterGAGAtoTATA(ESS(rf('repeatCAorGA.py'), 'GA'))
+#+END_SRC
+* Some decision problems are recognizable
+   but undecidable
+   • Recognizable means there’s a program that
+     • Always terminates with the right answer (“yes”)
+       on positive instances;
+     • Is never wrong on negative instances; but
+     • May enter an infinite loop on negative instances.
+   • Example: YesOnString and CrashOnString are
+              recognizable but undecidable.
+* Yes, YesOnString is recognizable
+  Here’s a program that recognizes it:
+#+name: recYesOnString 
+#+BEGIN_SRC python :noweb eval
+  def recYesOnString(inString):
+      (progString, newInString) = DESS(inString)
+      val = universal(progString, newInString)
+      if val == 'yes':
+          return 'yes'
+      else:
+          return 'no'
+#+END_SRC
+
+#+BEGIN_SRC python :tangle containsGAGA.py
+  def containsGAGA(inString):
+      if 'GAGA' in inString:
+          return 'yes'
+      else: 
+          return 'no'
+#+END_SRC
+#+BEGIN_SRC python :results output :noweb eval
+  <<utils>>
+  <<recYesOnString>>
+
+  def testRecYesOnString():
+      for (progName, inString, solution) in \
+          [('containsGAGA.py', 'GAGAGAGAG', 'yes'), \
+           ('containsGAGA.py', 'TTTTGGCCGGT', 'no') ]:
+          combinedString = ESS(rf(progName), inString)
+          val = recYesOnString(combinedString)
+          print((progName, inString), ":", val)
+          assert val == solution
+
+  testRecYesOnString()
+#+END_SRC
+** Test your understanding
+   Why does this program not also decide YesOnString?

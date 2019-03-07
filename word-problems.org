@@ -1,6 +1,7 @@
 #+TITLE: Word Problems
 #+AUTHOR: Various Authors
 #+OPTIONS: toc:nil num:nil \n:nil 
+#+STARTUP: entitiespretty inlineimages
 
 * Excerpt from Roger Penrose\rsquo{}s /The Emperor\rsquo{}s New Mind/
 
@@ -119,6 +120,10 @@
 
 ** An Easy One
    Is LAP \equiv LEAP?
+
+LAP \equiv LATEP -> 1
+LATEP \equiv LEATEP -> 2
+LEATEP \equiv LEAP -> 2
 *** Answer
   | Equivalence    | By Which? | Forwards or Backwards? |
   |----------------+-----------+------------------------|
@@ -128,6 +133,16 @@
 
 ** What About?
    Is CATERPILLAR \equiv MAN?
+
+CATERPILLAR \equiv CARPILLAR  -> 2
+CARPILLAR \equiv CARPILLATER -> 2
+CARPILLATER \equiv CARPILLOW -> 3
+CARPILLOW \equiv CARPAN -> 4
+CARPAN \equiv MEAN -> 5
+MEAN \equiv MATEN -> 2
+MATEN \equiv MAN -> 2
+Nope
+
 *** Answer
   | Equivalence             | By Which? | Forwards or Backwards? |
   |-------------------------+-----------+------------------------|
@@ -141,3 +156,4 @@
   | MATEN \equiv MAN             |         2 | Forwards               |
 ** And What About?
    Is CARPET \equiv MEAT?
+

@@ -32,7 +32,19 @@ if T2 then A1 else A2
 
 * DONE Wednesday, Feb 27th
   CLOSED: [2019-02-27 Wed 19:57]
-* Friday, March 1st
+* TODO Friday, March 1st
+
+** Book List on Godel's Incompleteness Theorem
+There's something about Godel
+Logicomix
+Thinking about Godel and Turing
+Infinity and the Mind
+The Emperor's New Mind
+** Godel's Incompleteness Theorem
+No finitely programmed machine can ever exhaust the richness of the mental and
+physical world we inhabit. 
+** CDL
+
 
 * DONE Chapter 13 Exercises [100%]
   CLOSED: [2019-02-27 Wed 19:57]

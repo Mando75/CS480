@@ -1,0 +1,96 @@
+#+TITLE: Practice With Mapping Reductions 
+#+OPTIONS: H:4 num:nil toc:t \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t |:t
+#+STARTUP: showeverything entitiespretty inlineimages
+
+* Theorem 0
+  A language is decidable iff it is Turing-recognizable and
+  co-Turing-recognizable.
+* Theorem 1
+  If A \le_m B and B is Turing-recognizable, then A is Turing-recognizable.
+* Problem 1
+  Show that A_{TM} is *not* mapping reducible to E_{TM}.
+
+  In other words, show that no computable function reduces A_{TM} to E_{TM}.
+
+  (Hint: Use a proof by contradiction, and facts you already know about A_{TM}
+  and E_{TM}.)
+** Solution
+   Suppose for a contradiction that A_{TM} \le_m E_{TM} via reduction f.
+
+   It follows from the definition of mapping reducibility that
+   co-A_{TM} \le_m co-E_{TM} via the same reduction function.
+
+   However,
+
+   1. co-E_{TM} is Turing-recognizable (why?)
+   2. co-A_{TM} is *not* Turing-recognizable (why?)
+
+   These two statements contradict Theorem 1 (how?)
+
+* Theorem 2
+   If L is a regular language, and A is mapping reducible to it, then A is
+   decidable.
+* Problem 2
+  Show that A is decidable iff A \le_m 0^*1^*.
+
+  If A \le_m 0^*1^* then A is decidable by virtue of Theorem 2.
+
+  How do we prove the other direction?
+** Solution
+  If A is decidable we can reduce A to 0^*1^* with the function
+  computed by the following TM F:
+
+  F = \ldquo{}On input w:
+       1. Test whether w is in A using A\rsquo{}s decider.
+       2. If w \in A then output 01.
+       3. If w \notin A then output 10.\rdquo
+
+* Problem 3
+  Show that A is Turing-recognizable iff A \le_m A_{TM}.
+** Solution
+   If A \le_m A_{TM} then A is Turing-recognizable by virtue of Theorem 1.
+
+   If A is Turing-recognizable, let M be a TM that recognizes it.
+
+   Reduce A to A_{TM} by mapping each string x to \langle{}M, x\rangle.
+
+   Then x \in A iff \langle{}M, x\rangle \in A_{TM}.
+
+   In addition, this mapping is computable, so it gives a mapping reduction
+   from A to A_{TM}.
+
+* Problem 4
+  Let J = {w | *either* w = 0x for some x \in A_{TM}, *or*
+                        w = 1y for some y \in co-A_{TM}}.
+
+  Show that neither J nor co-J is Turing-recognizable.
+** Solution
+ To prove that J is not Turing-recognizable, show that co-A_{TM} \le_{m} J.
+
+ The reduction maps any string y to the string 1y.
+
+ Then y \in co-A_{TM} iff 1y \in J.
+
+ To prove that co-J is not Turing-recognizable, show that A_{TM} \le_{m} J
+ (note A_{TM} \le_{m} J iff co-A_{TM} \le_{m} co-J).
+
+ The reduction maps any string x to the string 0x.
+
+ Then x \in A_{TM} iff 0x \in J.
+
+* Problem 5
+  Give an example of an undecidable language B, where B \le_{m} co-B.
+
+  (Hint: Use the language J from Problem 4.) 
+** Solution
+  Problem 4 showed that J is undecidable.
+
+  So just show that J \le_{m} co-J. 
+
+  The reduction f maps \varepsilon to itself and for other strings x, ...
+
+  (You come up with a definition of f(x) that is suitable...)
+
+  The function f is computable, and x \in J \Leftrightarrow f(x) \in co-J. 
+
+  Thus J \le_{m} co-J.

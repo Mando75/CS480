@@ -17,19 +17,6 @@ nonnegative integer data types only
 boolean type
 implicit i/o only
 
-** CDL
-#+BEGIN_EXAMPLE
-T1 \larr X
-T2 \larr Y
-
-while T1
-{
-   decr T1
-   if T2 then decr T2 else T1 \larr 0
-}
-if T2 then A1 else A2
-#+END_EXAMPLE
-
 * DONE Wednesday, Feb 27th
   CLOSED: [2019-02-27 Wed 19:57]
 * TODO Friday, March 1st

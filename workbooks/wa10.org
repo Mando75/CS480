@@ -1,0 +1,150 @@
+#+TITLE: Week 10 Workbook
+#+AUTHOR: Bryan Muller
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t
+#+OPTIONS: html-postamble:nil
+#+STARTUP: showeverything entitiespretty inlineimages
+
+* DONE Monday March 11
+  CLOSED: [2019-03-13 Wed 12:42]
+** Mapping Reducability
+f : \Sigma^* \rarr \Sigma^* is a computable function if 
+some Turing Machine M on every
+input w halts with just f(w) on its tape. 
+
+** Example Mapping Reduction
+ 1. Let A be a language known to be undecidable ("old" or "existing" language).
+ 2. Let B be the language that must be shown to be undecidable ("new" language).
+ 3. Find a mapping reduction /f/ from A to B.
+ 4. If B has a decider D_B then we can decide membership in A as follows
+
+Reduce Old to New 
+N<O? NO!
+
+* TODO Friday March 15
+** Theorems 0-1
+*** 0
+    A language is decidable iff it is Turing-recognizable and co-Turing-recognizable
+    RE = Turing recognizable
+*** 1
+    If A \le_m B and B is Turing-recognizable, then A is Turing-recognizable
+    A is known language, B is unknown lanaguage
+*** 2
+    If L is a regular language, and A is mapping reducible to it, then A is decidable. 
+* TODO Chapter 15 Exercises [60%]
+** DONE 15.2.3.1
+   CLOSED: [2019-03-12 Tue 22:34]
+*** Solution 1
+[1, 3, 3, 1, 1, 2, 1, 3, 3, 3, 2, 1, 1, 1, 3, 2, 1, 3, 3, 2, 1, 3, 2, 1, 1, 3, 2, 1, 3, 1, 3, 3, 2, 1, 3, 2, 1, 1, 3, 3, 1, 1, 3, 2, 1, 3, 2, 2, 1, 1, 2, 2, 1, 3, 2, 2, 2, 2, 3, 3, 2, 2, 3, 3, 1, 2, 1, 1, 2, 3, 2, 2, 3, 2, 2]
+100 1   1   100 100 0   100 1   1   1   0   100 100 100 1   
+1   0   0   1   1   100 1   0   0   0   100 1   1   1   0   
+
+0   100 1   1   0   100 1   0   100 100 1   0   100 1   100 
+100 1   0   0   100 1   0   100 1   1   0   100 1   0   1   
+
+1   1   0   100 1   0   100 100 1   1   100 100 1   0   100 
+0   0   100 1   0   100 1   1   0   0   1   1   0   100 1   
+
+1   0   0   100 100 0   0   100 1   0   0   0   0   1   1   
+0   100 100 1   1   100 100 1   0   100 100 100 100 0   0   
+
+0   0   1   1   100 0   100 100 0   1   0   0   1   0   0   
+100 100 0   0   1   100 1   1   100 0   100 100 0   100 100 
+*** Solution 2
+[1, 3, 3, 1, 1, 2, 1, 3, 3, 3, 2, 1, 1, 1, 3, 1, 3, 3, 2, 2, 1, 2, 1, 2, 2, 3, 1, 3, 3, 3, 3, 1, 2, 1, 1, 1, 1, 2, 3, 2, 1, 3, 3, 2, 2, 3, 1, 3, 2, 1, 2, 1, 1, 3, 3, 1, 3, 2, 3, 2, 2, 1, 1, 2, 1, 3, 2, 2, 2, 3, 2, 2, 3, 2, 2]
+100 1   1   100 100 0   100 1   1   1   0   100 100 100 1   
+1   0   0   1   1   100 1   0   0   0   100 1   1   1   0   
+
+100 1   1   0   0   100 0   100 0   0   1   100 1   1   1   
+1   0   0   100 100 1   100 1   100 100 0   1   0   0   0   
+
+1   100 0   100 100 100 100 0   1   0   100 1   1   0   0   
+0   1   100 1   1   1   1   100 0   100 1   0   0   100 100 
+
+1   100 1   0   100 0   100 100 1   1   100 1   0   1   0   
+0   1   0   100 1   100 1   1   0   0   1   0   100 0   100 
+
+0   100 100 0   100 1   0   0   0   1   0   0   1   0   0   
+100 1   1   100 1   0   100 100 100 0   100 100 0   100 100 
+** DONE 15.2.3.4 
+   CLOSED: [2019-03-13 Wed 15:23]
+  a. Done in Jove
+  b. 
+
+    i.
+
+    Given this scenario (len(T_i[0] < len(T_i1) or T_i[0] > len(T_i[1]) for all T_i),
+    then there will never be a solution due to the fact that with this
+    constraint one side of the string will never be able to catch up to the
+    other. 
+     
+    ii. 
+   This condition indicates that for at least two of the tiles, 
+   have a top where |T_j[0]| < |T_j[1]| and |T_k[0]| > T_k[1]|
+
+   Given the properties of the GCD and LCM, we can prove that there is an
+   infinite number of solutions to a diophantine with the following constraints: 
+   Mx + Py = Nx + Ry and M > N and P < R
+
+   Therefore, we can create a decider for a unary PCP that behaves like the
+   following: 
+   
+      Given a set of tiles, T:
+         if \exist t \in T : |t[0]| == |t[1]| -> accept (we have found a trivial solution)
+         
+         if \forall q,r \in T : (|q[0]| < |r[1]|) \lor (|q[0]| > |r[1]|) -> reject (one side
+         will never catch up to the other)
+
+         if \exist q,r \in T : (|q[0]| < |r[1]|) \land (q[0]| > |r[1]|) -> accept (some
+         combination of tiles will result in a match)
+
+** TODO 15.2.3.5
+** DONE 15.5.1.3
+   CLOSED: [2019-03-14 Thu 22:00]
+
+Mapping reduction from Halt_TM to A_TM
+
+Let HALT_TM = { \lang M, /w/ \rang : M halts on input /w/}
+
+Assume HALT_TM is decidable.
+
+Assume there is a decider for A_TM called D_ATM(M', /w/) where
+
+   D_ATM(M', /w/):
+      accepts => M' accepts /w/ => M accepts /w/
+      
+      rejects => M' rejects /w/ => M rejects /w/ or loops
+
+Now construct a decider for HALT_TM D_HALTTM(M', /w/) where
+   
+   D_HALTTM(M', /w/):
+      accepts => M' accepts /w/ => M accepts or rejects /w/
+
+      rejects => M' rejects /w/ => M loops
+
+We can now redefine an algorithm for D_ATM:
+
+  Run D_HALTTM on \lang M, /w/ \rang:
+    If D_HALTTM rejects => reject
+    If D_HALTTM accepts => continue
+  Run M on /w/:
+    If M accepts => accept
+    If M rejects => reject
+
+This has created a contradiction. If a decider for the Halt_TM could be
+created, then we could create a decider for A_TM. We know A_TM is undecidable,
+therefore a decider for Halt_TM cannot exist.
+
+** TODO 15.5.1.5
+
+CFL_TM = { \lang M \rang : M is a TM whose language is context-free. }
+
+A_TM to CFL_TM
+
+A \le_m CFL_TM
+
+Decider_CFLTM (M')
+
+   M'(x) (where x is form \lang M, /w/ \rang{
+      If M accepts 
+   }

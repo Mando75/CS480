@@ -128,9 +128,17 @@ Decider for SubCFG
 :  |___________________________________
 ** DONE 7 
    CLOSED: [2019-03-06 Wed 20:53]
-'L_AmbCFG not RE
+L_AmbCFG not RE 
 
 Recursively Enumerable languges are not closed under complementation. This means
 that the complement of a language L is only Recursively Enumerable if and only
 if L is also recursive. 
 
+If L and 'L are both Recurseively Enumerable languages, then L is decidable. 
+L is undecidable \rarr L is not R.E. || 'L is not R.E.
+
+
+
+
+* The unprovable universal CFG?
+Sipsor does it. 

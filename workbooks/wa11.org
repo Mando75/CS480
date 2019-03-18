@@ -1,0 +1,16 @@
+#+TITLE: Week 11 Workbook
+#+AUTHOR: Bryan Muller
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t
+#+OPTIONS: html-postamble:nil
+#+STARTUP: showeverything entitiespretty inlineimages
+
+
+* Monday March 18
+
+
+* Chapter 16 Exercises
+
+16.7.2.n where n is composite 
+
+NP = Non-deterministic Polynomial

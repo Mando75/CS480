@@ -91,6 +91,13 @@
 
   (You come up with a definition of f(x) that is suitable...)
 
+  Needs to take strings in J and put them in co-J. 
+  Take strings in co-J and put it in J.
+
+  For a string x \in J, 2x
+  For a string x \notin J, 1x
+
   The function f is computable, and x \in J \Leftrightarrow f(x) \in co-J. 
 
   Thus J \le_{m} co-J.
+  

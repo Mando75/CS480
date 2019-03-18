@@ -146,5 +146,8 @@ A \le_m CFL_TM
 Decider_CFLTM (M')
 
    M'(x) (where x is form \lang M, /w/ \rang{
-      If M accepts 
+      if x is of the form a^{n}b^{n}c^{n} accept
+      Run M on /w/
+         If M accepts /w/ => accept
+         If M rejects /w/ => reject
    }

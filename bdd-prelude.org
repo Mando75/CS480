@@ -1,0 +1,152 @@
+#+TITLE: BDD Prelude
+#+AUTHOR: Rick Neff
+#+EMAIL: NeffR@byui.edu
+#+DATE: 25 March 2019
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t |:t
+#+OPTIONS: html-postamble:t
+#+STARTUP: showeverything entitiespretty inlineimages
+#+SETUPFILE: theme-bigblow.setup
+
+* TODO Understand Boolean Expressions Better
+  Two Boolean expressions are said to be equal if they evaluate to the same
+  truth value for all truth assignments.
+
+  A Boolean expression is a *tautology* if it evaluates to true for *all*
+  truth assignments.
+
+  A Boolean expression is *satisfiable* if it evaluates to true for *at least
+  one* truth assignment.
+** Do You
+   recall De Morgan\rsquo{} Laws?
+
+   \not(P \lor Q) \leftrightarrow \not{}P \land \not{}Q
+
+   \not(P \land Q) \leftrightarrow \not{}P \lor \not{}Q
+
+   Recall the double-negation elimination rule?
+
+   \not{}\not{}P \leftrightarrow P
+
+** How About
+     the Distributive properties?
+
+    (P \land (Q \lor R)) \leftrightarrow ((P \land Q) \lor (P \land R))
+
+| ( | P | ∧ | ( | Q | ∨ | R | ) | ) | ↔ | ( | ( | P | ∧ | Q | ) | ∨ | ( | P | ∧ | R | ) | ) |
+|---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---|
+|   | 0 | 0 |   | 0 | 0 | 0 |   |   | 1 |   |   | 0 | 0 | 0 |   | 0 |   | 0 | 0 | 0 |   |   |
+|   | 0 | 0 |   | 0 | 1 | 1 |   |   | 1 |   |   | 0 | 0 | 0 |   | 0 |   | 0 | 0 | 1 |   |   |
+|   | 0 | 0 |   | 1 | 1 | 0 |   |   | 1 |   |   | 0 | 0 | 1 |   | 0 |   | 0 | 0 | 0 |   |   |
+|   | 0 | 0 |   | 1 | 1 | 1 |   |   | 1 |   |   | 0 | 0 | 1 |   | 0 |   | 0 | 0 | 1 |   |   |
+|   | 1 | 0 |   | 0 | 0 | 0 |   |   | 1 |   |   | 1 | 0 | 0 |   | 0 |   | 1 | 0 | 0 |   |   |
+|   | 1 | 1 |   | 0 | 1 | 1 |   |   | 1 |   |   | 1 | 0 | 0 |   | 0 |   | 1 | 1 | 1 |   |   |
+|   | 1 | 1 |   | 1 | 1 | 0 |   |   | 1 |   |   | 1 | 1 | 1 |   | 1 |   | 1 | 0 | 0 |   |   |
+|   | 1 | 1 |   | 1 | 1 | 1 |   |   | 1 |   |   | 1 | 1 | 1 |   | 1 |   | 1 | 1 | 1 |   |   |
+
+    (P \lor (Q \land R)) \leftrightarrow ((P \lor Q) \land (P \lor R))
+
+| ( | P | ∨ | ( | Q | ∧ | R | ) | ) | ↔ | ( | ( | P | ∨ | Q | ) | ∧ | ( | P | ∨ | R | ) | ) |
+|---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---|
+|   | 0 | 0 |   | 0 | 0 | 0 |   |   | 1 |   |   | 0 | 0 | 0 |   | 0 |   | 0 | 0 | 0 |   |   |
+|   | 0 | 0 |   | 0 | 0 | 1 |   |   | 1 |   |   | 0 | 0 | 0 |   | 0 |   | 0 | 1 | 1 |   |   |
+|   | 0 | 0 |   | 1 | 0 | 0 |   |   | 1 |   |   | 0 | 1 | 1 |   | 1 |   | 0 | 0 | 0 |   |   |
+|   | 0 | 1 |   | 1 | 1 | 1 |   |   | 1 |   |   | 0 | 1 | 1 |   | 1 |   | 0 | 1 | 1 |   |   |
+|   | 1 | 1 |   | 0 | 0 | 0 |   |   | 1 |   |   | 1 | 1 | 0 |   | 1 |   | 1 | 1 | 0 |   |   |
+|   | 1 | 1 |   | 0 | 0 | 1 |   |   | 1 |   |   | 1 | 1 | 0 |   | 1 |   | 1 | 1 | 1 |   |   |
+|   | 1 | 1 |   | 1 | 0 | 0 |   |   | 1 |   |   | 1 | 1 | 1 |   | 1 |   | 1 | 1 | 0 |   |   |
+|   | 1 | 1 |   | 1 | 1 | 1 |   |   | 1 |   |   | 1 | 1 | 1 |   | 1 |   | 1 | 1 | 1 |   |   |
+
+#+BEGIN_SRC elisp :results silent
+  (defun truth-table-for (list-of-variables)
+    (let ((list-of-named-variables (mapcar 'symbol-name list-of-variables)))
+      (append (list (append list-of-named-variables
+                    (list (format "f(%s)"
+                                  (string-join list-of-named-variables ", ")))) 'hline)
+              (loop with n = (length list-of-variables)
+                    for i from 0 below (expt 2 n)
+                    collect (pad (to-binary i) n)))))
+#+END_SRC
+
+#+BEGIN_SRC elisp :results value
+  (truth-table-for '(P Q R))
+#+END_SRC
+
+#+RESULTS:
+| P | Q | R | f(P, Q, R) | DNF             | \not CNF | CNF     |
+|---+---+---+------------+-----------------+-------+---------|
+| 0 | 0 | 0 |          0 |                 |     1 | ( ? ) \land |
+| 0 | 0 | 1 |          1 | (\not{}P \land \not{}Q \land R) \lor |     0 |         |
+| 0 | 1 | 0 |          0 |                 |     1 | ( ? ) \land |
+| 0 | 1 | 1 |          0 |                 |     1 | ( ? ) \land |
+| 1 | 0 | 0 |          0 |                 |     1 | ( ? ) \land |
+| 1 | 0 | 1 |          1 | (P \land \not{}Q \land R) \lor  |     0 |         |
+| 1 | 1 | 0 |          1 | (P \land Q \land \not{}R)    |     0 |         |
+| 1 | 1 | 1 |          0 |                 |     1 | ( ? )   |
+
+* TODO CDL
+  Argue that e_1 and e_2 are equal if and only if e_1 \leftrightarrow e_2 is a tautology.
+
+  Is it possible to say whether e is satisfiable from the fact that \not{}e is a
+  tautology? (It is possible, and you know e is *not* satisfiable.)
+
+  Now argue that *any* Boolean expression is equal to an expression in CNF and
+  an expression in DNF.
+
+* TODO Now Consider
+  The Cook-Levin theorem holds that when restricted to expressions in CNF,
+  Satisfiability (SAT) is NP-Complete.
+
+  However, satisfiability is decidable in polynomial time for DNFs, but their
+  tautology check is hard (co-NP-complete). (Convince yourselves of these
+  assertions --- describe polynomial-time algorithms for determining whether a
+  DNF is satisfiable and for determining whether a CNF is a tautology.)
+
+  Although satisfiability is easy for DNFs and the tautology check easy for
+  CNFs, we are not sitting pretty. Why? Because the conversion between CNFs
+  and DNFs is hard (exponential)!
+
+  For example, the following CNF over the variables u, t, w, x, y, z
+
+  (u \lor x) \land (t \lor y) \land (w \lor z)
+
+  has 3 conjuncts. Its corresponding DNF has 2^3 = 8 disjuncts:
+
+  (u \land t \land w) \lor
+  (u \land t \land z) \lor
+  (u \land y \land w) \lor
+  (u \land y \land z) \lor
+  (x \land t \land w) \lor
+  (x \land t \land z) \lor
+  (x \land y \land w) \lor
+  (x \land y \land z)
+
+  Generalizing, the DNF over the 2n variables
+
+  x^1_0, \dots, x^n_0, x^1_1, \dots, x^n_1
+
+ (x^1_0 \lor x^1_1) \land (x^2_0 \lor x^2_1) \land \dots \land (x^n_0 \lor x^n_1)
+
+ has n conjuncts. Its corresponding DNF has 2^n disjuncts, one for each of the
+ n-digit binary numbers 000\dots{}000 to 111\dots{}111 --- the i^{th} digit
+ representing a choice of either x^i_0 (for 0) or x^i_1 (for 1).
+
+ (x^1_0 \land x^2_0 \land \dots \land x^{n - 1}_0 \land x^n_0) \lor
+ (x^1_0 \land x^2_0 \land \dots \land x^{n - 1}_0 \land x^n_1) \lor
+ \dots
+ (x^1_1 \land x^2_1 \land \dots \land x^{n - 1}_1 \land x^n_0) \lor
+ (x^1_1 \land x^2_1 \land \dots \land x^{n - 1}_1 \land x^n_1)
+
+ Whereas the original expression has size proportional to n the DNF has size
+ proportional to n2^n.
+
+ Now explain how the Cook-Levin Theorem implies that checking in-equivalence
+ between Boolean expressions is NP-Hard.
+
+ Next, explain how the question of tautology and satisfiability can be decided
+ if we are given an algorithm for checking equivalence between Boolean
+ expressions.
+
+ In a nutshell, what Binary Decision Diagrams (BDDs) give us is a way to
+ describe Boolean expressions with *another normal form* that has more
+ desirable properties than DNFs and CNFs. In particular, there are efficient
+ algorithms for determining the satisfiability and tautology questions.

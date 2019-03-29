@@ -1,0 +1,21 @@
+#+TITLE: BDD Workbook
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+OPTIONS: html-postamble:nil
+#+STARTUP: showeverything entitiespretty
+#+SETUPFILE: theme-bigblow.setup
+
+* CDL Goal
+  The goal of this CDL is for you and your classmates to think about and discuss
+  what you (will have) learned about problem solving from grappling with the
+  problem of showing the Equivalence of Combinational Circuits (ECC) and relate
+  it to what you have already learned about problem solving.
+
+* TODO Construct and Show
+  Construct BDDs from two combinational circuits and use their BDDs to show that
+  the two circuits are not equivalent --- i.e., find an input that returns
+  different outputs in the two circuits.
+
+  [[https://rickneff.github.io/img/two-inequivalent-circuits.pdf][Here are the schematics of the two circuits]], call them A and B.
+
+  Hint: Use the [[http://formal.cs.utah.edu:8080/pbl/BDD.php][PBDD tool]] introduced in the book.

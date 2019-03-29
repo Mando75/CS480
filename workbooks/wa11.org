@@ -8,9 +8,143 @@
 
 * Monday March 18
 
-
-* Chapter 16 Exercises
-
-16.7.2.n where n is composite 
-
 NP = Non-deterministic Polynomial
+
+* Friday March 20
+
+
+* Chapter 16.7.2 Exercises
+
+** DONE Exercise 4
+   CLOSED: [2019-03-19 Tue 20:54]
+#+BEGIN_SRC elisp :results  raw
+(setq formula2 '(((a) b) ((b) c) ((c) d) ((d) a)))
+(to-dimacs formula2)
+#+END_SRC
+
+#+RESULTS:
+p cnf 4 4
+-4 1 0
+-1 2 0
+-2 3 0
+-3 4 0 
+
+This is satisfiable via CryptoMiniSat.
+
+** DONE Exercise 6 
+   CLOSED: [2019-03-19 Tue 20:54]
+#+BEGIN_SRC elisp :results raw 
+(setq formula3 '(((a) b) ((b) c) ((c) d) ((d) (a)) (a a)))
+(to-dimacs formula3)
+#+END_SRC
+
+#+RESULTS:
+p cnf 4 5
+-4 1 0
+-1 2 0
+-2 3 0
+-3 -4 0
+4 4 0 
+
+This was not satisfiable via CryptoMiniSat.
+
+** DONE Exercise 8
+   CLOSED: [2019-03-19 Tue 20:54]
+A clique has k(k-1)/2 edges. So k=5 has 10 edges. 
+
+There are (k-1)!/2 distinct Hamiltonian cycles in a complete graph. A clique is
+a complete subgraph g of graph G, so therefore a clique with size k=5 will have:
+
+   (5-1)!/2 = 4!/2 = 4*3*2*1/2 = 24/2 = 12
+
+   There will be (n-1)!/2 Hamiltonian cycles in a clique of size k=n
+
+** DONE Exercise 10
+   CLOSED: [2019-03-19 Tue 20:42]
+Done on REPL.it
+#+BEGIN_SRC python
+# Author: Nicholas Pilkington, 2015
+# License: MIT
+
+import pycosat
+
+N = 9
+M = 3
+
+def exactly_one(variables):
+    cnf = [ variables ]
+    n = len(variables)
+
+    for i in xrange(n):
+        for j in xrange(i+1, n):
+            v1 = variables[i]
+            v2 = variables[j]
+            cnf.append([-v1, -v2])
+
+    return cnf
+
+def transform(i, j, k):
+    return i*N*N + j*N + k + 1
+
+def inverse_transform(v):
+    v, k = divmod(v-1, N)
+    v, j = divmod(v, N)
+    v, i = divmod(v, N)
+    return i, j, k
+
+if __name__ == '__main__':
+    cnf = []
+
+    # Cell, row and column constraints
+    for i in xrange(N):
+        for s in xrange(N):
+            cnf = cnf + exactly_one([ transform(i, j, s) for j in xrange(N) ])
+            cnf = cnf + exactly_one([ transform(j, i, s) for j in xrange(N) ])
+
+        for j in xrange(N):
+            cnf = cnf + exactly_one([ transform(i, j, k) for k in xrange(N) ])
+
+    # Sub-matrix constraints
+    for k in xrange(N):
+        for x in xrange(M):
+            for y in xrange(M):
+                v = [ transform(y*M + i, x*M + j, k) for i in xrange(M) for j in xrange(M)]
+                cnf = cnf + exactly_one(v)
+
+
+    # A 16-constraint Sudoku
+    constraints = [
+        (0, 3, 7),
+        (1, 0, 1),
+        (2, 3, 4),
+        (2, 4, 3),
+        (2, 6, 2),
+        (3, 8, 6),
+        (4, 3, 5),
+        (4, 5, 9),
+        (5, 6, 4),
+        (5, 7, 1),
+        (5, 8, 8),
+        (6, 4, 8),
+        (6, 5, 1),
+        (7, 2, 2),
+        (7, 7, 5),
+        (8, 1, 4),
+        (8, 6, 3),
+    ]
+
+    cnf = cnf + [[transform(z[0], z[1], z[2])-1] for z in constraints]
+
+    for solution in pycosat.itersolve(cnf):
+        X = [ inverse_transform(v) for v in solution if v > 0]
+        for i, cell in enumerate(sorted(X, key=lambda h: h[0] * N*N + h[1] * N)):
+            print cell[2]+1, " ",
+            if (i+1) % N == 0: print ""
+#+END_SRC
+
+** DONE Exercise 9
+   CLOSED: [2019-03-25 Mon 12:08]
+
+   Done in class
+** Exercise 12
+

@@ -12,7 +12,8 @@
 #+END_SRC
 
   How do we use propositional logic to do NP-Completeness proofs?
-* TODO First Understand An Elisp Implementation of Boolean Formulas
+* DONE First Understand An Elisp Implementation of Boolean Formulas
+  CLOSED: [2019-03-18 Mon 14:00]
   A literal is a symbol with a value of 1 or 0.
 
   A clause is a list of literals. 
@@ -46,8 +47,11 @@
 
   Create the above sample formula to experiment with:
 #+BEGIN_SRC elisp :results raw
-  (setq formula1 '((a b c) (a (b) c) ((a) (b) c)))}
+  (setq formula1 '((a b c) (a (b) c) ((a) (b) c)))
 #+END_SRC
+
+#+RESULTS:
+((a b c) (a (b) c) ((a) (b) c))
 
   Make a list of literals given the formula they appear in:
 #+BEGIN_SRC emacs-lisp :results silent
@@ -73,7 +77,7 @@
     (set sym (if (zerop (symbol-value sym)) 1 0)))
 #+END_SRC    
 
-#+BEGIN_SRC emacs-lisp :results raw
+#+BEGIN_SRC elisp :results raw
   (flip 'a)
 #+END_SRC
 
@@ -95,11 +99,11 @@
      (prog1 1 (put 'get-assignment :satisfied assignment))))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp :results raw
+#+BEGIN_SRC elisp :results raw
   (eval-cnf-formula formula1) 
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp :results raw
+#+BEGIN_SRC elisp :results raw
   (eval-cnf-formula '((a b (c)) ((a) (b) c) ((a) b (c))) '((a . 1) (b . 0) (c . 1)))
 #+END_SRC
 
@@ -120,11 +124,11 @@
      1))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp :results raw
+#+BEGIN_SRC elisp :results raw
   (eval-dnf-formula formula1)
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp :results raw
+#+BEGIN_SRC elisp :results raw
   (eval-dnf-formula '((a b (c)) ((a) (b) c) ((a) b (c))) '((a . 0) (b . 0) (c . 1)))
 #+END_SRC
 
@@ -143,7 +147,7 @@
         (append (to-binary d) (list m)))))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp :results raw
+#+BEGIN_SRC elisp :results raw
   (to-binary 5)
 #+END_SRC
 
@@ -153,7 +157,7 @@
     (append (make-list (- n (length list-of-bits)) 0) list-of-bits)) 
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp :results raw
+#+BEGIN_SRC elisp :results raw
   (pad (to-binary 5) 8)
 #+END_SRC
 
@@ -172,11 +176,11 @@
       shared-assignment))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp :results raw
+#+BEGIN_SRC elisp :results raw
   (get-assignment '(a b c) 6)
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp :results raw
+#+BEGIN_SRC elisp :results raw
   (get 'get-assignment :shared)
 #+END_SRC
 
@@ -187,7 +191,7 @@
           collect (mapcar* 'cons list-of-literals (pad (to-binary i) n))))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp :results value
+#+BEGIN_SRC elisp :results value
   (get-all-possible-assignments '(a b c))
 #+END_SRC
 
@@ -200,7 +204,7 @@
           (get-all-possible-assignments (literals formula))))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp :results raw
+#+BEGIN_SRC elisp :results raw
   (is-satisfiable formula1)
 #+END_SRC
 
@@ -232,12 +236,12 @@
           return assignment))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp :results value
+#+BEGIN_SRC elisp :results value
   (get-all-satisfying-assignments formula1)
 #+END_SRC
 
   What about DNF?
-#+BEGIN_SRC emacs-lisp :results value
+#+BEGIN_SRC elisp :results value
   (defalias 'eval-formula 'eval-dnf-formula)
   (get-all-satisfying-assignments formula1)
 #+END_SRC
@@ -301,7 +305,7 @@
   =graph1-formula= and =graph2-formula=:
 
 #+BEGIN_SRC elisp :results silent
-  (setq graph1-formula (quote (
+(setq graph1-formula (quote (
     (r1 g1 b1)
     (r2 g2 b2)
     (r3 g3 b3)
@@ -357,12 +361,40 @@
 #+END_SRC
 
 #+BEGIN_SRC elisp :results raw
-  (literals graph1-formula)
+(literals graph1-formula)
 #+END_SRC
+
+#+RESULTS:
+(r1 g1 b1 r2 g2 b2 r3 g3 b3 r4 r6 g4 g6 b4 b6 r5 r7 g5 g7 b5 b7)
 
 #+BEGIN_SRC elisp :results code 
   (and (is-satisfiable-faster graph1-formula)
        (get-one-satisfying-assignment graph1-formula))
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC elisp
+((r1 . 0)
+ (g1 . 0)
+ (b1 . 0)
+ (r2 . 0)
+ (g2 . 0)
+ (b2 . 0)
+ (r3 . 0)
+ (g3 . 0)
+ (b3 . 0)
+ (r4 . 0)
+ (r6 . 0)
+ (g4 . 0)
+ (g6 . 0)
+ (b4 . 0)
+ (b6 . 0)
+ (r5 . 0)
+ (r7 . 0)
+ (g5 . 0)
+ (g7 . 0)
+ (b5 . 0)
+ (b7 . 0))
 #+END_SRC
 
 #+BEGIN_SRC elisp :results silent

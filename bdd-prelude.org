@@ -83,7 +83,8 @@
 | 1 | 1 | 0 |          1 | (P \land Q \land \not{}R)    |     0 |         |
 | 1 | 1 | 1 |          0 |                 |     1 | ( ? )   |
 
-* TODO CDL
+* DONE CDL
+  CLOSED: [2019-03-29 Fri 13:20]
   Argue that e_1 and e_2 are equal if and only if e_1 \leftrightarrow e_2 is a tautology.
 
   Is it possible to say whether e is satisfiable from the fact that \not{}e is a

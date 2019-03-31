@@ -11,7 +11,8 @@
   problem of showing the Equivalence of Combinational Circuits (ECC) and relate
   it to what you have already learned about problem solving.
 
-* TODO Construct and Show
+* DONE Construct and Show
+  CLOSED: [2019-03-29 Fri 13:34]
   Construct BDDs from two combinational circuits and use their BDDs to show that
   the two circuits are not equivalent --- i.e., find an input that returns
   different outputs in the two circuits.
@@ -19,3 +20,22 @@
   [[https://rickneff.github.io/img/two-inequivalent-circuits.pdf][Here are the schematics of the two circuits]], call them A and B.
 
   Hint: Use the [[http://formal.cs.utah.edu:8080/pbl/BDD.php][PBDD tool]] introduced in the book.
+
+| ( | ( | x | ∧ | y | ) | ∨ | ( | x | ⊽ | y | ) | ) | ∧ | ( | ( | w | ∧ | z | ) | ∨ | ( | w | ⊽ | z | ) | ) |
+|---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---|
+|   |   | 0 | 0 | 0 |   | 0 |   | 0 | 1 | 0 |   |   | 0 |   |   | 0 | 0 | 0 |   | 0 |   | 0 | 1 | 0 |   |   |
+|   |   | 0 | 0 | 0 |   | 0 |   | 0 | 1 | 0 |   |   | 0 |   |   | 0 | 0 | 1 |   | 0 |   | 0 | 0 | 1 |   |   |
+|   |   | 0 | 0 | 0 |   | 0 |   | 0 | 1 | 0 |   |   | 0 |   |   | 1 | 0 | 0 |   | 0 |   | 1 | 0 | 0 |   |   |
+|   |   | 0 | 0 | 0 |   | 0 |   | 0 | 1 | 0 |   |   | 0 |   |   | 1 | 1 | 1 |   | 1 |   | 1 | 0 | 1 |   |   |
+|   |   | 0 | 0 | 1 |   | 0 |   | 0 | 0 | 1 |   |   | 0 |   |   | 0 | 0 | 0 |   | 0 |   | 0 | 1 | 0 |   |   |
+|   |   | 0 | 0 | 1 |   | 0 |   | 0 | 0 | 1 |   |   | 0 |   |   | 0 | 0 | 1 |   | 0 |   | 0 | 0 | 1 |   |   |
+|   |   | 0 | 0 | 1 |   | 0 |   | 0 | 0 | 1 |   |   | 0 |   |   | 1 | 0 | 0 |   | 0 |   | 1 | 0 | 0 |   |   |
+|   |   | 0 | 0 | 1 |   | 0 |   | 0 | 0 | 1 |   |   | 0 |   |   | 1 | 1 | 1 |   | 1 |   | 1 | 0 | 1 |   |   |
+|   |   | 1 | 0 | 0 |   | 0 |   | 1 | 0 | 0 |   |   | 0 |   |   | 0 | 0 | 0 |   | 0 |   | 0 | 1 | 0 |   |   |
+|   |   | 1 | 0 | 0 |   | 0 |   | 1 | 0 | 0 |   |   | 0 |   |   | 0 | 0 | 1 |   | 0 |   | 0 | 0 | 1 |   |   |
+|   |   | 1 | 0 | 0 |   | 0 |   | 1 | 0 | 0 |   |   | 0 |   |   | 1 | 0 | 0 |   | 0 |   | 1 | 0 | 0 |   |   |
+|   |   | 1 | 0 | 0 |   | 0 |   | 1 | 0 | 0 |   |   | 0 |   |   | 1 | 1 | 1 |   | 1 |   | 1 | 0 | 1 |   |   |
+|   |   | 1 | 1 | 1 |   | 1 |   | 1 | 0 | 1 |   |   | 1 |   |   | 0 | 0 | 0 |   | 0 |   | 0 | 1 | 0 |   |   |
+|   |   | 1 | 1 | 1 |   | 1 |   | 1 | 0 | 1 |   |   | 1 |   |   | 0 | 0 | 1 |   | 0 |   | 0 | 0 | 1 |   |   |
+|   |   | 1 | 1 | 1 |   | 1 |   | 1 | 0 | 1 |   |   | 1 |   |   | 1 | 0 | 0 |   | 0 |   | 1 | 0 | 0 |   |   |
+|   |   | 1 | 1 | 1 |   | 1 |   | 1 | 0 | 1 |   |   | 1 |   |   | 1 | 1 | 1 |   | 1 |   | 1 | 0 | 1 |   |   |

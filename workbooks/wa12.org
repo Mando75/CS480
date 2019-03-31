@@ -1,0 +1,94 @@
+#+TITLE: Week 11 Workbook
+#+AUTHOR: Bryan Muller
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t
+#+OPTIONS: html-postamble:nil
+#+STARTUP: showeverything entitiespretty inlineimages
+
+* Monday
+** CDL
+*** Argue that e_1 and e_2 are equal if and only if e_1 \equiv e_2 is a tautology.
+*** DNF to CNF
+
+(\not P \land \not Q \land R) \lor (P \land \not Q \land R) \lor (P \land Q \land \not R)
+
+(\not P \lor P \lor P) \land
+(\not Q \lor P \lor P) \land 
+(\not P \lor \not Q \lor P) \land 
+(\not Q \lor \not Q Q)
+* Chapter 17 Exercise
+** DONE 1
+   CLOSED: [2019-03-26 Tue 17:17]
+*** 4 input NOR function
+[[file:./graphs/4nor.png]]
+*** 4 input AND function
+[[file:./graphs/4And.png]]
+*** Comparison
+    The have the same tree structure, but the edge labels are switched. Every
+    edge labeled with a /1/ in the 4 input NOR function is labeled with a /0/ on
+    the 4 input AND function and vice versa. Every edge labeled /0/ in the 4 input NOR
+    function is labeled with a /1/ on the 4 input AND function.
+** DONE 2
+   CLOSED: [2019-03-26 Tue 19:14]
+*** 5 XNOR
+    [[file:./graphs/5XNOR.png]]
+*** Comparison
+The only change is on the edges from e to the accept/reject states. The XNOR
+function swaps the 1 and 0 on each /e/ node to the accept/reject state.
+This negates the output, which is the definition of the XNOR function.
+** DONE 3
+   CLOSED: [2019-03-26 Tue 19:14]
+
+:  x1
+:  | \  0
+:  |  \
+:  |   x2
+:  |   | \  0
+:  |   |  \
+:  |   |   x3
+: 1|   |   | \  0
+:  |   |   |  \
+:  |  1|   |   x4
+:  |   |  1|   | \ 
+:  |   |   |  1|  \  0
+:  \   |   |   /   \
+:   \  |   |  /     \
+:   ----------    -----------
+:  |    1    |   |    0      |
+:  |_________|   |___________|
+
+Yes, this is a linearly sized BDD. 
+It is the same as the PBDD output
+** 4
+*** a)
+No, it is incorrect. The BDD allows several invalid acceptance states such as:
+#+BEGIN_EXAMPLE
+A: '010', B: '001'
+A: '100', B: '001'
+A: '101', B: '011'
+A: '110', B: '011'
+A: '110', B: '101'
+A: '100', B: '011'
+A: '101', B: '010'
+A: '110', B: '001'
+A: '100', B: '010'
+#+END_EXAMPLE
+
+In these examples, A \not\lt B
+
+**** BDD
+[[file:./graphs/incorrectLT.png]]
+*** b)
+Old
+#+BEGIN_EXAMPLE
+Var_Order : a2, b2, a1, b1, a0, b0
+Main_Exp : ~a2 & b2 | ~a1 & b1 | ~a0 & b0
+#+END_EXAMPLE
+
+Modified
+#+BEGIN_EXAMPLE
+Var_Order : a2, b2, a1, b1, a0, b0
+Main_Exp : (~a2 & b2) |  ((~a2 & b2) & ~a1 & b1) | (((~a2 & b2) | (~a1 & b1)) & ~a0 & b0) 
+#+END_EXAMPLE
+
+[[file:./graphs/altb.png]]

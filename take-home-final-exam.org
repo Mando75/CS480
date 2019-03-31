@@ -1,0 +1,162 @@
+#+TITLE: Take Home Final Exam Winter 2019
+#+AUTHOR: Rick Neff
+#+EMAIL: NeffR@byui.edu
+#+LANGUAGE: en
+#+OPTIONS: H:5 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t
+#+STARTUP: showeverything entitiespretty
+#+SETUPFILE: theme-bigblow.setup
+
+* Instructions
+  Please analyze and reason carefully, making full use of the *mind tools* in
+  your possession:
+
+  The philosopher John Locke wrote in 1690 about three mind tools (which he
+  called acts) in /An Essay Concerning Human Understanding/:
+#+BEGIN_QUOTE
+ The acts of the mind, wherein it exerts its power over simple ideas, are
+ chiefly these three:
+
+ 1. Combining several simple ideas into one compound one, and thus all complex
+    ideas are made.
+ 2. The second is bringing two ideas, whether simple or complex, together, and
+    setting them by one another so as to take a view of them at once, without
+    uniting them into one, by which it gets all its ideas of relations.
+ 3. The third is separating them from all other ideas that accompany them in
+    their real existence: this is called abstraction, and thus all its general
+    ideas are made.
+#+END_QUOTE
+
+** Reading
+  - [[https://rickneff.github.io/the-ocean-of-truth.pdf][The Ocean of Truth]]
+  - [[https://rickneff.github.io/is-creativity-algorithmic.pdf][Is Creativity Algorithmic?]]
+  - [[https://rickneff.github.io/what-is-determinism.html][What Is Determinism?]]
+
+** Writing
+  Using the above three sources, and from what you have learned this semester
+  about computation, complexity and other theoretical computer science topics,
+  discuss the computational and philosophical implications of free will and
+  determinism, and describe how computational theory and practice affect your
+  attitudes and mindset about creativity and creation. Specifically, answer the
+  questions interwoven into the (fourth reading) below:
+
+  [\dots] Schr\ouml{}dinger [once] indulged in a bit of mystical speculation, advancing
+  the dubious notion that the biologist\rsquo{}s increasing knowledge of the mechanisms
+  of life will one day lead her to conclude \ldquo{}I am God.\rdquo He reasoned from the
+  contradiction between free will and determinism:
+
+  1. My body functions as a pure mechanism according to the laws of Nature;
+
+  2. yet I know, by incontrovertible direct experience, that I am directing its
+     motions, of which I foresee the effects \dots,
+
+  3. so I am God, QED.
+
+  Bringing God into the discussion, modern revelation has something to say about
+  the computational and philosophical implications of free will as an essential
+  aspect of existence. I sincerely hope that your studying computational theory
+  and practice has been freely willed, and has made a difference in your
+  viewpoint on life and the gospel. The thoughts and questions below are
+  intended to further fuel your thinking.
+
+  In a gospel context, making choices is an essential aspect of intelligent,
+  conscious existence. Expanding the context, the capacity to make choices
+  apparently exists in even the smallest particles of matter. But it\rsquo{}s still
+  gospel truth: intelligences (things that act) are infused in matter (things
+  that are acted upon).
+
+#+BEGIN_QUOTE
+  All truth is independent in that *sphere* in which God has placed it, *to act
+  for itself*, as all intelligence also; otherwise there is no existence. ---
+  Doctrine and Covenants 93:30, emphasis added.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+  The light which is in all things, which giveth life to all things, which is
+  the law by which all things are governed \dots --- Doctrine and Covenants 88:13
+#+END_QUOTE
+
+  Nondeterministic computation can be reduced to deterministic computation,
+  given enough time and space. Deterministic computation seems to govern the
+  behavior of matter and energy, from the macroscopic (galaxies, stars, planets,
+  animals, plants, people, rocks, etc.) to the microscopic (molecules, atoms,
+  protons, neutrons, electrons, photons, etc.):
+
+#+BEGIN_VERSE
+  All kingdoms have a law given;
+  And there are many kingdoms;
+  for there is no space in the which there is no kingdom;
+  and there is no kingdom in which there is no space,
+  either a greater or a lesser kingdom.
+  And unto every kingdom is given a law;
+  and unto every law there are certain bounds also and conditions.
+  All beings who abide not in those conditions are not justified.
+  --- Doctrine and Covenants 88:36-39
+#+END_VERSE
+
+  There can be no coercion or compulsion in a just universe governed by law. The
+  primal intelligences in matter obey the laws, bounds and conditions of their
+  \ldquo{}sphere\rdquo because they *want* to, not because they *have* to.
+
+  Obedience is the first law. Order is the result. Computation in the universe
+  can proceed in unending and ever-increasing complexity not in spite of but
+  *because* laws exist and are freely obeyed.
+
+  The advanced intelligences that are given control of a body created in the
+  image of God do not always obey the higher laws that have been decreed for
+  their progression, thus limiting their \ldquo{}computational output\rdquo (growth). Why
+  is that?
+
+  At this stage in our progression, there are many limits to our freedom of
+  choice. While we are free to disobey the laws of the gospel, or the laws of
+  man, we are *not* free to \ldquo{}disobey\rdquo the law of gravity, or electromagnetism,
+  or energy/momentum conservation, etc. We are not free to jump off a cliff and
+  not fall. We are likewise not free to remember our pre-mortal existence, nor
+  to peer into the post-mortal realm at will. Why these limitations?
+
+  The free will of man and the omniscience of God are mutually contradictory. If
+  God knows the future perfectly, how am I free to choose to do otherwise than
+  what He knows I will choose to do? If the end result of my life\rsquo{}s
+  \ldquo{}computation\rdquo is known in advance, how am I truly free to \ldquo{}compute\rdquo something
+  else?
+
+* TODO Decide a Halting Problem
+  This more computational/decidability-related task is to figure out what the
+  code in the below block named =decide= does, and decide whether or not it will
+  halt when invoked with a , , (comma comma) to evaluate the source code block.
+
+  These are the specific questions you must answer:
+
+  1. What is this program computing?
+  2. How does it do it?
+  3. Will it ever terminate?
+
+#+name: decide
+#+BEGIN_SRC elisp :results silent
+  (package-reinstall 'timp)
+  (require 'timp)
+  (timp-send-code (setq thread (timp-get :persist t))
+        :code
+        `(progn
+           (require 'calc-math)
+           (require 'cl)
+           (loop with flibbers = (list 17 78 19 23 29 77 95 77 1 11 13 15 15 55)
+                 with flobbers = (list 91 85 51 38 33 29 23 19 17 13 11 14 2 1)
+                 with i = 2
+                 with f = 0
+                 with p = nil
+                 with time-keeps-ticking = t
+                 while time-keeps-ticking
+                 do (loop initially do (setq time-keeps-ticking nil)
+                          for flibber in flibbers
+                          for flobber in flobbers
+                          while (not time-keeps-ticking)
+                          do (setq f (math-mul i (math-make-frac flibber flobber)))
+                          (when (math-integerp f)
+                            (setq i f
+                                  p (math-integer-log2 i))
+                            (when p
+                              (message "2^%s = %s" (calc-eval p) (calc-eval i)))
+                            (setq time-keeps-ticking t))))))
+#+END_SRC
+
+  Hint: [[elisp:(switch-to-buffer-other-window "*Messages*" t)][Switch to Messages Buffer]]

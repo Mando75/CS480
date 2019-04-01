@@ -1,0 +1,178 @@
+#+TITLE: The Lambda Calculus Workbook
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+OPTIONS: html-postamble:nil
+#+STARTUP: showeverything entitiespretty
+#+SETUPFILE: theme-bigblow.setup
+
+* TODO Investigate
+  The topic of the week, the lambda calculus, is nothing like the calculus that
+  deals with derivatives and integrals!
+
+  [[http://www.inf.fu-berlin.de/inst/ag-ki/rojas_home/documents/tutorials/lambda.pdf][This document]] gives a brief introduction to it and describes its connection to
+  [[https://firstthreeodds.org/17657741833134731255/an-introduction-to-functional-programming.pdf][functional programming]].
+
+  As you will see, the grammar describing a lambda calculus expression is pretty
+  simple --- a total of four productions!
+
+* TODO Concretize the Abstract by Writing Some Code
+  Expressions in the lambda calculus are pretty primitive, so we like to
+  reformulate them in terms of less primitive operations. For example, the
+  initialization and binding of local variables using =let= is \ldquo{}syntactic sugar\rdquo
+  for a lambda expression applied to other expressions. First, a lambda example:
+
+#+BEGIN_SRC elisp :results raw
+  ((lambda (x y z) (list '= x (+ y z))) 5 2 3)
+#+END_SRC
+
+#+RESULTS:
+(= 5 5)
+
+  The same construct using =let=:
+#+BEGIN_SRC elisp :results raw
+  (let ((x 5)
+        (y 2)
+        (z 3))
+    (list '= x (+ y z)))
+#+END_SRC
+
+#+RESULTS:
+(= 5 5)
+
+  The bodies are the same, only the \ldquo{}appendages\rdquo differ.
+
+  The Identity lambda in elisp:
+#+BEGIN_SRC elisp :results silent
+  (fset 'I (set 'I (lambda (x) x)))
+#+END_SRC
+
+#+BEGIN_SRC elisp :results raw
+  (I '(1 2 3))
+#+END_SRC
+
+#+RESULTS:
+(1 2 3)
+
+#+BEGIN_SRC elisp :results raw
+  (I (I (I I)))
+#+END_SRC
+
+#+RESULTS:
+(lambda (x) x)
+
+  The Zero lambda:
+#+BEGIN_SRC elisp :results silent
+  (fset 'Z (set 'Z (lambda (x) (lambda (y) y))))
+#+END_SRC
+
+   Try out [[http://projectultimatum.org/cgi-bin/lambda][Hai (Paul) Liu’s step-by-step Lambda Viewer]] on the examples in the
+   Lambda Calculus tutorial linked-to above.
+
+  The Successor lambda:
+#+BEGIN_SRC elisp :results silent
+  ;; ???
+#+END_SRC
+
+  Compare the elisp versions with the python in the book:
+#+BEGIN_SRC python :results output
+  I = lambda c: c                                # Identity
+  Z = lambda b: lambda c: c                      # Number 0 (Zero)
+  S = lambda a: lambda b: lambda c: b(a(b)(c))   # Successor
+
+  print("S(Z) -->")
+  print(S(Z))
+  print("S(S(Z)) -->")
+  print(S(S(Z)))
+
+  def increment(n):
+      return n+1
+
+  print("increment(1) -->")
+  print(increment(1))
+
+  def ChurchToNat(c):
+      return c(increment)(0)
+
+  print("ChurchToNat(Z) -->")
+  print(ChurchToNat(Z))
+
+  print("ChurchToNat(S(Z)) -->")
+  print(ChurchToNat(S(Z)))
+
+  print("ChurchToNat(S(S(Z))) -->")
+  print(ChurchToNat(S(S(Z))))
+
+  def NatToChurch(n):
+      if n == 0:
+          return Z
+      else:
+          return S(NatToChurch(n-1))
+
+  print("ChurchToNat(NatToChurch(3)) -->")
+  print(ChurchToNat(NatToChurch(3)))
+#+END_SRC
+
+** Recursing with Primitives
+
+  Recursion manifests itself in functions that call themselves, or /simpler/
+  versions of themselves. Primitives once wrapped in recursive calls become less
+  primitive with each additional wrapping layer.
+
+  For example, the recursive rules for addition are just the following two
+  equations:
+
+  (+1) x + 0 = x
+  (+2) x + s(y) = s(x + y)
+
+  Thus, the successor function (s) allows us to define addition as what it
+  fundamentally is: repeated (recursive) counting. Two more equations define the
+  recursive rules for multiplication in terms of repeated addition (5 \times 4 = 5 +
+  5 + 5 + 5), reducing the calculation of a product to the calculation of sums:
+
+  (\times{}1) x \times 0 = 0
+  (\times{}2) x \times s(y) = x + (x \times y)
+
+  Here are these functions in python:
+#+BEGIN_SRC python :results output
+  def s(x):
+    return x + 1
+
+  def add(x, y):
+    if (y == 0):
+      return x
+    else:
+      return s(add(x, y - 1))
+
+  def mul(x, y):
+    if (y == 0):
+      return 0
+    else:
+      return add(x, mul(x, y - 1))
+
+  print("add(5, 3) -->")
+  print(add(5, 3))
+
+  print("mul(5, 3) -->")
+  print(mul(5, 3))
+#+END_SRC
+
+** TODO Go Another Step Up
+   Define exp(x, y) in terms of repeated multiplication, and supply the
+   equations for exponentiation. (5^4 = 5 \times 5 \times 5 \times 5, exemplifying reducing
+   exponentiation to the calculation of products.)
+
+#+BEGIN_SRC python :results output
+  # what goes here to get the RESULTS below?
+
+  print("exp(5, 3) -->")
+  print(exp(5, 3))
+#+END_SRC
+
+#+RESULTS:
+: exp(5, 3) -->
+: 125
+
+** TODO Convert python to elisp
+
+  Find a way to define the S (Successor) function in elisp, then define
+  addition, multiplication and exponentiation to behave like the python code.

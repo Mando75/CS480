@@ -88,7 +88,7 @@ Main_Exp : ~a2 & b2 | ~a1 & b1 | ~a0 & b0
 Modified
 #+BEGIN_EXAMPLE
 Var_Order : a2, b2, a1, b1, a0, b0
-Main_Exp : (~a2 & b2) |  ((~a2 & b2) & ~a1 & b1) | (((~a2 & b2) | (~a1 & b1)) & ~a0 & b0) 
+Main_Exp : (~a2 & b2) |  ((~a2 & b2) & ~a1 & b1) | (((~a2 & b2) | (~a1 & b1)) & (~a0 & b0)) 
 #+END_EXAMPLE
 
 [[file:./graphs/altb.png]]

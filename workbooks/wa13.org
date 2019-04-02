@@ -172,7 +172,7 @@ t
 
 #+RESULTS:
 t
-** Exercise 18.8.1
+** TODO Exercise 18.8.1
 
 A fixpoint combinator is a combinator /E/ such that for any lambda expression
 /G/, the identity (/EG/) = /G/(/EG/) holds. There are an infinite number of
@@ -194,7 +194,7 @@ order of the inner function further back in queue for evalutation. This is why
 the applicative (eager) Y combinator works with eager languages. Instead of
 returning a "value" it returns another layered function. This means that eager
 languages will stop evaluation there, preventing an infinite loop of self
-evalutation. This means that Y and Y_e are equiv
+evalutation. 
 
 
 ** Exercise 18.8.2

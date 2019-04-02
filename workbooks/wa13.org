@@ -172,7 +172,8 @@ t
 
 #+RESULTS:
 t
-** TODO Exercise 18.8.1
+
+** Exercise 18.8.1 WIP
 
 A fixpoint combinator is a combinator /E/ such that for any lambda expression
 /G/, the identity (/EG/) = /G/(/EG/) holds. There are an infinite number of

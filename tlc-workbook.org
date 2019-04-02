@@ -69,9 +69,47 @@
    Lambda Calculus tutorial linked-to above.
 
   The Successor lambda:
-#+BEGIN_SRC elisp :results silent
-  ;; ???
+Use lexical t for closure
+#+BEGIN_SRC elisp :results code :lexical t
+  (fset 'S
+        (set 'S
+             (lambda (a)
+               (lambda (b)
+                 (lambda (c)
+                   (funcall b
+                            (funcall
+                               (funcall a b) c)))))))
 #+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC elisp :results silent
+(closure
+ ("t")
+ (a)
+ (lambda
+   (b)
+   (lambda
+     (c)
+     (funcall b
+              (funcall
+               (funcall a b)
+               c)))))
+#+END_SRC
+
+#+BEGIN_SRC elisp :results silent
+(defun church-to-nat (c)
+(funcall (funcall c '1+) 0))
+#+END_SRC
+
+#+RESULTS:
+: church-to-nat
+
+#+BEGIN_SRC elisp
+(church-to-nat (S Z))
+#+END_SRC
+
+#+RESULTS:
+: 1
 
   Compare the elisp versions with the python in the book:
 #+BEGIN_SRC python :results output
@@ -111,6 +149,24 @@
   print("ChurchToNat(NatToChurch(3)) -->")
   print(ChurchToNat(NatToChurch(3)))
 #+END_SRC
+
+#+RESULTS:
+#+begin_example
+S(Z) -->
+<function <lambda> at 0x100ca2de8>
+S(S(Z)) -->
+<function <lambda> at 0x100ca6c08>
+increment(1) -->
+2
+ChurchToNat(Z) -->
+0
+ChurchToNat(S(Z)) -->
+1
+ChurchToNat(S(S(Z))) -->
+2
+ChurchToNat(NatToChurch(3)) -->
+3
+#+end_example
 
 ** Recursing with Primitives
 
@@ -160,6 +216,10 @@
    Define exp(x, y) in terms of repeated multiplication, and supply the
    equations for exponentiation. (5^4 = 5 \times 5 \times 5 \times 5, exemplifying reducing
    exponentiation to the calculation of products.)
+
+#+BEGIN_SRC elisp :lexical t
+(
+#+END_SRC
 
 #+BEGIN_SRC python :results output
   # what goes here to get the RESULTS below?

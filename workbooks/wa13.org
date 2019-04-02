@@ -1,0 +1,202 @@
+#+TITLE: Week 11 Workbook
+#+AUTHOR: Bryan Muller
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t
+#+OPTIONS: html-postamble:nil
+#+STARTUP: showeverything entitiespretty inlineimages
+
+
+* Y Combinator in elisp
+
+#+BEGIN_SRC emacs-lisp
+  (defun Y-combinator (f) ((lambda (x) (funcall x x)) 
+                           (lambda (x)
+                             (funcall f (lambda (&rest g)
+                                          (apply (funcall x x) g))))))
+#+END_SRC
+
+#+RESULTS:
+: Y-combinator
+
+Do all but the final two exercises --- 18.8.4 and 18.8.5
+
+* Base Code
+#+BEGIN_SRC elisp :results silent :lexical t
+    (fset 'I (set 'I (lambda (x) x)))
+
+    (fset 'Z (set 'Z (lambda (x) (lambda (y) y))))
+
+    (fset 'S
+          (set 'S
+               (lambda (a)
+                 (lambda (b)
+                   (lambda (c)
+                     (funcall b
+                              (funcall
+                                 (funcall a b) c)))))))
+
+  (fset 'ADD
+        (set 'ADD
+             (lambda (a)
+               (lambda (b) (funcall (funcall a S) b)))))
+
+  (fset 'MUL
+        (set 'MUL
+             (lambda (a)
+               (lambda (b)
+                 (lambda (c)
+                   (funcall a (funcall b) c))))))
+
+  (fset 'TRUE
+        (set 'TRUE
+             (lambda (a)
+               (lambda (b)
+                       a))))
+
+  (fset 'FALSE
+        (set 'FALSE
+             (lambda (a)
+               (lambda (b)
+                 b))))
+
+  (fset 'NOT
+        (set 'NOT
+             (lambda (a)
+               (funcall (funcall a FALSE) TRUE))))
+
+  (fset 'AND
+        (set 'AND
+             (lambda (a)
+                (lambda (b)
+                   (funcall (funcall a b) a)))))
+
+
+  (fset 'OR
+        (set 'OR
+             (lambda (a)
+               (lambda (b) 
+                 (funcall (funcall a a) b)))))
+
+  (fset 'ZP
+        (set 'ZP
+            (lambda (a)
+                    (funcall (funcall (funcall a FALSE) NOT) FALSE))))
+
+  (fset 'PAIR 
+       (set 'PAIR
+            (lambda (x)
+                (lambda (y)
+                    (lambda (f)
+                       (funcall (funcall f x) y))))))
+
+  (fset 'FIRST
+       (set 'FIRST
+            (lambda (p) (funcall p TRUE))))
+
+  (fset 'SECOND
+       (set 'SECOND
+            (lambda (p) (funcall p FALSE))))
+
+  (fset 'Y
+       (set 'Y
+          (lambda (f) 
+             ((lambda (x) (funcall x x)
+              (lambda (x) (funcall f (lambda (&rest v)
+                                     (apply (funcall x x) v)))))))))
+
+#+END_SRC
+#+BEGIN_SRC elisp :results silent 
+
+  (defun lambda-to-bool (b)
+     (funcall (funcall b t) nil))
+
+  
+  (defun bool-to-lambda (b)
+     (if b
+         TRUE
+       FALSE))
+
+
+  (defun church-to-nat (c)
+  (funcall (funcall c '1+) 0))
+
+  (defun nat-to-church (n)
+     (if (zerop n)
+        Z
+        (funcall S (nat-to-church (1- n)))))
+
+  (defun lambda-s (x)
+     (1+ x))
+
+  (defun lambda-add (x y)
+     (if (zerop y)
+        x
+     (lambda-s (lambda-add x (1- y)))))
+
+  (defun lambda-mul (x y)
+     (if (= 1 y)
+        x
+       (lambda-add x (lambda-mul x (1- y)))))
+
+  (defun lambda-ex (x y)
+     (if (zerop y)
+        1
+      (if (= 1 y)
+          x
+        (lambda-mul x (lambda-ex x (1- y)))))) 
+#+END_SRC
+
+#+BEGIN_SRC elisp :results raw
+(lambda-to-bool (funcall (funcall AND TRUE) FALSE))
+(bool-to-lambda nil)
+#+END_SRC
+
+
+* Exercises
+** DONE Exercise 18.5.1
+   CLOSED: [2019-04-01 Mon 18:57]
+#+BEGIN_SRC elisp :results raw
+(lambda-to-bool (funcall (funcall (funcall PAIR TRUE) FALSE) AND))
+#+END_SRC
+
+#+RESULTS:
+t
+
+
+** DONE Exercise 18.5.2
+   CLOSED: [2019-04-01 Mon 19:07]
+
+#+BEGIN_SRC elisp :results raw
+(lambda-to-bool (funcall (funcall (funcall PAIR TRUE) FALSE) OR))
+#+END_SRC
+
+#+RESULTS:
+t
+** Exercise 18.8.1
+
+A fixpoint combinator is a combinator /E/ such that for any lambda expression
+/G/, the identity (/EG/) = /G/(/EG/) holds. There are an infinite number of
+fixpoint combinators. 
+
+
+\textit{Y} = (\lambda f.(\lambda x. f(x x))(\lambda x. f(x x)))
+\textit{Y_e} = (\lambda f.(\lambda x.(x x))(\lambda y.f(\lambda v: ((y y) v))))
+
+| = | ((\lambda f.(\lambda x.(x x)))((\lambda y.f)(\lambda v.((y y)v))))G | Base                                         |
+| = | ((\lambda x.(x x)))((\lambda y.G)(\lambda v.((y y)v))))       | Apply Beta reduction with /f/ bound to G     |
+| = | ((\lambda y.G \lambda y.G)(\lambda v.((y y) v)))              | Apply Beta reduction with /x/ bound to \lambda y.G |
+
+Y_e is a fixed-point function due to Tennent's correspondence principle. 
+Breaking down Y_e, we see that it is very similar to Y. The difference being that
+instead of evaluating the second \lambda x. f(x x) immedeiatly, we defer it into
+another wrapped lambda. This is essentially a no-op, as all it does it place the
+order of the inner function further back in queue for evalutation. This is why
+the applicative (eager) Y combinator works with eager languages. Instead of
+returning a "value" it returns another layered function. This means that eager
+languages will stop evaluation there, preventing an infinite loop of self
+evalutation. This means that Y and Y_e are equiv
+
+
+** Exercise 18.8.2
+
+** Exercise 18.8.3

@@ -1,0 +1,63 @@
+* Identity
+#+BEGIN_SRC elisp :results silent
+  (fset 'I (set 'I (lambda (x) x)))
+#+END_SRC
+
+* Zero
+#+BEGIN_SRC elisp :results silent
+  (fset 'Z (set 'Z (lambda (x) (lambda (y) y))))
+#+END_SRC
+
+* Successor
+#+BEGIN_SRC elisp :results silent :lexical t
+  (fset 'S
+        (set 'S
+             (lambda (a)
+               (lambda (b)
+                 (lambda (c)
+                   (funcall b
+                            (funcall
+                               (funcall a b) c)))))))
+#+END_SRC
+
+* Nat encodings
+#+BEGIN_SRC elisp :results silent
+(defun church-to-nat (c)
+(funcall (funcall c '1+) 0))
+
+(defun nat-to-church (n)
+   (if (zerop n)
+      Z
+      (funcall S (nat-to-church (1- n)))))
+#+END_SRC
+
+
+* Arith
+#+BEGIN_SRC elisp :results silent :lexical t
+(defun lambda-s (x)
+   (1+ x))
+
+(defun lambda-add (x y)
+   (if (zerop y)
+      x
+   (lambda-s (lambda-add x (1- y)))))
+
+(defun lambda-mul (x y)
+   (if (= 1 y)
+      x
+     (lambda-add x (lambda-mul x (1- y)))))
+
+(defun lambda-ex (x y)
+   (if (zerop y)
+      1
+    (if (= 1 y)
+        x
+      (lambda-mul x (lambda-ex x (1- y)))))) 
+#+END_SRC
+
+#+BEGIN_SRC elisp
+(lambda-ex 2 7)
+#+END_SRC
+
+#+RESULTS:
+: 128

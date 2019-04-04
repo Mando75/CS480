@@ -2,7 +2,7 @@
 #+LANGUAGE: en
 #+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t
 #+OPTIONS: html-postamble:nil
-#+STARTUP: entitiespretty
+#+STARTUP: entitiespretty showeverything
 
 #+Begin_Latex
 \pagebreak
@@ -869,7 +869,7 @@ Selections from Week 3 exercises:
 #+NAME: fig:Exercise 4.2 DFA
 #+ATTR_ORG: :width 200/250/300/400/500/600
 #+ATTR_LATEX: :width 2.0in
-     [[file:graphs/4.2dfa.gv.png]]
+     [[file:workbooks/graphs/4.2dfa.gv.png]]
 
 **** 2.
      State table
@@ -1023,7 +1023,7 @@ Selections from Week 3 exercises:
      #+NAME: fig:Exercise 4.7.1.2 DFA
 #+ATTR_ORG: :width 200/250/300/400/500/600
 #+ATTR_LATEX: :width 2.0in
-            [[file:graphs/dfa4.7.1.2.gv.png]]
+            [[file:workbooks/graphs/dfa4.7.1.2.gv.png]]
 
 #+Begin_Latex
 \pagebreak
@@ -1035,7 +1035,7 @@ Selections from Week 3 exercises:
 #+NAME: fig:Exercise 4.7.1.2 DFA
 #+ATTR_ORG: :width 200/250/300/400/500/600
 #+ATTR_LATEX: :width 2.0in
-     [[file:graphs/4-7-1-3.png]]
+     [[file:workbooks/graphs/4-7-1-3.png]]
 *** Exercise 4.9
     2.
          If L is regular than that implies that there is a natural number N such
@@ -1086,7 +1086,7 @@ Selections from Week 4 exercises:
 #+NAME: fig:Exercise 5.1.1.2 DFA
 #+ATTR_ORG: :width 200/250/300/400/500/600
 #+ATTR_LATEX: :width 2.0in
- [[file:graphs/5.1.1.2.gv.png]]
+ [[file:workbooks/graphs/5.1.1.2.gv.png]]
 
      Test Strings
  | String | In | Out | Correct |
@@ -1153,7 +1153,7 @@ Selections from Week 4 exercises:
 #+NAME: fig:Exercise 5.2.1.1 DFA
 #+ATTR_ORG: :width 200/250/300/400/500/600
 #+ATTR_LATEX: :width 2.0in
- [[file:graphs/5.2.1.1.gv.png]]
+ [[file:workbooks/graphs/5.2.1.1.gv.png]]
 
  Treat every string as if it is a 3 bit word. We know that the valid 3 bit strings are
  011, 110, 101. Make paths for these strings, and send anything else to the black hole.
@@ -1221,7 +1221,7 @@ Selections from Week 4 exercises:
 #+NAME: fig:Exercise 5.2.1.2 DFA
 #+ATTR_ORG: :width 200/250/300/400/500/600
 #+ATTR_LATEX: :width 2.0in
- [[file:graphs/5.2.1.2.gv.png]]
+ [[file:workbooks/graphs/5.2.1.2.gv.png]]
 
 **** 3.
 
@@ -1252,7 +1252,7 @@ Selections from Week 4 exercises:
 #+NAME: fig:Exercise 6.2.1 DFA
 #+ATTR_ORG: :width 200/250/300/400/500/600
 #+ATTR_LATEX: :width 2.0in
- [[file:graphs/union47_comp47.png]]
+ [[file:workbooks/graphs/union47_comp47.png]]
 
  Yes, this is still a DFA. A DFA is allowed to have disconnected states.
 **** 2.
@@ -1396,7 +1396,7 @@ Selections from Week 4 exercises:
 #+NAME: fig:Exercise 6.5.5 DFA
 #+ATTR_ORG: :width 200/250/300/400/500/600
 #+ATTR_LATEX: :width 2.0in
- [[file:graphs/Chapter6BlimpMin.png]]
+ [[file:workbooks/graphs/Chapter6BlimpMin.png]]
 
 
 

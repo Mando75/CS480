@@ -45,7 +45,7 @@ Do all but the final two exercises --- 18.8.4 and 18.8.5
              (lambda (a)
                (lambda (b)
                  (lambda (c)
-                   (funcall a (funcall b) c))))))
+                    (funcall a (funcall b c)))))))
 
   (fset 'TRUE
         (set 'TRUE
@@ -134,9 +134,11 @@ Do all but the final two exercises --- 18.8.4 and 18.8.5
      (lambda-s (lambda-add x (1- y)))))
 
   (defun lambda-mul (x y)
-     (if (= 1 y)
-        x
-       (lambda-add x (lambda-mul x (1- y)))))
+     (if (zerop y)
+         0
+       (if (= 1 y)
+          x
+         (lambda-add x (lambda-mul x (1- y))))))
 
   (defun lambda-ex (x y)
      (if (zerop y)
@@ -153,6 +155,19 @@ Do all but the final two exercises --- 18.8.4 and 18.8.5
 
 
 * Exercises
+** DONE Exercise 18.4.1
+   CLOSED: [2019-04-03 Wed 19:46]
+   ADD applies the successor function repeatedly until the numbers have been added.
+   MUL does the same, although instead of repeating the successor function, it
+   repeats the addition function.
+** Exercise 18.4.2
+#+BEGIN_SRC elisp
+(church-to-nat (funcall (funcall MUL (nat-to-church 4)) (nat-to-church 8)))
+#+END_SRC
+
+#+RESULTS:
+: 32
+
 ** DONE Exercise 18.5.1
    CLOSED: [2019-04-01 Mon 18:57]
 #+BEGIN_SRC elisp :results raw
@@ -161,7 +176,6 @@ Do all but the final two exercises --- 18.8.4 and 18.8.5
 
 #+RESULTS:
 t
-
 
 ** DONE Exercise 18.5.2
    CLOSED: [2019-04-01 Mon 19:07]
@@ -173,7 +187,8 @@ t
 #+RESULTS:
 t
 
-** Exercise 18.8.1 WIP
+** DONE Exercise 18.8.1 
+   CLOSED: [2019-04-03 Wed 19:41]
 
 A fixpoint combinator is a combinator /E/ such that for any lambda expression
 /G/, the identity (/EG/) = /G/(/EG/) holds. There are an infinite number of
@@ -181,12 +196,74 @@ fixpoint combinators.
 
 
 \textit{Y} = (\lambda f.(\lambda x. f(x x))(\lambda x. f(x x)))
-\textit{Y_e} = (\lambda f.(\lambda x.(x x))(\lambda y.f(\lambda v: ((y y) v))))
+\textit{Y_e} = (\lambda f.(\lambda x.(x x))(\lambda y.f(\lambda v. ((y y) v))))
+lambda f:(lambda x:x(x))(lambda y:f(lambda v:y(y)(v)))
 
-| = | ((\lambda f.(\lambda x.(x x)))((\lambda y.f)(\lambda v.((y y)v))))G | Base                                         |
-| = | ((\lambda x.(x x)))((\lambda y.G)(\lambda v.((y y)v))))       | Apply Beta reduction with /f/ bound to G     |
-| = | ((\lambda y.G \lambda y.G)(\lambda v.((y y) v)))              | Apply Beta reduction with /x/ bound to \lambda y.G |
+EG = (\lambda f.(\lambda x. (x x))(\lambda y.f(\lambda v. ((y y) v))))G
 
+   = (\lambda f.(\lambda x.x x) (\lambda y.f (\lambda v. y y v)))G
+ 
+   = (\lambda f.(\lambda y.f (\lambda v.y y v))(\lambda y.f (\lambda v. y y v)))G
+
+   = (\lambda y.G(\lambda v. y y v))(\lambda y.G(\lambda v. y y v ))
+
+   = G(\lambda v. (\lambda y.G(\lambda v. y y v ))(\lambda y.G(\lambda v. y y v )) v)
+ 
+   = G (\lambda y.G(\lambda v. y y v))(\lambda y.G(\lambda v. y y v))
+
+   thus /EG/ = /G/(/EG/) and Y_e is a fixpoint combinator
+
+** DONE Exercise 18.8.2
+   CLOSED: [2019-04-03 Wed 13:44]
+
+#+BEGIN_SRC python :results output
+  # Below, for clarity, we use don't use Church numerals..
+  # The Ye -- eager Y combinator
+
+  Ye = lambda f: (lambda x: x(x))(lambda y: f(lambda v: y(y)(v)))
+  # Pre-Factorial: performs the product of 
+  # a natural number and all natural number less than it
+  # We call it pre-factorial because we need to apply
+  # Y to it to obtain the real factorial
+
+  prefact = lambda fact: lambda n: (1 if n==0 else n*fact(n-1))
+
+  # Pre-sum: sums all the natural numbers less than the given number
+
+  presum = lambda f: lambda n: (0 if n==0 else n+f(n-1))
+
+  # Pre-Fib: returns the nth number of the series defined by 
+  # the following definitions
+  #  the first two numbers are 1 and 1
+  #  the next number is defined as the sum of the prior two numbers
+
+  prefib = lambda f: lambda n: 0 if n == 0 else (1 if n == 1 else f(n-1) + f(n-2))
+
+  fact = lambda n: Ye(prefact)(n)
+  sum = lambda n: Ye(presum)(n)
+
+  print("fact examples")
+  print(fact(3))
+  print(fact(5))
+  print(fact(8))
+  print("Sum examples")
+  print(sum(3))
+  print(sum(5))
+  print(sum(8))
+#+END_SRC
+
+#+RESULTS:
+: fact examples
+: 6
+: 120
+: 40320
+: Sum examples
+: 6
+: 15
+: 36
+
+** DONE Exercise 18.8.3
+   CLOSED: [2019-04-03 Wed 13:44]
 Y_e is a fixed-point function due to Tennent's correspondence principle. 
 Breaking down Y_e, we see that it is very similar to Y. The difference being that
 instead of evaluating the second \lambda x. f(x x) immedeiatly, we defer it into
@@ -198,6 +275,3 @@ languages will stop evaluation there, preventing an infinite loop of self
 evalutation. 
 
 
-** Exercise 18.8.2
-
-** Exercise 18.8.3

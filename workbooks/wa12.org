@@ -59,7 +59,8 @@ This negates the output, which is the definition of the XNOR function.
 
 Yes, this is a linearly sized BDD. 
 It is the same as the PBDD output
-** 4
+** DONE 4
+   CLOSED: [2019-04-03 Wed 20:12]
 *** a)
 No, it is incorrect. The BDD allows several invalid acceptance states such as:
 #+BEGIN_EXAMPLE
@@ -87,8 +88,8 @@ Main_Exp : ~a2 & b2 | ~a1 & b1 | ~a0 & b0
 
 Modified
 #+BEGIN_EXAMPLE
-Var_Order : a2, b2, a1, b1, a0, b0
-Main_Exp : (~a2 & b2) |  ((~a2 & b2) & ~a1 & b1) | (((~a2 & b2) | (~a1 & b1)) & (~a0 & b0)) 
+Var_Order : x2 y2 x1 y1 x0 y0
+Main_Exp :   (~x2 & y2) | (~(x2 XOR y2) & (~x1 & y1)) | ((~(x2 XOR y2) & ~(x1 XOR y1)) & (~x0 & y0))
 #+END_EXAMPLE
 
 [[file:./graphs/altb.png]]

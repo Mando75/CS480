@@ -1,0 +1,599 @@
+* Definitions to illustrate Lambda Calculus
+  :PROPERTIES:
+  :CUSTOM_ID: definitions-to-illustrate-lambda-calculus
+  :END:
+
+Lambda Calculus was introduced to mathematics (and hence to computer
+science) by Alonzo Church. The definitions in this notebook help
+demonstrate that the Lambda notation is surprisingly versatile and helps
+us encode a vast array of nontrivial calculations. It has in fact been
+shown that the Lambda notation is universal. It is known that any
+collection of primitives that includes operations on numbers,
+conditional branches and recursion is universal ("Turing complete"), and
+what this notebook shows is how to encode numbers, arithmetic, and
+conditional testing. We offer you the opportunity to carry out a suite
+of experiments to obtain an appreciation of the power of these
+primitives we provide. Further details of the universality of Lambda
+calculus may be found in the literature.
+
+** Church Numerals
+   :PROPERTIES:
+   :CUSTOM_ID: church-numerals
+   :END:
+
+Alonzo Church proposed an interesting way to encode natural numbers:
+numbers 0, 1, 2, and so on. To represent number N belonging to this set,
+one merely builds a Lambda expression containing N applications of an
+abstract function "b" to another abstract function "c". In this sequel,
+we begin with the identity function I = lambda c: c, and then model ZERO
+(number 0) as lambda b: lambda c: c, or in other words, lambda b: I. It
+will be soon apparent what all these definitions lead to.
+#+name: prelim
+#+BEGIN_SRC python
+    # The identity function, I:
+    # ---
+    # I takes as well as returns a quantity c
+    #
+    I    = lambda c: c
+
+    # The ZERO function, ZERO:
+    # ---
+    # The lambda expression below models 0. The encoding scheme used is that of
+    # Church Numerals. Basically, it can also be written lambda b: lambda c: c
+    # that is, the lambda body is "c"
+    # or in other words zero applications of b to c.
+    #
+    # The reason that this defines 0 adequately will soon become apparent.
+    #
+    ZERO = lambda b: I
+
+    # The successor function, S:
+    # ---
+    # This is how the successor function is encoded. Basically, it will help
+    # wrap one more "b" application around an innermost c, as will soon be demoed.
+    #
+    S    = lambda a: lambda b: lambda c: b(a(b)(c))
+#+END_SRC
+
+** A taste of how the definition of ZERO and S fit together
+   :PROPERTIES:
+   :CUSTOM_ID: a-taste-of-how-the-definition-of-zero-and-s-fit-together
+   :END:
+
+Note that S(ZERO) reduces to lambda b: lambda c: b(c).
+
+This expression has b(c) inside, i.e., one application of 'b' to 'c',
+thus modeling 1. Here is how we obtain that result:
+
+- Start with S(ZERO)
+
+- Applying the definition of S, we get
+
+  - (lambda a: lambda b: lambda c: b(a(b)(c))) (ZERO)
+
+- Substituting ZERO in place of a in the above, we get
+
+  - lambda b: lambda c: b(ZERO(b)(c))
+
+- Applying the definition of ZERO, we get
+
+  - lambda b: lambda c: b((lambda b: I)(b)(c))
+
+- Eta reduction of (lambda b: I)b to I gives
+
+  - lambda b: lambda c: b(I(c))
+
+- Plugging in the definition of I gives
+
+  - lambda b: lambda c: b((lambda c:c)(c))
+
+- Another round of eta reduction - this time (lambda c:c)c reducing to c
+  gives
+
+  - lambda b: lambda c: b(c)
+
+- Notice that we have a "b(c)" innermost. That is one application of b
+  to c
+
+  - This ends up modeling 1
+
+In the same vein, S(S(ZERO)) reduces to lambda b: lambda c: b(b(c)). By
+now, we know that this models "2" since we have a b(b(c)) innermost.
+
+** Modeling Arithmetic
+   :PROPERTIES:
+   :CUSTOM_ID: modeling-arithmetic
+   :END:
+
+We now embark on modeling addition and multiplication. The ingenuity
+behind these definitions may be attributed to Alonzo Church himself. We
+are merely interested in finding out how these definitions work in
+creating Church numerals that model arithmetic correctly. (There is a
+story that Church himself took some effort to find definitions for
+certain operators -- notably the predecessor.)
+
+#+name: addmul
+#+BEGIN_SRC python
+    # The addition function, ADD:
+    # ---
+    # This is how addition is encoded. Again not quite obvious yet. Hang on!
+    # Notice that ADD is curried in that it takes the first number 'a' to be
+    # added, and yields a function lambda b:... . The body of this function
+    # does a(S) and feeds it b. This accomplishes addition.
+    #
+    ADD  = lambda a: lambda b: a(S)(b)
+
+    # The multiplication function, MUL:
+    # ---
+    # And finally for the encoding of multiplication - nonobvious again!
+    #
+    MUL  = lambda a: lambda b: lambda c: a((b)(c))     # Multiplication
+#+END_SRC
+
+** Checking the definitions
+   :PROPERTIES:
+   :CUSTOM_ID: checking-the-definitions
+   :END:
+
+The manner in which ADD and MUL work may be unraveled by testing them on
+specific numbers. Given two numbers N1 and N2 encoded as Church numerals
+(which are functions), ADD works by applying function N1 (modeled by
+'a') on S (the successor function), and subsequently applies the
+resulting function to function N1 (modeled by 'b'). It ends up obtaining
+the N1th successor of N2.
+
+Instead of doing this checking in these notebooks, we will give you
+helper functions that will help us interactively confirm these
+encodings.
+
+#+name: conversion
+#+BEGIN_SRC python
+    def increment(n):
+        """Standard increment of n. Helps define ChurchToNat.
+        """
+        return n+1
+
+    def ChurchToNat(c):
+        """To define the Church numeral to Nat converter, all we need to do is
+           accept c, which is a function representing the Church numeral. We then
+           specialize c with the standard increment applied to 0. The result will
+           be that the Church numeral in question will end up applying increment
+           to 0 n times.
+           """
+        return c(increment)(0)
+
+    def NatToChurch(n):
+        """A reverse converter now converts a standard natural number to a
+           Church numeral. This is done by applying S (i.e. our successor
+           function) n times to 0.
+        """
+        if n == 0:
+            return ZERO
+        else:
+            return S(NatToChurch(n-1))
+#+END_SRC
+
+** Now for some arithmetic, followed by printouts
+   :PROPERTIES:
+   :CUSTOM_ID: now-for-some-arithmetic-followed-by-printouts
+   :END:
+
+We will experimentally confirm that ADD and MUL work correctly,
+obtaining printouts in the form of standard numerals, thanks to the
+ChurchToNat helper function. We begin with seeing how ZERO and S work.
+
+#+BEGIN_SRC python :results output :noweb eval
+    <<prelim>>
+    <<conversion>>
+    print(ChurchToNat(ZERO))
+#+END_SRC
+
+#+RESULTS:
+: 0
+
+#+BEGIN_EXAMPLE
+    0
+#+END_EXAMPLE
+
+#+BEGIN_SRC python
+    ChurchToNat(S(ZERO))
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+    1
+#+END_EXAMPLE
+
+#+BEGIN_SRC python
+    ChurchToNat(S(S(ZERO)))
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+    2
+#+END_EXAMPLE
+
+#+BEGIN_SRC python :results output :noweb eval
+  <<prelim>>
+  <<addmul>>
+  <<conversion>>
+    # Let us do 1+2, giving us 3
+  print(ChurchToNat( ADD(S(ZERO))(S(S(ZERO)))))
+#+END_SRC
+
+#+RESULTS:
+: 3
+
+#+BEGIN_EXAMPLE
+    3
+#+END_EXAMPLE
+
+#+BEGIN_SRC python :results output :noweb eval
+  <<prelim>>
+  <<addmul>>
+  <<conversion>>
+    # Let us do 2*3, giving us 6
+  print(ChurchToNat( MUL(S(S(ZERO))) (S(S(S(ZERO))))))
+#+END_SRC
+
+#+RESULTS:
+: 6
+
+#+BEGIN_EXAMPLE
+    6
+#+END_EXAMPLE
+
+#+BEGIN_SRC python :results output :noweb eval
+  <<prelim>>
+  <<conversion>>
+    # The lambda function itself is not printed
+  print(NatToChurch(7))
+#+END_SRC
+
+#+RESULTS:
+: <function <lambda> at 0x105d7e848>
+
+#+BEGIN_EXAMPLE
+    <function __main__.<lambda>.<locals>.<lambda>>
+#+END_EXAMPLE
+
+#+BEGIN_SRC python :results output :noweb eval
+  <<prelim>>
+  <<conversion>>
+    # But we can show it via ChurchToNat
+  print(ChurchToNat(NatToChurch(7)))
+#+END_SRC
+
+#+RESULTS:
+: 7
+
+#+BEGIN_EXAMPLE
+    7
+#+END_EXAMPLE
+
+The definitions of various arithmetic operations seem to be exactly as
+we expect.
+
+* Definitions of Booleans
+  :PROPERTIES:
+  :CUSTOM_ID: definitions-of-booleans
+  :END:
+
+We now switch gears and define Boolean operations in Lambda calculus.
+Aided by these definitions, we can finally define recursive functions
+where we can carry out arithmetic, and also decide to perform Boolean
+tests to terminate recursion. These definitions will likely be
+nonobvious, at least at first glance, until we see them in action in our
+tests.
+
+#+name: booleans
+#+BEGIN_SRC python
+    # Church-coded Boolean true
+    TRUE  = lambda a: lambda b: a
+
+    # Church-coded Boolean false
+    FALSE = lambda a: lambda b: b
+
+    # Boolean negation
+    NOT = lambda a: a(FALSE)(TRUE)
+
+    # Conjunction
+    AND = lambda a: lambda b: a(b)(FALSE)
+
+    # Disjunction using DeMorgan's
+    OR = lambda a: lambda b: NOT(AND(NOT(a))(NOT(b)))
+
+    # Equal to zero test
+    Z = lambda a: a(FALSE)(NOT)(FALSE)
+
+    # Pair creator
+    PAIR = lambda x: lambda y: lambda f: f(x)(y)
+
+    # Extracts first of pair
+    FIRST = lambda p: p(TRUE)
+
+    # Extracts second of pair
+    SECOND = lambda p: p(FALSE)
+
+    # Returns the literal boolean equivalent of Church-coded boolean
+    def LambdaToBoolean(b):
+        return b(True)(False)
+
+    # Returns the Church encoded boolean of a literal boolean
+    def BooleanToLambda(b):
+        if(b):
+            return TRUE
+        else:
+            return FALSE
+#+END_SRC
+
+#+BEGIN_SRC python :results output :noweb eval
+    <<booleans>>
+    print(LambdaToBoolean(TRUE))
+#+END_SRC
+
+#+RESULTS:
+: True
+
+#+BEGIN_EXAMPLE
+    True
+#+END_EXAMPLE
+
+#+BEGIN_SRC python :results output :noweb eval
+    <<booleans>>
+    print(LambdaToBoolean(AND(TRUE)(TRUE)))
+#+END_SRC
+
+#+RESULTS:
+: True
+
+#+BEGIN_EXAMPLE
+    True
+#+END_EXAMPLE
+
+#+BEGIN_SRC python :results output :noweb eval
+    <<booleans>>
+    print(LambdaToBoolean(AND(FALSE)(TRUE)))
+#+END_SRC
+
+#+RESULTS:
+: False
+
+#+BEGIN_EXAMPLE
+    False
+#+END_EXAMPLE
+
+#+BEGIN_SRC python :results output :noweb eval
+    <<booleans>>
+    LB1 = LambdaToBoolean( (FIRST(PAIR(TRUE)(FALSE))) )
+    print(LB1)
+#+END_SRC
+
+#+RESULTS:
+: True
+
+#+BEGIN_EXAMPLE
+    True
+#+END_EXAMPLE
+
+* Y: The fixpoint finder
+  :PROPERTIES:
+  :CUSTOM_ID: y-the-fixpoint-finder
+  :END:
+
+We introduce the Y operator which helps model recursion. Suppose
+function F is recursively defined. Our accompanying textbook (and many
+similar sources) will tell us that F can then be viewed as the solution
+to an equation of the form F = G(F). In mathematics, a value (or
+function) F such that F=G(F) is said to be a fixpoint of G. In the
+following, we will obtain these fixpoints by employing a fixpoint
+finder. The standard fixpoint finder is the Y combinator or Y function.
+Given that we are encoding all our concepts in Python which is an
+/eager/ language (follows eager evaluation), we will term our Y
+combinator Ye (e for eager).
+
+What is eager evaluation, you might ask. We do not need to know all the
+details of this concept, but a high level explanation may leave you a
+bit more satisfied than otherwise.
+
+** Eager versus lazy evaluation
+   :PROPERTIES:
+   :CUSTOM_ID: eager-versus-lazy-evaluation
+   :END:
+
+When we apply a function f to an argument E, written f(E), one could
+follow two approaches:
+
+1. Evaluate E fully, obtaining some value (say v). Then apply f to v.
+   This is the eager evaluation approach -- alternately known as call by
+   value.
+
+2. Do not evaluate E one bit. Instead, assuming that the formal
+   parameter of f is x, substitute E for x everywhere within the body of
+   f. This is the non-eager evaluation approach, more properly termed
+   lazy evaluation -- alternately known as call by name.
+
+You may wonder how these two approaches differ. Again, the quick answer
+is that the latter approach can avoid nontermination (infinite looping)
+in more cases. To see this, think of a function g which takes three
+arguments, say x, y, and z.
+
+- Let g(x,y,z) be such that it evaluates x, and if found true, will
+  evaluate and return y, ignoring z entirely. On the other hand, if x is
+  found to be false, it will ignore y entirely and evaluate z.
+
+- Now call g as follows: g(True, 0, InfLoop()), where InfLoop() is a
+  function call of no arguments that simply goes into an infinite loop.
+
+- However, since the first argument of g is the constant True, we can
+  return the answer 0 under lazy evaluation.
+
+- On the other hand, with eager evaluation, the function call g(True, 0,
+  InfLoop()) will be fixated on "grinding down InfLoop() into a value v"
+  before it proceeds further with g's evaluation. Clearly, this results
+  in the whole computation looping infinitely (which is unnecessary).
+
+** The eager Y combinator, Ye
+   :PROPERTIES:
+   :CUSTOM_ID: the-eager-y-combinator-ye
+   :END:
+
+In general, a functional programming afficianado likes to introduce
+Lambda calculus in terms of a fixpoint finder called Y. This function is
+often called the Y function (or Y combinator; the term combinator
+originates from another line of work on combinatory calculus, and is
+being mentioned in case you hear it by chance and wonder what that
+means).
+
+The Y combinator is defined as follows:
+
+Y = lambda f: ( (lambda x: f(x x)) (lambda x: f(x x)) )
+
+Unfortunately, this Y combinator is designed for those who work under
+the assumption of the lazy evaluation semantics. Python, however,
+supports only eager evaluation (call by value), and therefore we must
+take due precautions to avoid infinite looping. For this reason, we
+define a suitable Y combinator which we call Ye, and is different from
+Y. See the definition of Ye below.
+
+#+name: eagerY
+#+BEGIN_SRC python
+    # Below, for clarity, we use don't use Church numerals..
+    # The Ye -- eager Y combinator
+
+    Ye = lambda f: (lambda x: x(x))(lambda y: f(lambda v: y(y)(v)))
+#+END_SRC
+
+** The notion of a "pre" function
+   :PROPERTIES:
+   :CUSTOM_ID: the-notion-of-a-pre-function
+   :END:
+
+Consider the standard factorial function which we call 'fact' below:
+
+fact(n) = (1 if n==0 else n*fact(n-1))
+
+Using Lambdas a bit more "cleverly", we can rewrite the above definition
+into an equational form:
+
+fact = lambda n: (1 if n==0 else n*fact(n-1))
+
+In a sense we are seeking one function 'fact' such that plugging it in
+on both sides of the equality symbol '=' achieves "balance".
+
+Using the Beta rule of Lambda calculus, we can write the above equation
+as follows (we are using the Beta rule "backwards"):
+
+fact = (lambda F. lambda n: (1 if n==0 else n*F(n-1))) fact
+
+We can immediately see that this is of the form "fact = G fact". Thus,
+fact is a fixpoint of this "G" function, which we will "find"
+(calculate) using our eager fixpoint finder, Ye.
+
+We will employ Ye to find the fixpoint of the so called "pre" function.
+Thus, if we are interested in defining the factorial function (termed
+'fact'), we will define the prefact function and obtain its fixpoint
+using Ye. One can understand "pre" to connote /prelude/, i.e. /prelude
+to defining a recursive function/.
+
+Plainly said, the G function is the "pre" function. We will now see
+various examples of "pre" functions.
+
+** 'A' fixpoint or 'the' fixpoint?
+   :PROPERTIES:
+   :CUSTOM_ID: a-fixpoint-or-the-fixpoint
+   :END:
+
+We have been employing the term *the fixpoint* without batting an
+eyelid. While a general discussion is beyond the scope of these notes,
+we must say that in general, for a G function, there could be multiple
+fixpoints. Luckily for us, we are going to be dealing with only /total/
+functions -- that is, recursive definitions where the function does not
+infinitely loop for any argument. For such functions, there is only one
+fixpoint, and Ye will find that. We are thus justified in using the term
+*the fixpoint*.
+
+#+name: prefuncs
+#+BEGIN_SRC python
+
+    # Pre-Factorial: performs the product of
+    # a natural number and all natural number less than it
+    # We call it pre-factorial because we need to apply
+    # Y to it to obtain the real factorial
+
+    prefact = lambda fact: lambda n: (1 if n==0 else n*fact(n-1))
+
+    # Pre-sum: sums all the natural numbers less than the given number
+
+    presum = lambda f: lambda n: (0 if n==0 else n+f(n-1))
+
+    # Pre-Fib: returns the nth number of the series defined by
+    # the following definitions
+    #  the first two numbers are 1 and 1
+    #  the next number is defined as the sum of the prior two numbers
+
+    prefib = lambda f: lambda n: 0 if n == 0 else (1 if n == 1 else f(n-1) + f(n-2))
+#+END_SRC
+
+** Onto the first recursive definition
+   :PROPERTIES:
+   :CUSTOM_ID: onto-the-first-recursive-definition
+   :END:
+
+We now have built-up enough machinery to show you how we can handle
+recursive functions.
+
+We can write the following without (we hope) surprising you one bit:
+
+- fact = Ye prefact : In other words, fact is obtained by finding a
+  fixpoint of prefact.
+
+- To see this working, we can calculate fact 3, fact 4, and fact 5.
+  Given that we are working with standard numerals (and not Church
+  numerals), we can run without any printing aids such as ChurchToNat.
+
+- We can similarly give fib and prefib a go.
+
+#+BEGIN_SRC python :results output :noweb eval
+    <<eagerY>>
+    <<prefuncs>>
+    fact = Ye(prefact)
+    print(fact(5))
+#+END_SRC
+
+#+RESULTS:
+: 120
+
+#+BEGIN_EXAMPLE
+    120
+#+END_EXAMPLE
+
+#+BEGIN_SRC python :results output :noweb eval
+    <<eagerY>>
+    <<prefuncs>>
+    fib = Ye(prefib)
+    print(fib(5))
+#+END_SRC
+
+#+RESULTS:
+: 5
+
+#+BEGIN_EXAMPLE
+    5
+#+END_EXAMPLE
+
+* END: this finishes fixpoint theory defined in Jove
+  :PROPERTIES:
+  :CUSTOM_ID: end-this-finishes-fixpoint-theory-defined-in-jove
+  :END:
+
+#+BEGIN_SRC python :results output :noweb eval
+    <<eagerY>>
+    <<prefuncs>>
+    print(Ye(presum)(10))
+#+END_SRC
+
+#+RESULTS:
+: 55
+
+#+BEGIN_EXAMPLE
+    55
+#+END_EXAMPLE

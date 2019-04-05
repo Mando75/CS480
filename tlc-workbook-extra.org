@@ -1,0 +1,131 @@
+#+TITLE: The Lambda Calculus Workbook Extra
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+OPTIONS: html-postamble:nil
+#+STARTUP: showeverything entitiespretty
+#+SETUPFILE: theme-bigblow.setup
+
+* TODO Investigate
+  The lambda calculus, dealing as it does with just functions, leads to
+  questions not just of *application*, but of *composition*.
+
+  How do we compose functions together? Left-to-right, or right-to-left?
+
+* TODO Concretize With Code
+
+  Which is this?
+#+BEGIN_SRC elisp :results silent :lexical t
+  (defun compose-fns (&rest fns)
+    "Takes a list of functions and returns a fn that is the
+    composition of those fns. The returned fn takes a variable
+    number of arguments, and returns the result of applying
+    each fn to the result of applying the previous fn to
+    the arguments (right-to-left)."
+    (lambda (&rest args)
+      (car (reduce-fn (lambda (fn xs) (list (apply fn xs)))
+                           args fns))))
+
+  (defun reduce-fn (fn initial-value list)
+    "Replace conses with FN, nil with INITIAL-VALUE and evaluate
+    the resulting expression. If LIST is empty, INITIAL-VALUE is
+    returned and FN is not called."
+    (if (null list)
+        initial-value
+      (funcall fn (car list) (reduce-fn fn initial-value (cdr list)))))
+#+END_SRC
+
+#+BEGIN_SRC elisp :results code
+  (fset 'TP (setq TP (compose-fns (lambda (x) (+ x x)) (lambda (y) (* y y)))))
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC elisp
+(closure
+ ((fns
+   (lambda
+     (x)
+     (+ x x))
+   (lambda
+     (y)
+     (* y y)))
+  "t")
+ (&rest args)
+ (car
+  (reduce-fn
+   (lambda
+     (fn xs)
+     (list
+      (apply fn xs)))
+   args fns)))
+#+END_SRC
+
+#+BEGIN_SRC elisp :results raw
+  (TP 5)
+#+END_SRC
+
+#+RESULTS:
+50
+
+** TODO Left-to-Right
+  How about PT (plus then times)? How would you change =compose-fns= and/or
+  =reduce-fn= so that the plus function is invoked first, followed by the times
+  function? In other words, make it so PT of 5 returns 100 (5+5 * 5+5):
+
+#+BEGIN_SRC elisp :results raw
+  (PT 5)
+#+END_SRC
+
+* TODO Explore More
+#+BEGIN_SRC elisp :results code :lexical t
+  (fset 'S (set 'S (lambda (x) (lambda (y) (lambda (z) (funcall y (funcall (funcall x y) z)))))))
+#+END_SRC
+
+#+BEGIN_SRC elisp :results raw
+  (S Z)
+#+END_SRC
+
+#+BEGIN_SRC elisp :results raw
+  (S (S Z))
+#+END_SRC
+
+#+BEGIN_SRC elisp :results silent
+  (defun church-to-nat (c)
+    (funcall (funcall c '1+) 0))
+
+  (defun nat-to-church (n)
+    (if (zerop n)
+        Z
+      (S (nat-to-church (1- n)))))
+#+END_SRC
+
+#+BEGIN_SRC elisp :results raw
+  (church-to-nat Z)
+#+END_SRC
+
+#+BEGIN_SRC elisp :results raw
+  (church-to-nat (S Z))
+#+END_SRC
+
+#+BEGIN_SRC elisp :results raw
+  (church-to-nat (S (S Z)))
+#+END_SRC
+
+#+BEGIN_SRC elisp :results raw
+  (church-to-nat (S (S (S Z))))
+#+END_SRC
+
+#+BEGIN_SRC elisp :results raw
+  (nat-to-church 0)
+#+END_SRC
+
+#+BEGIN_SRC elisp :results raw
+  (nat-to-church 1)
+#+END_SRC
+
+#+BEGIN_SRC elisp :results raw
+  (church-to-nat (nat-to-church 0))
+#+END_SRC
+
+#+BEGIN_SRC elisp :results raw
+  (loop for n from 0 to 10 collect (church-to-nat (nat-to-church n)))
+#+END_SRC

@@ -1,0 +1,64 @@
+#+OPTIONS: H:5 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t
+#+STARTUP: showeverything entitiespretty
+
+
+* CDL
+#+BEGIN_EXAMPLE
+log(n!) \in \Theta(n log n)
+
+log(n!) = log(n) + log(n-1) + ... + log(2) + log(2) 
+
+n log(n) = log(n) + log(n) + ... + log(n) + log(n)
+
+#+END_EXAMPLE
+
+Upper Bound:
+Show that log(n!) \le nlog(n) for all n \ge 1.
+
+#+BEGIN_EXAMPLE
+log(n) + log(n-1) + ... + log(2) + log(2) \le log(n) + log(n) + ... + log(n) + log(n)
+#+END_EXAMPLE
+
+so, log(n!) \in \Omicron(nlog(n))
+
+Lower Bound:
+
+Show that log(n!) is greater than or equal to a constant multiple of nlog(n)
+
+#+BEGIN_EXAMPLE
+log(n!) = log(n*n-1*...*2*1) = log(n) + log(n-1) * ... * log(2) * log(1)
+#+END_EXAMPLE
+
+Delete the first half of the term:
+
+#+BEGIN_EXAMPLE
+log(n!) \ge log(n) + log(n-1) + ... + log(n/2 + 1) + log(n/2)
+#+END_EXAMPLE
+
+Reduced, it turns into 
+#+BEGIN_EXAMPLE
+log(n!) \ge (n/2)log(n - n/2)
+#+END_EXAMPLE
+
+https://www.mcs.sdsmt.edu/ecorwin/cs372/handouts/theta_n_factorial.htm
+We want to show this is greater than a multiple of n log n. Since it is less than (n/2)log(n),
+we need to pick a multiple less than one-half, for example one-quarter. 
+
+To show , we can use the following argument.
+
+For n ≥ 4,
+
+
+
+Putting these together gives the following.
+
+
+
+So, log n! = Ω(n log n).
+
+Either since we have log n! = Ω(n log n) and log n! = O(n lg n) or since
+
+
+
+we can conclude log n! = Θ(n log n)
+

@@ -1,0 +1,223 @@
+#+TITLE: Take Home Final Exam Winter 2019
+#+AUTHOR: Bryan Muller
+#+EMAIL: mul13001@byui.edu
+#+LANGUAGE: en
+#+OPTIONS: H:5 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t
+#+STARTUP: showeverything entitiespretty
+#+SETUPFILE: theme-bigblow.setup
+#+latex_class_options: [12pt]
+#+LATEX_HEADER: \usepackage{setspace}
+#+LATEX_HEADER: \doublespacing
+
+
+* On Free Will and Determinism
+Free will and the omniscience of God are mutually exclusive ideas. If God is
+truly omniscient then He already knows what the outcomes of our lives will be,
+thereby making our eventual destiny deterministic, predestined, unavoidable. If
+this is the case, how can anyone argue for the existence of an omniscient God
+who has created beings with free will? 
+
+Humans crave meaning. Throughout history we have devised methods to describe and
+make sense of the universe around us and our place in it. We began first with
+gods to explain the unknown forces shaping the world around us. Eventually
+insightful men and women realized that these forces were not random. They could
+be quantified, measured, and to an extent, predicted. This led scientists to
+develope a deterministic view of the universe. French scientist Pierre-Simon
+Laplace is even reported to have said something along the lines of the
+following (paraphrased), if at one time we knew the positions and speeds of all the particles
+in the universe, then we could calculate their behaviour at any other time, in
+the past or future. Obviously this computation would be incredibly complex, but
+Laplace and others held that it would be theoretically possible. What they may
+have not anticipated was how these discoveries would begin to conflict with
+their previous notions about the nature of God. Does a deterministic
+mathematical and scientific view of the world lead to the removal of the
+necessity of deity?
+
+Mathematics can be described as the language of the universe. Using mathematics
+as a foundation, the sciences of physics, biology, chemistry, etc have been able
+to create a magnificent description of the natural world around us. But what is
+mathematics grounded in? This is one of the questions at the foundations of
+number and computational theory, and still a hotly debated topic. One could make
+the argument that our understanding of the universe could stem from our
+understanding of mathematics. If mathematics is a construction of humankind's
+intuition or simple philosophical view of the world, does that indicate that we
+have locked /ourselves/ in a potentially deterministic box? On the other hand,
+if the foundation of mathematics can be found in logic or Platonism, how does
+one reconcile the inferred determinism of these models with free will?
+
+Kurt G\ouml{}del showed, quite paradoxically, that no consistent set of axioms can be
+algorithmically listed which would be capable of proving all arithmetic truths.
+This leads to the undeniable conclusion that there exist some truths, though
+known to be true, cannot be proven as such. G\ouml{}del's work when paired with the
+work of mathematicians Alonso Church and Alan Turing showed that with only a
+finite logical system, not only can we never programmatically describe all
+truths, but that we can not even know the output of all the programs we create
+[[[https://rickneff.github.io/the-ocean-of-truth.pdf][1]]]. As Rudy Rucker so eloquently described in his essay [[https://rickneff.github.io/the-ocean-of-truth.pdf][/The Ocean of Truth/]],
+if this were not the case, every human activity would be listable and
+computable. This would imply that we are stuck in a finite, deterministic
+universe where every action you make could be precalculated. You would like to
+become a computer scientist? Here are the exact steps /you/ must follow to
+achieve it. Thankfully, due to the work of G\ouml{}del and others, we know this is not
+the case.
+
+This nondeterministic view is further backed up by quantam theory. In Dr. Stephen
+Hawking's essay [[http://www.hawking.org.uk/does-god-play-dice.html][/Does God Play Dice?/]], he delves into this very question about
+determinism and free will [2]. His conclusion from a physicist's perspective is that
+the universe is not deterministic. He ends his essay with the following:
+
+#+BEGIN_QUOTE
+To sum up, what I have been talking about, is whether the universe evolves in an
+arbitrary way, or whether it is deterministic. The classical view, put forward
+by Laplace, was that the future motion of particles was completely determined,
+if one knew their positions and speeds at one time. This view had to be
+modified, when Heisenberg put forward his Uncertainty Principle, which said that
+one could not know both the position, and the speed, accurately. However, it was
+still possible to predict one combination of position and speed. But even this
+limited predictability disappeared, when the effects of black holes were taken
+into account. The loss of particles and information down black holes meant that
+the particles that came out were random. One could calculate probabilities, but
+one could not make any definite predictions. Thus, the future of the universe is
+not completely determined by the laws of science, and its present state, as
+Laplace thought. God still has a few tricks up his sleeve.
+#+END_QUOTE
+
+What then, does a nondeterministic universe impy for the concept of an
+omniscient God? If our universe is non-determinstic, how then can there exist a
+God with a knowledge of our past, present, and future without contradicting the
+laws He supposedly created? While I do not claim to have *the* answer to this
+question, I do have some thoughts and insights that I believe are worth
+discussing.
+
+My instinct is to follow a traditional line of thinking put forward by
+theologians like C.S. Lewis, which is that God exists on a plane outside of time
+where he observes all of our time at once. In his book /Mere Christianity/,
+Lewis expounds with the following [3]: 
+
+#+BEGIN_QUOTE
+But suppose God is outside and above the Time-line. In that case, what we call
+"tomorrow" is visible to Him in just the same way as what we call "today". All
+the days are "Now" for Him. He does not remember you doing things yesterday, He
+simply sees you doing them: because, though you have lost yesterday, He has not.
+He does not "foresee" you doing things tomorrow, He simply sees you doing them:
+because, though tomorrow is not yet there for you, it is for Him. You never
+supposed that your actions at this moment were any less free because God knows
+what you are doing. Well, He knows your tomorrow's actions in just the same
+way—because He is already in tomorrow and can simply watch you. In a sense, He
+does not know your action till you have done it: but then the moment at which
+you have done it is already "Now" for Him.
+#+END_QUOTE
+
+An answer along these lines, while not stemming from any concrete logical
+deduction or proof, does seem to align nicely with the doctrine often repeated
+in Holy Writ that God's course is "one eternal round." Through this view, God is
+omniscient not because He knows exactly what choices we will make in our lives,
+but because he sees our entire life as one complete whole. We are still free to
+choose, and He will know the outcome, but not because He determined it to be so.
+
+* On Disobedience to Higher Laws
+
+Elder N. Eldon Tanner said, "Law is the simple application of truth. [4]" 
+
+Why does it seem that advanced intelligences are free to disobey the higher
+laws set forth by God? I would argue that they are not. 
+
+God has put forth both spiritual and physical laws to govern our universe. As
+physical beings, we are bound to obey, one way or the other, the physical laws
+of the universe God has set forth. We cannot simply "choose" to disregard
+gravity. The law has hold on us, whether we like it or not. To disregard it is
+to invite physical peril into our lives. I believe the same holds with the
+spiritual laws God has set forth. 
+
+Yes, it may seem that many men and women disregard the laws of God seemingly
+without consequence, but we have been repeatedly taught that there is a day of
+reckoning coming, a day when all men will be held accountable for their deeds,
+whether good or evil. Just like choosing to disregard the law of gravity may
+lead to serious physical injury or death, disregarding the spiritual laws of God
+will result in spiritual harm and death. The consequence may not be immediete,
+but it will come nonetheless.
+
+It seems we have come into this world with bodies which understand and willingly
+obey the physical laws of the universe. This provides us with a level of
+*computational output* to operate from. However, our main purpose in coming here
+has been to learn to freely obey the spiritual laws God has set forth, further
+increasing our output. Perhaps this can be viewed as a step on the heirarchy of
+languages. A regular language has some computational power, but like our
+obedience to the physical laws, is limited in what its computational power can
+produce. Learning to obey the spiritual laws would move us up the language
+heirarchy to a sphere which is more computationally powerful. 
+
+* Deciding a Halting Problem
+** What is the program computing?
+   This program is an implementation of Conway's PRIMEGAME which is a method to
+   generate prime numbers. The program uses FRACTRAN (a Turing-complete
+   language) to generate the prime powers of 2.
+** How does it do it?
+   OEIS provides a great writeup of how the PRIMEGAME works, which I will
+   paraphrase here [5].
+
+   Given a sequence of 14 rational numbers,
+
+   #+BEGIN_SRC elisp :results code
+   (require 'calc-math)
+   (setq flibbers (list 17 78 19 23 29 77 95 77 1 11 13 15 15 55)
+         flobbers (list 91 85 51 38 33 29 23 19 17 13 11 14 2 1))
+   (mapcar* 'math-make-frac flibbers flobbers)
+   #+END_SRC
+
+   #+BEGIN_SRC elisp
+   ((frac 17 91)
+    (frac 78 85)
+    (frac 19 51)
+    (frac 23 38)
+    (frac 29 33)
+    (frac 77 29)
+    (frac 95 23)
+    (frac 77 19)
+    (frac 1 17)
+    (frac 11 13)
+    (frac 13 11)
+    (frac 15 14)
+    (frac 15 2)
+    55)
+   #+END_SRC
+
+   starting with i = 2, find the first number in the sequence that when
+   multiplied by i produces an integer. Set i to that integer. This will
+   generate a sequence such that when the binary logarithm of n is an integer,
+   it will be a prime number (checking if it is an integer is handled nicely by
+   'math-integer-log2). This then generates the noncomposite powers of 2, or in
+   other words, the prime powers of two.
+
+   I would like to quote directly from the OEIS wiki page, as I think it
+   provides perhaps a clearer insight into how one could think of this program
+   as a machine. 
+
+#+BEGIN_QUOTE
+It may be helpful to think of the "machine" as an actual machine, with an intake
+on one end and an outtake on the other end. A workpiece, in this case, a power
+of 2, is fed into the intake, the machine is activated and after making some
+noise and shaking, the workpiece comes out the other end transformed into
+another power of 2. And of course we can take this new power of 2 and put it
+into the intake once again.
+#+END_QUOTE
+
+** Will it ever terminate?
+With this machine sequence, no the program will never halt. The last number in
+the machine sequence is the whole number 55. This guarantees that if none of the
+previous numbers in the sequence multiplied by i produces an integer, the 55
+will (remember that i only gets changed when it is multiplied by one of the
+fractions to produce a new integer). This is quite elegant, because as
+we know, there is an infinite number of primes. It therefore seems appropriate
+that a program designed to produce the prime powers of 2 would also never halt.  
+
+#+BEGIN_EXPORT latex
+\pagebreak
+#+END_EXPORT
+
+* References
+   1. /The Ocean of Truth/, Rudy Rucker, https://rickneff.github.io/the-ocean-of-truth.pdf
+   2. /Does God Play Dice?/, Stephen Hawking, http://www.hawking.org.uk/does-god-play-dice.html
+   3. /Mere Christianity/, C.S. Lewis, MacMillan Pub. Co., New York
+   4. /The Laws of God/, N. Eldon Tanner, https://www.lds.org/general-conference/1975/10/the-laws-of-god?lang=eng
+   5. /Conway's PRIMEGAME/, OEIS Wiki, https://oeis.org/wiki/Conway's_PRIMEGAME
+   6. /A007542/, OEIS.org, http://oeis.org/A007542

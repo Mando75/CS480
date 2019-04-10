@@ -65,15 +65,137 @@
 
 #+RESULTS:
 50
+50
 
-** TODO Left-to-Right
+** DONE Left-to-Right
+   CLOSED: [2019-04-05 Fri 13:23]
   How about PT (plus then times)? How would you change =compose-fns= and/or
   =reduce-fn= so that the plus function is invoked first, followed by the times
   function? In other words, make it so PT of 5 returns 100 (5+5 * 5+5):
 
+#+BEGIN_SRC elisp :results silent :lexical t
+  (defun compose-fns-lr (&rest fns)
+    "Takes a list of functions and returns a fn that is the
+    composition of those fns. The returned fn takes a variable
+    number of arguments, and returns the result of applying
+    each fn to the result of applying the previous fn to
+    the arguments (right-to-left)."
+    (lambda (&rest args)
+      (car (reduce-fn (lambda (fn xs) (list (apply fn xs)))
+                           args (reverse fns)))))
+
+  (defun reduce-fn-lr (fn initial-value list)
+    "Replace conses with FN, nil with INITIAL-VALUE and evaluate
+    the resulting expression. If LIST is empty, INITIAL-VALUE is
+    returned and FN is not called."
+    (if (null list)
+        initial-value
+      (funcall fn (car list) (reduce-fn fn initial-value (cdr list)))))
+#+END_SRC
+
+#+BEGIN_SRC elisp :results code
+  (fset 'PT (setq PT (compose-fns-lr (lambda (x) (+ x x)) (lambda (y) (* y y)))))
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC elisp
+(closure
+ ((fns
+   (lambda
+     (x)
+     (+ x x))
+   (lambda
+     (y)
+     (* y y)))
+  "t")
+ (&rest args)
+ (car
+  (reduce-fn
+   (lambda
+     (fn xs)
+     (list
+      (apply fn xs)))
+   args
+   (reverse fns))))
+#+END_SRC
+
+
+
 #+BEGIN_SRC elisp :results raw
   (PT 5)
 #+END_SRC
+
+#+RESULTS:
+100
+50
+
+* Optional Parameter
+** DONE Left-to-Right
+   CLOSED: [2019-04-05 Fri 13:23]
+  How about PT (plus then times)? How would you change =compose-fns= and/or
+  =reduce-fn= so that the plus function is invoked first, followed by the times
+  function? In other words, make it so PT of 5 returns 100 (5+5 * 5+5):
+
+#+BEGIN_SRC elisp :results silent :lexical t
+  (defun compose-fns-o (&rest fns &key ltr)
+    "Takes a list of functions and returns a fn that is the
+    composition of those fns. The returned fn takes a variable
+    number of arguments, and returns the result of applying
+    each fn to the result of applying the previous fn to
+    the arguments (right-to-left)."
+    (lambda (&rest args)
+      (car (reduce-fn (lambda (fn xs) (list (apply fn xs)))
+                           args (if left-to-right (reverse fns) fns)))))
+
+  (defun reduce-fn-lr (fn initial-value list)
+    "Replace conses with FN, nil with INITIAL-VALUE and evaluate
+    the resulting expression. If LIST is empty, INITIAL-VALUE is
+    returned and FN is not called."
+    (if (null list)
+        initial-value
+      (funcall fn (car list) (reduce-fn fn initial-value (cdr list)))))
+#+END_SRC
+
+#+BEGIN_SRC elisp :results code
+  (fset 'PTO (setq PTO (compose-fns-o (lambda (x) (+ x x)) (lambda (y) (* y y)))))
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC elisp
+(closure
+ ((left-to-right)
+  (&key)
+  (fns
+   (lambda
+     (x)
+     (+ x x))
+   (lambda
+     (y)
+     (* y y))
+   :ltr)
+  "t")
+ (&rest args)
+ (car
+  (reduce-fn
+   (lambda
+     (fn xs)
+     (list
+      (apply fn xs)))
+   args
+   (if left-to-right
+       (reverse fns)
+     fns))))
+#+END_SRC
+
+#+BEGIN_SRC elisp :results raw
+  (PTO 5 :ltr t)
+#+END_SRC
+
+#+RESULTS:
+100
+100
+
+
 
 * TODO Explore More
 #+BEGIN_SRC elisp :results code :lexical t

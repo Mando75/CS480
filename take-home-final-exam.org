@@ -5,6 +5,9 @@
 #+OPTIONS: H:5 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t
 #+STARTUP: showeverything entitiespretty
 #+SETUPFILE: theme-bigblow.setup
+#+LATEX_HEADER: \usepackage{setspace}
+#+LATEX_HEADER: \doublespacing
+
 
 * Instructions
   Please analyze and reason carefully, making full use of the *mind tools* in
@@ -28,7 +31,7 @@
 
 ** Reading
   - [[https://rickneff.github.io/the-ocean-of-truth.pdf][The Ocean of Truth]]
-  - [[https://rickneff.github.io/is-creativity-algorithmic.pdf][Is Creativity Algorithmic?]]
+  -[[https://rickneff.github.io/is-creativity-algorithmic.pdf][ Is Creativity Algorithmic?]]
   - [[https://rickneff.github.io/what-is-determinism.html][What Is Determinism?]]
 
 ** Writing
@@ -160,3 +163,32 @@
 #+END_SRC
 
   Hint: [[elisp:(switch-to-buffer-other-window "*Messages*" t)][Switch to Messages Buffer]]
+#+name: decide-no-threds
+#+BEGIN_SRC elisp :results silent
+  (require 'calc-math)
+  (require 'cl)
+  (defun halting () (loop with flibbers = (list 17 78 19 23 29 77 95 77 1 11 13 15 15 55)
+        with flobbers = (list 91 85 51 38 33 29 23 19 17 13 11 14 2 1)
+        with i = 2
+        with f = 0
+        with p = nil
+        with time-keeps-ticking = t
+        while time-keeps-ticking
+        do (loop initially do (setq time-keeps-ticking nil)
+                 for flibber in flibbers
+                 for flobber in flobbers
+                 while (not time-keeps-ticking)
+                 do (setq f (math-mul i (math-make-frac flibber flobber)))
+                 (when (math-integerp f)
+                   (setq i f
+                         p (math-integer-log2 i))
+                   (when p
+                     (message "2^%s = %s" (calc-eval p) (calc-eval i)))
+                   (setq time-keeps-ticking t)))))
+#+END_SRC
+
+#+BEGIN_SRC elisp
+(halting)
+#+END_SRC
+
+

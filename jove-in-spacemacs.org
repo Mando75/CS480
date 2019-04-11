@@ -1,0 +1,70 @@
+
+* Jove Demo
+#+BEGIN_SRC python :results code
+  from jove.DotBashers import dotObject_nfa
+  from jove.Def_md2mc import md2mc
+  # from Def_NFA import dotObj_nfa
+
+  nfa7_5 = md2mc('''NFA
+  I    : 0|1 -> I
+  I    : 0   -> S0
+  S0   : 1   -> S0
+  S01  : 0   -> S010
+  S010 : 1   -> F
+  F    : 0|1   -> F''')
+  return dotObj_nfa(nfa7_5)
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC dot :file ex.png
+// NO_St1
+digraph {
+	graph [rankdir=LR]
+	EMPTY [label="" shape=plaintext]
+	S010 [label=S010 peripheries=1 shape=circle]
+	S01 [label=S01 peripheries=1 shape=circle]
+	I [label=I peripheries=1 shape=circle]
+	S0 [label=S0 peripheries=1 shape=circle]
+	F [label=F peripheries=2 shape=circle]
+	EMPTY -> I
+	I -> I [label=0]
+	I -> S0 [label=0]
+	I -> I [label=1]
+	S0 -> S0 [label=1]
+	S01 -> S010 [label=0]
+	S010 -> F [label=1]
+	F -> F [label=0]
+	F -> F [label=1]
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:ex.png]]
+
+
+* Jove Instructions
+
+** 1. Change Org-Babel-Python environment to your conda/pipenv en environment
+   SPC SPC customize-group "python"
+
+   Search for "Python Org Babel Command"
+
+   Change the path to your CS480 env e.g. "/Users/*yourusername*/anaconda3/envs/CS480/bin/python"
+
+  
+** 2. Find your env package folder
+   Open your terminal and activate your CS480 env. 
+
+   Enter the python console, import a package and check it's file location
+
+#+BEGIN_SRC python
+import jupyter
+jupyter.__file__
+#+END_SRC
+
+** 3. Copy Jove folder into your env packages folder
+
+You can now import methods from jove files via 
+#+BEGIN_SRC python
+from jove.file_name import method_name
+#+END_SRC

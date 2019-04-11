@@ -1,0 +1,444 @@
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> md
+Rule 1     md -> error
+Rule 2     md -> DFA lines
+Rule 3     md -> NFA lines
+Rule 4     md -> PDA lines
+Rule 5     md -> TM lines
+Rule 6     lines -> one_line
+Rule 7     lines -> one_line lines
+Rule 8     one_line -> state COLON labels ARROW states
+Rule 9     state -> ID
+Rule 10    states -> state
+Rule 11    states -> state COMMA states
+Rule 12    labels -> one_label
+Rule 13    labels -> one_label OR labels
+Rule 14    one_label -> ID_or_EPS_or_B
+Rule 15    ID_or_EPS_or_B -> ID
+Rule 16    ID_or_EPS_or_B -> EPS
+Rule 17    ID_or_EPS_or_B -> BLANK
+Rule 18    one_label -> ID_or_EPS_or_B COMMA ID_or_EPS_or_B SEMICOLON ID_or_EPS_or_B
+Rule 19    one_label -> ID_or_EPS_or_B SEMICOLON ID_or_EPS_or_B COMMA ID_or_EPS_or_B
+
+Terminals, with rules where they appear
+
+ARROW                : 8
+BLANK                : 17
+COLON                : 8
+COMMA                : 11 18 19
+DFA                  : 2
+EPS                  : 16
+ID                   : 9 15
+NFA                  : 3
+OR                   : 13
+PDA                  : 4
+SEMICOLON            : 18 19
+TM                   : 5
+error                : 1
+
+Nonterminals, with rules where they appear
+
+ID_or_EPS_or_B       : 14 18 18 18 19 19 19
+labels               : 8 13
+lines                : 2 3 4 5 7
+md                   : 0
+one_label            : 12 13
+one_line             : 6 7
+state                : 8 10 11
+states               : 8 11
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . md
+    (1) md -> . error
+    (2) md -> . DFA lines
+    (3) md -> . NFA lines
+    (4) md -> . PDA lines
+    (5) md -> . TM lines
+
+    error           shift and go to state 2
+    DFA             shift and go to state 3
+    NFA             shift and go to state 4
+    PDA             shift and go to state 5
+    TM              shift and go to state 6
+
+    md                             shift and go to state 1
+
+state 1
+
+    (0) S' -> md .
+
+
+
+state 2
+
+    (1) md -> error .
+
+    $end            reduce using rule 1 (md -> error .)
+
+
+state 3
+
+    (2) md -> DFA . lines
+    (6) lines -> . one_line
+    (7) lines -> . one_line lines
+    (8) one_line -> . state COLON labels ARROW states
+    (9) state -> . ID
+
+    ID              shift and go to state 10
+
+    lines                          shift and go to state 7
+    one_line                       shift and go to state 8
+    state                          shift and go to state 9
+
+state 4
+
+    (3) md -> NFA . lines
+    (6) lines -> . one_line
+    (7) lines -> . one_line lines
+    (8) one_line -> . state COLON labels ARROW states
+    (9) state -> . ID
+
+    ID              shift and go to state 10
+
+    lines                          shift and go to state 11
+    one_line                       shift and go to state 8
+    state                          shift and go to state 9
+
+state 5
+
+    (4) md -> PDA . lines
+    (6) lines -> . one_line
+    (7) lines -> . one_line lines
+    (8) one_line -> . state COLON labels ARROW states
+    (9) state -> . ID
+
+    ID              shift and go to state 10
+
+    lines                          shift and go to state 12
+    one_line                       shift and go to state 8
+    state                          shift and go to state 9
+
+state 6
+
+    (5) md -> TM . lines
+    (6) lines -> . one_line
+    (7) lines -> . one_line lines
+    (8) one_line -> . state COLON labels ARROW states
+    (9) state -> . ID
+
+    ID              shift and go to state 10
+
+    lines                          shift and go to state 13
+    one_line                       shift and go to state 8
+    state                          shift and go to state 9
+
+state 7
+
+    (2) md -> DFA lines .
+
+    $end            reduce using rule 2 (md -> DFA lines .)
+
+
+state 8
+
+    (6) lines -> one_line .
+    (7) lines -> one_line . lines
+    (6) lines -> . one_line
+    (7) lines -> . one_line lines
+    (8) one_line -> . state COLON labels ARROW states
+    (9) state -> . ID
+
+    $end            reduce using rule 6 (lines -> one_line .)
+    ID              shift and go to state 10
+
+    one_line                       shift and go to state 8
+    lines                          shift and go to state 14
+    state                          shift and go to state 9
+
+state 9
+
+    (8) one_line -> state . COLON labels ARROW states
+
+    COLON           shift and go to state 15
+
+
+state 10
+
+    (9) state -> ID .
+
+    COLON           reduce using rule 9 (state -> ID .)
+    COMMA           reduce using rule 9 (state -> ID .)
+    ID              reduce using rule 9 (state -> ID .)
+    $end            reduce using rule 9 (state -> ID .)
+
+
+state 11
+
+    (3) md -> NFA lines .
+
+    $end            reduce using rule 3 (md -> NFA lines .)
+
+
+state 12
+
+    (4) md -> PDA lines .
+
+    $end            reduce using rule 4 (md -> PDA lines .)
+
+
+state 13
+
+    (5) md -> TM lines .
+
+    $end            reduce using rule 5 (md -> TM lines .)
+
+
+state 14
+
+    (7) lines -> one_line lines .
+
+    $end            reduce using rule 7 (lines -> one_line lines .)
+
+
+state 15
+
+    (8) one_line -> state COLON . labels ARROW states
+    (12) labels -> . one_label
+    (13) labels -> . one_label OR labels
+    (14) one_label -> . ID_or_EPS_or_B
+    (18) one_label -> . ID_or_EPS_or_B COMMA ID_or_EPS_or_B SEMICOLON ID_or_EPS_or_B
+    (19) one_label -> . ID_or_EPS_or_B SEMICOLON ID_or_EPS_or_B COMMA ID_or_EPS_or_B
+    (15) ID_or_EPS_or_B -> . ID
+    (16) ID_or_EPS_or_B -> . EPS
+    (17) ID_or_EPS_or_B -> . BLANK
+
+    ID              shift and go to state 19
+    EPS             shift and go to state 20
+    BLANK           shift and go to state 21
+
+    labels                         shift and go to state 16
+    one_label                      shift and go to state 17
+    ID_or_EPS_or_B                 shift and go to state 18
+
+state 16
+
+    (8) one_line -> state COLON labels . ARROW states
+
+    ARROW           shift and go to state 22
+
+
+state 17
+
+    (12) labels -> one_label .
+    (13) labels -> one_label . OR labels
+
+    ARROW           reduce using rule 12 (labels -> one_label .)
+    OR              shift and go to state 23
+
+
+state 18
+
+    (14) one_label -> ID_or_EPS_or_B .
+    (18) one_label -> ID_or_EPS_or_B . COMMA ID_or_EPS_or_B SEMICOLON ID_or_EPS_or_B
+    (19) one_label -> ID_or_EPS_or_B . SEMICOLON ID_or_EPS_or_B COMMA ID_or_EPS_or_B
+
+    OR              reduce using rule 14 (one_label -> ID_or_EPS_or_B .)
+    ARROW           reduce using rule 14 (one_label -> ID_or_EPS_or_B .)
+    COMMA           shift and go to state 24
+    SEMICOLON       shift and go to state 25
+
+
+state 19
+
+    (15) ID_or_EPS_or_B -> ID .
+
+    COMMA           reduce using rule 15 (ID_or_EPS_or_B -> ID .)
+    SEMICOLON       reduce using rule 15 (ID_or_EPS_or_B -> ID .)
+    OR              reduce using rule 15 (ID_or_EPS_or_B -> ID .)
+    ARROW           reduce using rule 15 (ID_or_EPS_or_B -> ID .)
+
+
+state 20
+
+    (16) ID_or_EPS_or_B -> EPS .
+
+    COMMA           reduce using rule 16 (ID_or_EPS_or_B -> EPS .)
+    SEMICOLON       reduce using rule 16 (ID_or_EPS_or_B -> EPS .)
+    OR              reduce using rule 16 (ID_or_EPS_or_B -> EPS .)
+    ARROW           reduce using rule 16 (ID_or_EPS_or_B -> EPS .)
+
+
+state 21
+
+    (17) ID_or_EPS_or_B -> BLANK .
+
+    COMMA           reduce using rule 17 (ID_or_EPS_or_B -> BLANK .)
+    SEMICOLON       reduce using rule 17 (ID_or_EPS_or_B -> BLANK .)
+    OR              reduce using rule 17 (ID_or_EPS_or_B -> BLANK .)
+    ARROW           reduce using rule 17 (ID_or_EPS_or_B -> BLANK .)
+
+
+state 22
+
+    (8) one_line -> state COLON labels ARROW . states
+    (10) states -> . state
+    (11) states -> . state COMMA states
+    (9) state -> . ID
+
+    ID              shift and go to state 10
+
+    state                          shift and go to state 26
+    states                         shift and go to state 27
+
+state 23
+
+    (13) labels -> one_label OR . labels
+    (12) labels -> . one_label
+    (13) labels -> . one_label OR labels
+    (14) one_label -> . ID_or_EPS_or_B
+    (18) one_label -> . ID_or_EPS_or_B COMMA ID_or_EPS_or_B SEMICOLON ID_or_EPS_or_B
+    (19) one_label -> . ID_or_EPS_or_B SEMICOLON ID_or_EPS_or_B COMMA ID_or_EPS_or_B
+    (15) ID_or_EPS_or_B -> . ID
+    (16) ID_or_EPS_or_B -> . EPS
+    (17) ID_or_EPS_or_B -> . BLANK
+
+    ID              shift and go to state 19
+    EPS             shift and go to state 20
+    BLANK           shift and go to state 21
+
+    one_label                      shift and go to state 17
+    labels                         shift and go to state 28
+    ID_or_EPS_or_B                 shift and go to state 18
+
+state 24
+
+    (18) one_label -> ID_or_EPS_or_B COMMA . ID_or_EPS_or_B SEMICOLON ID_or_EPS_or_B
+    (15) ID_or_EPS_or_B -> . ID
+    (16) ID_or_EPS_or_B -> . EPS
+    (17) ID_or_EPS_or_B -> . BLANK
+
+    ID              shift and go to state 19
+    EPS             shift and go to state 20
+    BLANK           shift and go to state 21
+
+    ID_or_EPS_or_B                 shift and go to state 29
+
+state 25
+
+    (19) one_label -> ID_or_EPS_or_B SEMICOLON . ID_or_EPS_or_B COMMA ID_or_EPS_or_B
+    (15) ID_or_EPS_or_B -> . ID
+    (16) ID_or_EPS_or_B -> . EPS
+    (17) ID_or_EPS_or_B -> . BLANK
+
+    ID              shift and go to state 19
+    EPS             shift and go to state 20
+    BLANK           shift and go to state 21
+
+    ID_or_EPS_or_B                 shift and go to state 30
+
+state 26
+
+    (10) states -> state .
+    (11) states -> state . COMMA states
+
+    ID              reduce using rule 10 (states -> state .)
+    $end            reduce using rule 10 (states -> state .)
+    COMMA           shift and go to state 31
+
+
+state 27
+
+    (8) one_line -> state COLON labels ARROW states .
+
+    ID              reduce using rule 8 (one_line -> state COLON labels ARROW states .)
+    $end            reduce using rule 8 (one_line -> state COLON labels ARROW states .)
+
+
+state 28
+
+    (13) labels -> one_label OR labels .
+
+    ARROW           reduce using rule 13 (labels -> one_label OR labels .)
+
+
+state 29
+
+    (18) one_label -> ID_or_EPS_or_B COMMA ID_or_EPS_or_B . SEMICOLON ID_or_EPS_or_B
+
+    SEMICOLON       shift and go to state 32
+
+
+state 30
+
+    (19) one_label -> ID_or_EPS_or_B SEMICOLON ID_or_EPS_or_B . COMMA ID_or_EPS_or_B
+
+    COMMA           shift and go to state 33
+
+
+state 31
+
+    (11) states -> state COMMA . states
+    (10) states -> . state
+    (11) states -> . state COMMA states
+    (9) state -> . ID
+
+    ID              shift and go to state 10
+
+    state                          shift and go to state 26
+    states                         shift and go to state 34
+
+state 32
+
+    (18) one_label -> ID_or_EPS_or_B COMMA ID_or_EPS_or_B SEMICOLON . ID_or_EPS_or_B
+    (15) ID_or_EPS_or_B -> . ID
+    (16) ID_or_EPS_or_B -> . EPS
+    (17) ID_or_EPS_or_B -> . BLANK
+
+    ID              shift and go to state 19
+    EPS             shift and go to state 20
+    BLANK           shift and go to state 21
+
+    ID_or_EPS_or_B                 shift and go to state 35
+
+state 33
+
+    (19) one_label -> ID_or_EPS_or_B SEMICOLON ID_or_EPS_or_B COMMA . ID_or_EPS_or_B
+    (15) ID_or_EPS_or_B -> . ID
+    (16) ID_or_EPS_or_B -> . EPS
+    (17) ID_or_EPS_or_B -> . BLANK
+
+    ID              shift and go to state 19
+    EPS             shift and go to state 20
+    BLANK           shift and go to state 21
+
+    ID_or_EPS_or_B                 shift and go to state 36
+
+state 34
+
+    (11) states -> state COMMA states .
+
+    ID              reduce using rule 11 (states -> state COMMA states .)
+    $end            reduce using rule 11 (states -> state COMMA states .)
+
+
+state 35
+
+    (18) one_label -> ID_or_EPS_or_B COMMA ID_or_EPS_or_B SEMICOLON ID_or_EPS_or_B .
+
+    OR              reduce using rule 18 (one_label -> ID_or_EPS_or_B COMMA ID_or_EPS_or_B SEMICOLON ID_or_EPS_or_B .)
+    ARROW           reduce using rule 18 (one_label -> ID_or_EPS_or_B COMMA ID_or_EPS_or_B SEMICOLON ID_or_EPS_or_B .)
+
+
+state 36
+
+    (19) one_label -> ID_or_EPS_or_B SEMICOLON ID_or_EPS_or_B COMMA ID_or_EPS_or_B .
+
+    OR              reduce using rule 19 (one_label -> ID_or_EPS_or_B SEMICOLON ID_or_EPS_or_B COMMA ID_or_EPS_or_B .)
+    ARROW           reduce using rule 19 (one_label -> ID_or_EPS_or_B SEMICOLON ID_or_EPS_or_B COMMA ID_or_EPS_or_B .)
+

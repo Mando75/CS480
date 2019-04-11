@@ -17,21 +17,29 @@ thereby making our eventual destiny deterministic, predestined, unavoidable. If
 this is the case, how can anyone argue for the existence of an omniscient God
 who has created beings with free will? 
 
-Humans crave meaning. Throughout history we have devised methods to describe and
+Humans crave meaning. Throughout history, we have devised methods to describe and
 make sense of the universe around us and our place in it. We began first with
-gods to explain the unknown forces shaping the world around us. Eventually
+gods to explain the unknown forces shaping the world around us. Eventually,
 insightful men and women realized that these forces were not random. They could
 be quantified, measured, and to an extent, predicted. This led scientists to
-develope a deterministic view of the universe. French scientist Pierre-Simon
+develop a deterministic view of the universe. French scientist Pierre-Simon
 Laplace is even reported to have said something along the lines of the
-following (paraphrased), if at one time we knew the positions and speeds of all the particles
-in the universe, then we could calculate their behaviour at any other time, in
-the past or future. Obviously this computation would be incredibly complex, but
-Laplace and others held that it would be theoretically possible. What they may
-have not anticipated was how these discoveries would begin to conflict with
-their previous notions about the nature of God. Does a deterministic
-mathematical and scientific view of the world lead to the removal of the
-necessity of deity?
+following:
+
+#+BEGIN_QUOTE
+An intellect which at any given moment knew all the forces that animate Nature
+and the mutual positions of the beings that comprise it, if this intellect were
+vast enough to submit its data to analysis, could condense into a single formula
+the movement of the greatest bodies of the universe and that of the lightest
+atom: for such an intellect nothing could be uncertain; and the future just like
+the past would be present before our eyes.
+#+END_QUOTE
+
+Obviously this computation would be incredibly complex, but Laplace and others
+held that it would be theoretically possible. What they may have not anticipated
+was how these discoveries would begin to conflict with their previous notions
+about the nature of God. Does a deterministic mathematical and scientific view
+of the world lead to the removal of the necessity of deity?
 
 Mathematics can be described as the language of the universe. Using mathematics
 as a foundation, the sciences of physics, biology, chemistry, etc have been able
@@ -44,23 +52,57 @@ intuition or simple philosophical view of the world, does that indicate that we
 have locked /ourselves/ in a potentially deterministic box? On the other hand,
 if the foundation of mathematics can be found in logic or Platonism, how does
 one reconcile the inferred determinism of these models with free will?
+Furthermore, is mathematics itself "trivial", or does it require a "deeper"
+intelligence to understand and expand?
 
+William Byers describes the difference between "trivial" and "deep" mathematics
+in his book /How Mathematicians Think/. He concludes that "trivial" and "deep"
+mathematics can be separated by the idea of verification. It is trivial to
+verify that a logical proposition is true; it requires almost no knowledge or
+background information to do, and can be easily fed to a computer to verify. On
+the other hand, true understanding is nontrivial. It requires mathematics that
+not only can easily be shown to be true, but also provides insight into why it
+is true [0]. While a mechanical computer is quite capable of performing simple
+verification problems, it is not capable of this higher form of complex thought. 
+Byers concludes:
+
+#+BEGIN_QUOTE
+If mathematics includes the mathematician, then it is reasonable to see
+intelligence as an essential ingredient of mathematics. Mathematics is a form of
+intelligence in action; that is, it is not only the objective result of an act
+of intelligence but rather a demonstration of the nature of intelligence itself.
+It is a major way in which intelligence functions. When we study mathematics we
+are not so much absorbing some predetermined set of facts as we are studying the
+manner in which the mind works — the manner in which it produces mathematics.
+#+END_QUOTE
+#+BEGIN_EXPORT latex
+\linebreak
+\linebreak
+#+END_EXPORT
 Kurt G\ouml{}del showed, quite paradoxically, that no consistent set of axioms can be
 algorithmically listed which would be capable of proving all arithmetic truths.
-This leads to the undeniable conclusion that there exist some truths, though
-known to be true, cannot be proven as such. G\ouml{}del's work when paired with the
-work of mathematicians Alonso Church and Alan Turing showed that with only a
-finite logical system, not only can we never programmatically describe all
-truths, but that we can not even know the output of all the programs we create
-[[[https://rickneff.github.io/the-ocean-of-truth.pdf][1]]]. As Rudy Rucker so eloquently described in his essay [[https://rickneff.github.io/the-ocean-of-truth.pdf][/The Ocean of Truth/]],
-if this were not the case, every human activity would be listable and
-computable. This would imply that we are stuck in a finite, deterministic
-universe where every action you make could be precalculated. You would like to
-become a computer scientist? Here are the exact steps /you/ must follow to
-achieve it. Thankfully, due to the work of G\ouml{}del and others, we know this is not
-the case.
+This leads to the undeniable conclusion that there exist some truths, which
+though known to be true, cannot be proven as such. The implications of this
+conclusion are massive and thought-provoking. For instance, it shows that
+mathematics itself is nontrivial! 
 
-This nondeterministic view is further backed up by quantam theory. In Dr. Stephen
+G\ouml{}del's work when paired with the work of mathematicians Alonso Church and Alan
+Turing showed that with only a finite logical system, not only can we never
+programmatically describe all truths, but that we can not even know the output
+of all the programs we create [[[https://rickneff.github.io/the-ocean-of-truth.pdf][1]]]. As Rudy Rucker so eloquently described in his
+essay [[https://rickneff.github.io/the-ocean-of-truth.pdf][/The Ocean of Truth/]], if this were not the case, every human activity
+would be listable and computable. This would imply that we are stuck in a
+finite, deterministic universe where every action you make could be
+pre-calculated. Every person's life could be entirely reduced down to a
+mathematical equation. You would like to become a computer scientist? Here are
+the exact steps /you/ must follow to become one. Building off this idea, it would
+be theoretically possible to reduce the entire universe and every action that
+takes place in it down to a single computation. One master equation, that while
+perhaps far too complex to ever truly understand, would ultimately determine the
+entire outcome of the universe. Perhaps this is God's true form? Thankfully due
+to the work of G\ouml{}del and others, we know this is not the case.
+
+This nondeterministic view is further backed up by quantum theory. In Dr. Stephen
 Hawking's essay [[http://www.hawking.org.uk/does-god-play-dice.html][/Does God Play Dice?/]], he delves into this very question about
 determinism and free will [2]. His conclusion from a physicist's perspective is that
 the universe is not deterministic. He ends his essay with the following:
@@ -81,8 +123,8 @@ not completely determined by the laws of science, and its present state, as
 Laplace thought. God still has a few tricks up his sleeve.
 #+END_QUOTE
 
-What then, does a nondeterministic universe impy for the concept of an
-omniscient God? If our universe is non-determinstic, how then can there exist a
+What then, does a nondeterministic universe imply for the concept of an
+omniscient God? If our universe is nondeterministic, how then can there exist a
 God with a knowledge of our past, present, and future without contradicting the
 laws He supposedly created? While I do not claim to have *the* answer to this
 question, I do have some thoughts and insights that I believe are worth
@@ -116,8 +158,13 @@ choose, and He will know the outcome, but not because He determined it to be so.
 
 * On Disobedience to Higher Laws
 
-Elder N. Eldon Tanner said, "Law is the simple application of truth. [4]" 
-
+#+BEGIN_QUOTE
+"Law is the simple application of truth." - N. Eldon Tanner [4]
+#+END_QUOTE
+#+BEGIN_EXPORT latex
+\linebreak
+\linebreak
+#+END_EXPORT
 Why does it seem that advanced intelligences are free to disobey the higher
 laws set forth by God? I would argue that they are not. 
 
@@ -133,14 +180,14 @@ without consequence, but we have been repeatedly taught that there is a day of
 reckoning coming, a day when all men will be held accountable for their deeds,
 whether good or evil. Just like choosing to disregard the law of gravity may
 lead to serious physical injury or death, disregarding the spiritual laws of God
-will result in spiritual harm and death. The consequence may not be immediete,
+will result in spiritual harm and death. The consequence may not be immediate,
 but it will come nonetheless.
 
 It seems we have come into this world with bodies which understand and willingly
 obey the physical laws of the universe. This provides us with a level of
 *computational output* to operate from. However, our main purpose in coming here
 has been to learn to freely obey the spiritual laws God has set forth, further
-increasing our output. Perhaps this can be viewed as a step on the heirarchy of
+increasing our output. Perhaps this can be viewed as a step on the hierarchy of
 languages. A regular language has some computational power, but like our
 obedience to the physical laws, is limited in what its computational power can
 produce. Learning to obey the spiritual laws would move us up the language
@@ -152,18 +199,10 @@ heirarchy to a sphere which is more computationally powerful.
    generate prime numbers. The program uses FRACTRAN (a Turing-complete
    language) to generate the prime powers of 2.
 ** How does it do it?
-   OEIS provides a great writeup of how the PRIMEGAME works, which I will
+   OEIS provides a great write up of how the PRIMEGAME works, which I will
    paraphrase here [5].
 
    Given a sequence of 14 rational numbers,
-
-   #+BEGIN_SRC elisp :results code
-   (require 'calc-math)
-   (setq flibbers (list 17 78 19 23 29 77 95 77 1 11 13 15 15 55)
-         flobbers (list 91 85 51 38 33 29 23 19 17 13 11 14 2 1))
-   (mapcar* 'math-make-frac flibbers flobbers)
-   #+END_SRC
-
    #+BEGIN_SRC elisp
    ((frac 17 91)
     (frac 78 85)
@@ -209,12 +248,36 @@ will (remember that i only gets changed when it is multiplied by one of the
 fractions to produce a new integer). This is quite elegant, because as
 we know, there is an infinite number of primes. It therefore seems appropriate
 that a program designed to produce the prime powers of 2 would also never halt.  
+* Final Thoughts
 
+As this is the final assignment of my undergraduate degree, I felt it
+appropriate to share some thoughts with you, the teacher who has had the
+greatest influence on my mind the past 4 years.
+
+I have truly enjoyed my journey from Discrete Mathematics I through
+Computational Theory. The four "DM" classes have been the most challenging,
+thought provoking, and rewarding classes I have taken during my undergraduate
+degree. I never would have believed that I would be able to understand the
+concepts that I am now able to explain clearly and plainly to my friends and
+family. I came to this university with a desire to learn, and more than any
+other classes, the "DM" classes have fulfilled that desire. I am excited to
+continue down this path of knowledge and discovery you have set me on in my
+future endeavors. Thank you for believing in and supporting me through the last
+year and a half of my schooling. I hope that I have been as rewarding a student
+to teach as you have been a teacher to learn from. I will always remember the
+lessons that you taught me, and espouse the comforts of elisp to all those
+willing to hear.
+
+Adieu
+
+ 
 #+BEGIN_EXPORT latex
 \pagebreak
 #+END_EXPORT
 
+
 * References
+   0. /Is Creativity Algorithmic?/, William Byers, https://rickneff.github.io/is-creativity-algorithmic.pdf 
    1. /The Ocean of Truth/, Rudy Rucker, https://rickneff.github.io/the-ocean-of-truth.pdf
    2. /Does God Play Dice?/, Stephen Hawking, http://www.hawking.org.uk/does-god-play-dice.html
    3. /Mere Christianity/, C.S. Lewis, MacMillan Pub. Co., New York
